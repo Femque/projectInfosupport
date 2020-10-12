@@ -4,17 +4,21 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CalenderComponent } from './components/calender/calender.component';
+import { ScheduleModule, RecurrenceEditorModule, DayService, WeekService, WorkWeekService,
+  MonthService, MonthAgendaService } from '@syncfusion/ej2-angular-schedule';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent
+    NavbarComponent,
     CalenderComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    ScheduleModule, RecurrenceEditorModule
   ],
-  providers: [],
+  providers: [DayService, WeekService, WorkWeekService,
+    MonthService, MonthAgendaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
