@@ -1,0 +1,5 @@
+{
+  "url": "localhost:8080",
+  "appointmentUrl": "localhost:8080/appointments",
+  "createAppointmentUrl": "localhost:8080/appointments/create"
+}

@@ -18,9 +18,9 @@ public class InfosupportController {
   @Autowired
   public InfosupportController(AppointmentRepository repo) {this.repo = repo;}
 
-  @GetMapping("/test")
+  @GetMapping("/appointments")
   public List<Appointment> getAllAppointments() { return repo.findAll(); }
 
-  @PostMapping("/posttest")
+  @PostMapping("/appointments/create")
   public Appointment createAppointment(@RequestBody Appointment appointment) { return repo.createAppointment(appointment); }
 }
