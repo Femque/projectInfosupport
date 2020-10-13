@@ -32,4 +32,11 @@ public class AppointmentRepositoryMock implements AppointmentRepository {
   public Appointment findById(long id) {
     return null;
   }
+
+  @Override
+  public Appointment createAppointment(Appointment appointment) {
+
+    appointments.add(appointment);
+    return appointment;
+  }
 }

@@ -8,4 +8,5 @@ import java.util.List;
 public interface AppointmentRepository {
   public List<Appointment> findAll();
   public Appointment findById(long id);
+  public Appointment createAppointment(Appointment appointment);
 }
