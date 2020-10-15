@@ -1,0 +1,17 @@
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  background: #57ba94;
+}
+
+a {
+  color: white;
+}
+
+p {
+  color: white;
+  text-align: right;
+}
