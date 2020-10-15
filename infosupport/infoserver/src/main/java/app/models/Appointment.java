@@ -18,7 +18,7 @@ public class Appointment {
   //later aanpassen naar Gp gp
   private String gp;
   private String location;
-  private LocalDate date;
+  private String date;
   private boolean isFollowUp;
 
   public long getId() {
@@ -37,7 +37,7 @@ public class Appointment {
     return location;
   }
 
-  public LocalDate getDate() {
+  public String getDate() {
     return date;
   }
 
@@ -45,7 +45,7 @@ public class Appointment {
     return isFollowUp;
   }
 
-  public Appointment(long id, String patient, String gp, String location, LocalDate date, boolean isFollowUp) {
+  public Appointment(long id, String patient, String gp, String location, String date, boolean isFollowUp) {
     this.id = id;
     this.patient = patient;
     this.gp = gp;
@@ -61,7 +61,7 @@ public class Appointment {
     appointment.patient = "Test patient " + idCounter;
     appointment.gp = "Test GP " + idCounter;
     appointment.location = "Test location " + idCounter;
-    appointment.date = LocalDate.now();
+    appointment.date = "Test date";
     appointment.isFollowUp = false;
 
     return appointment;

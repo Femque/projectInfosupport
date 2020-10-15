@@ -1,3 +1,11 @@
+import {Component, OnInit} from '@angular/core';
+import {Config, ConfigService} from "../../config/config.service";
+import {Appointment} from "../../models/appointment";
+import {CalendarService} from "./calendar.service";
+
+@Component({
+  selector: 'app-calender',
+  providers: [CalendarService],
 import { Component, OnInit } from '@angular/core';
 import { EventSettingsModel, DayService, WeekService, WorkWeekService, MonthService, AgendaService } from '@syncfusion/ej2-angular-schedule';
 
@@ -103,8 +111,20 @@ export class CalenderComponent implements OnInit {
 
 
 
-  constructor() { }
+  appointments: Appointment[];
 
+  constructor(private calendarService: CalendarService) {
+  }
+
+  ngOnInit() {
+    console.log("getting appointments");
+    this.getAppointments();
+  }
+
+  getAppointments(): void {
+    this.calendarService.getAppointments()
+      .subscribe(appointments => (this.appointments = appointments));
+  }
   ngOnInit(): void {
   }}
 
