@@ -16,8 +16,8 @@ const httpOptions = {
 
 @Injectable()
 export class CalendarService {
-  appointmentUrl = 'http://localhost:8080/appointments' //Url to our service
-  //error handler?
+  getAppointmentsUrl = 'http://localhost:8080/appointments' //Url to get all appointments
+  createAppointmentUrl = 'http://localhost:8080/appointments/create' //Url to create appointment
 
   constructor(
     private http: HttpClient
@@ -25,8 +25,16 @@ export class CalendarService {
   }
 
   getAppointments(): Observable<Appointment[]> {
-    console.log("inside ")
-    return this.http.get<Appointment[]>(this.appointmentUrl)
+    console.log("getting appointments ")
+    return this.http.get<Appointment[]>(this.getAppointmentsUrl)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  createAppointment(appointment: Appointment): Observable<Appointment> {
+    console.log("creating appointment");
+    return this.http.post<Appointment>(this.createAppointmentUrl, appointment)
       .pipe(
         catchError(this.handleError)
       );
