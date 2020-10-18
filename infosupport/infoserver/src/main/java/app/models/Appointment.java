@@ -20,7 +20,8 @@ public class Appointment {
   private String location;
   private LocalDateTime startTime;
   private LocalDateTime endTime;
-  private boolean isFollowUp;
+  private String description;
+//  private boolean isFollowUp;
 
   public long getId() {
     return id;
@@ -46,30 +47,35 @@ public class Appointment {
     return endTime;
   }
 
-  public boolean isFollowUp() {
-    return isFollowUp;
+  public String getDescription() {
+    return description;
   }
 
-  public Appointment(long id, String patient, String gp, String location, LocalDateTime startTime, LocalDateTime endTime, boolean isFollowUp) {
+  //  public boolean isFollowUp() {
+//    return isFollowUp;
+//  }
+
+  public Appointment(long id, String patient, String description, String location, LocalDateTime startTime, LocalDateTime endTime) {
     this.id = id;
     this.patient = patient;
-    this.gp = gp;
     this.location = location;
     this.startTime = startTime;
     this.endTime = endTime;
-    this.isFollowUp = isFollowUp;
+    this.description = description;
+//    this.isFollowUp = isFollowUp;
   }
 
   public static Appointment createAppointmentForTesting(int idCounter) {
-    Appointment appointment = new Appointment(0, null, null, null, null, null, false);
+    Appointment appointment = new Appointment(0, null, null, null, null, null);
 
     appointment.id += appointment.id + idCounter;
     appointment.patient = "Test patient " + idCounter;
-    appointment.gp = "Test GP " + idCounter;
+    appointment.description = "";
+//    appointment.gp = "Test GP " + idCounter;
     appointment.location = "Test location " + idCounter;
     appointment.startTime = LocalDateTime.now();
     appointment.endTime = LocalDateTime.now();
-    appointment.isFollowUp = false;
+//    appointment.isFollowUp = false;
 
     return appointment;
   }

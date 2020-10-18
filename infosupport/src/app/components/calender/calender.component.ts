@@ -33,6 +33,10 @@ L10n.load({
 
 export class CalenderComponent implements OnInit {
 
+  constructor(private calendarService: CalendarService) {
+  }
+
+
   appointments: Appointment[] = [];
   event: object[] = [
     {
@@ -52,15 +56,6 @@ export class CalenderComponent implements OnInit {
 
     }, {
       Id: 3,
-      Subject: 'MOROCCO vs IR IRAN',
-      Description: 'Group B',
-      StartTime: new Date(2020, 9, 16, 4, 0),
-      EndTime: new Date(2020, 9, 16, 17, 0),
-      StartTimezone: 'Europe/Moscow',
-      EndTimezone: 'Europe/Moscow',
-      City: 'Saint Petersburg',
-      CategoryColor: '#397cd2',
-      GroupId: 2}]
       Patient: 'Femke Hofland',
       Location: 'ZonneVeldt',
       Description: '',
@@ -71,17 +66,14 @@ export class CalenderComponent implements OnInit {
 
   // @ts-ignore
   public eventSettings: EventSettingsModel = {
-    dataSource: this.appointments
-  }
-
-    dataSource: this.event,
+    dataSource: this.appointments,
     fields: {
       id: 'Id',
-      subject: {name: 'Patient', title: 'Patient'},
-      location: {name: 'Location', title: 'Location'},
-      description: {name: 'Description', title: 'Event Description'},
-      startTime: {name: 'StartTime', title: 'Start Duration'},
-      endTime: {name: 'EndTime', title: 'End Duration'},
+      subject: {name: 'patient', title: 'Patient'},
+      location: {name: 'location', title: 'Location'},
+      description: {name: 'description', title: 'Event Description'},
+      startTime: {name: 'startTime', title: 'Start Duration'},
+      endTime: {name: 'endTime', title: 'End Duration'},
     }
   };
 
@@ -104,11 +96,8 @@ export class CalenderComponent implements OnInit {
         dropDownListObject.appendTo(statusElement);
         statusElement.setAttribute('Patient', 'Patient');
       }
-    }
-  }
-  appointments: Appointment[];
 
-  constructor(private calendarService: CalendarService) {
+    }
   }
 
   ngOnInit() {
@@ -121,8 +110,8 @@ export class CalenderComponent implements OnInit {
     return this.calendarService.createAppointment(appointment)
   }
 
-  getAppointments(): void {
-     this.calendarService.getAppointments()
+  getAppointments(): any {
+    this.calendarService.getAppointments()
       .subscribe(data => {
         for (let i = 0; i < data.length; i++) {
           let newAppointment = new Appointment(
@@ -133,10 +122,8 @@ export class CalenderComponent implements OnInit {
             data[i].endTime,
             data[i].isFollowUp
           )
-
           this.appointments.push(newAppointment);
-        }
-      });
+        }});
   }
 }
 
