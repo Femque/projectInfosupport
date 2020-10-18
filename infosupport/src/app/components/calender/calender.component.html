@@ -1,5 +1,5 @@
 <div class="calender  float-left">
-  <ejs-schedule [eventSettings]="eventSettings" (popupOpen)="onPopupOpen($event)"  height="500" width="800">
+  <ejs-schedule [eventSettings]="eventSettings" (popupOpen)="onPopupOpen($event)" [views]="scheduleViews"   height="500" width="800">
   <ng-template style="height: 70%" #editorTemplate let-data>
     <table class="custom-event-editor">
       <tbody>
@@ -18,7 +18,7 @@
       <tr>
         <td class="e-textlabel">Starttijd</td>
         <td colspan="4">
-          <input id="StartTime" class="e-field" type="text" name="startTime" />
+          <input id="startTime" class="e-field" type="text" name="startTime" />
         </td>
       </tr>
 

@@ -4,7 +4,7 @@ import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CalenderComponent } from './components/calender/calender.component';
-import { ScheduleModule, RecurrenceEditorModule, DayService, WeekService, WorkWeekService,
+import { ScheduleModule, RecurrenceEditorModule, DayService, WorkWeekService,
   MonthService, MonthAgendaService } from '@syncfusion/ej2-angular-schedule';
 import { HttpClientModule } from '@angular/common/http';
 import { AppointmentComponent } from './components/appointment/appointment.component';
@@ -51,7 +51,7 @@ import {MatSelectModule} from "@angular/material/select";
     MatSelectModule
 
   ],
-  providers: [DayService, WeekService, WorkWeekService,
+  providers: [DayService, WorkWeekService,
     MonthService, MonthAgendaService],
   bootstrap: [AppComponent]
 })
