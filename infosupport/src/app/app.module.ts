@@ -28,6 +28,8 @@ import {MatSelectModule} from "@angular/material/select";
     CalenderComponent,
     AppointmentComponent,
     HomeComponent,
+
+
   ],
 
   imports: [
@@ -35,6 +37,18 @@ import {MatSelectModule} from "@angular/material/select";
     ScheduleModule, RecurrenceEditorModule,
     BrowserModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatToolbarModule,
+    MatGridListModule,
+    MatSelectModule
 
   ],
   providers: [DayService, WeekService, WorkWeekService,

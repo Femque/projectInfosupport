@@ -29,7 +29,7 @@ export class AppointmentComponent implements OnInit {
         this.appointmentDate = "";
         this.appointmentTime = "";
         this.appointmentMessage = "";
-        const appointmentDate = new Date(createdAppointment.date).toDateString();
+        const appointmentDate = new Date(createdAppointment.startTime).toDateString();
         this.successMessage = `Uw afspraak is succesvol geboekt op ${appointmentDate}`;
         },
         (error: ErrorEvent) => {

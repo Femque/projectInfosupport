@@ -80,21 +80,21 @@ export class CalenderComponent implements OnInit {
 
   onPopupOpen(args: PopupOpenEventArgs): void {
     if (args.type === 'Editor') {
-      let startElement: HTMLInputElement = args.element.querySelector('#StartTime') as HTMLInputElement;
+      let startElement: HTMLInputElement = args.element.querySelector('#startTime') as HTMLInputElement;
       if (!startElement.classList.contains('e-datetimepicker')) {
         new DateTimePicker({value: new Date(startElement.value) || new Date()}, startElement);
       }
-      let endElement: HTMLInputElement = args.element.querySelector('#EndTime') as HTMLInputElement;
+      let endElement: HTMLInputElement = args.element.querySelector('#endTime') as HTMLInputElement;
       if (!endElement.classList.contains('e-datetimepicker')) {
         new DateTimePicker({value: new Date(endElement.value) || new Date()}, endElement);
       }
-      let statusElement: HTMLInputElement = args.element.querySelector('#Patient') as HTMLInputElement;
+      let statusElement: HTMLInputElement = args.element.querySelector('#patient') as HTMLInputElement;
       if (!statusElement.classList.contains('e-dropdownlist')) {
         let dropDownListObject: DropDownList = new DropDownList({
           dataSource: ['Jesse Bijlma', 'Bram Osborne', 'Femke Hofland', 'Faris Abahri'], value: statusElement.value
         });
         dropDownListObject.appendTo(statusElement);
-        statusElement.setAttribute('Patient', 'Patient');
+        statusElement.setAttribute('patient', 'patient');
       }
 
     }
@@ -117,10 +117,8 @@ export class CalenderComponent implements OnInit {
           let newAppointment = new Appointment(
             data[i].id,
             data[i].patient,
-            data[i].gp,
             data[i].startTime,
             data[i].endTime,
-            data[i].isFollowUp
           )
           this.appointments.push(newAppointment);
         }});

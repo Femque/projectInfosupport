@@ -62,8 +62,8 @@ public class Appointment {
     this.startTime = startTime;
     this.endTime = endTime;
     this.description = description;
-//    this.isFollowUp = isFollowUp;
   }
+
 
   public static Appointment createAppointmentForTesting(int idCounter) {
     Appointment appointment = new Appointment(0, null, null, null, null, null);
