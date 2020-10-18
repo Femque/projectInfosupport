@@ -8,10 +8,10 @@ import {
   EventSettingsModel,
   DayService,
   WeekService,
-  WorkWeekService,
   MonthService,
   AgendaService,
-  PopupOpenEventArgs
+  PopupOpenEventArgs,
+  View
 } from '@syncfusion/ej2-angular-schedule';
 import {Observable} from "rxjs";
 
@@ -26,7 +26,7 @@ L10n.load({
 
 @Component({
   selector: 'app-calender',
-  providers: [DayService, WeekService, WorkWeekService, MonthService, AgendaService, CalendarService],
+  providers: [DayService, WeekService, MonthService, AgendaService, CalendarService],
   templateUrl: './calender.component.html',
   styleUrls: ['./calender.component.css']
 })
@@ -38,6 +38,11 @@ export class CalenderComponent implements OnInit {
 
 
   appointments: Appointment[] = [];
+  public scheduleViews: View[] = ['Day', 'Week', 'Month', 'Agenda'];
+
+
+
+
   event: object[] = [
     {
       Id: 1,
@@ -91,7 +96,7 @@ export class CalenderComponent implements OnInit {
       let statusElement: HTMLInputElement = args.element.querySelector('#patient') as HTMLInputElement;
       if (!statusElement.classList.contains('e-dropdownlist')) {
         let dropDownListObject: DropDownList = new DropDownList({
-          dataSource: ['Jesse Bijlma', 'Bram Osborne', 'Femke Hofland', 'Faris Abahri'], value: statusElement.value
+          dataSource: ["Test patient 1","Test patient 2","Test patient 3","Test patient 4","Test patient 5"], value: statusElement.value
         });
         dropDownListObject.appendTo(statusElement);
         statusElement.setAttribute('patient', 'patient');
@@ -110,6 +115,7 @@ export class CalenderComponent implements OnInit {
     return this.calendarService.createAppointment(appointment)
   }
 
+
   getAppointments(): any {
     this.calendarService.getAppointments()
       .subscribe(data => {
@@ -119,6 +125,7 @@ export class CalenderComponent implements OnInit {
             data[i].patient,
             data[i].startTime,
             data[i].endTime,
+            data[i].location
           )
           this.appointments.push(newAppointment);
         }});
