@@ -81,7 +81,16 @@ export class CalenderComponent implements OnInit {
      this.calendarService.getAppointments()
       .subscribe(data => {
         for (let i = 0; i < data.length; i++) {
-          this.appointments.push(data[i]);
+          let newAppointment = new Appointment(
+            data[i].id,
+            data[i].patient,
+            data[i].gp,
+            data[i].startTime,
+            data[i].endTime,
+            data[i].isFollowUp
+          )
+
+          this.appointments.push(newAppointment);
         }
       });
   }
