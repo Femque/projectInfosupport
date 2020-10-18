@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -17,11 +17,13 @@ import { AppointmentComponent } from './components/appointment/appointment.compo
     AppointmentComponent
 
   ],
+
   imports: [
     BrowserModule,
     ScheduleModule, RecurrenceEditorModule,
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+
   ],
   providers: [DayService, WeekService, WorkWeekService,
     MonthService, MonthAgendaService],
