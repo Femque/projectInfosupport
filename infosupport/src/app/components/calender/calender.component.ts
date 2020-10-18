@@ -13,6 +13,7 @@ import {
   AgendaService,
   PopupOpenEventArgs
 } from '@syncfusion/ej2-angular-schedule';
+import {Observable} from "rxjs";
 
 
 L10n.load({
@@ -32,6 +33,7 @@ L10n.load({
 
 export class CalenderComponent implements OnInit {
 
+  appointments: Appointment[] = [];
   event: object[] = [
     {
       Id: 1,
@@ -50,6 +52,15 @@ export class CalenderComponent implements OnInit {
 
     }, {
       Id: 3,
+      Subject: 'MOROCCO vs IR IRAN',
+      Description: 'Group B',
+      StartTime: new Date(2020, 9, 16, 4, 0),
+      EndTime: new Date(2020, 9, 16, 17, 0),
+      StartTimezone: 'Europe/Moscow',
+      EndTimezone: 'Europe/Moscow',
+      City: 'Saint Petersburg',
+      CategoryColor: '#397cd2',
+      GroupId: 2}]
       Patient: 'Femke Hofland',
       Location: 'ZonneVeldt',
       Description: '',
@@ -60,6 +71,9 @@ export class CalenderComponent implements OnInit {
 
   // @ts-ignore
   public eventSettings: EventSettingsModel = {
+    dataSource: this.appointments
+  }
+
     dataSource: this.event,
     fields: {
       id: 'Id',
@@ -100,11 +114,29 @@ export class CalenderComponent implements OnInit {
   ngOnInit() {
     console.log("getting appointments");
     this.getAppointments();
+    console.log(this.appointments);
+  }
+
+  createAppointment(appointment: Appointment): Observable<Appointment> {
+    return this.calendarService.createAppointment(appointment)
   }
 
   getAppointments(): void {
-    this.calendarService.getAppointments()
-      .subscribe(appointments => (this.appointments = appointments));
+     this.calendarService.getAppointments()
+      .subscribe(data => {
+        for (let i = 0; i < data.length; i++) {
+          let newAppointment = new Appointment(
+            data[i].id,
+            data[i].patient,
+            data[i].gp,
+            data[i].startTime,
+            data[i].endTime,
+            data[i].isFollowUp
+          )
+
+          this.appointments.push(newAppointment);
+        }
+      });
   }
 }
 
