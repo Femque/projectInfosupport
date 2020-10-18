@@ -30,6 +30,12 @@ public class AppointmentRepositoryMock implements AppointmentRepository {
 
   @Override
   public Appointment findById(long id) {
+    for (Appointment value : appointments) {
+      if (value.id == id) {
+        return value;
+      }
+    }
+
     return null;
   }
 
@@ -39,4 +45,18 @@ public class AppointmentRepositoryMock implements AppointmentRepository {
     appointments.add(appointment);
     return appointment;
   }
+
+  @Override
+  public Appointment deleteAppointment(long id) {
+    for (int i = 0; i < appointments.size(); i++) {
+      if (appointments.get(i).id == id) {
+        appointments.remove(i);
+        return appointments.get(i);
+      }
+    }
+
+    return null;
+  }
+
+
 }

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -29,22 +29,13 @@ import {MatSelectModule} from "@angular/material/select";
     AppointmentComponent,
     HomeComponent,
   ],
+
   imports: [
     BrowserModule,
     ScheduleModule, RecurrenceEditorModule,
     BrowserModule,
     HttpClientModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    MatTableModule,
-    MatProgressSpinnerModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatToolbarModule,
-    MatGridListModule, MatSelectModule,
+
   ],
   providers: [DayService, WeekService, WorkWeekService,
     MonthService, MonthAgendaService],

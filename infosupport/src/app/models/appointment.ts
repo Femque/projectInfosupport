@@ -5,16 +5,19 @@ export class Appointment {
   //Later vervangen door patient model
   public patient: string;
   public gp: string;
-  public date: string;
+  public startTime: Date;
+  public endTime: Date;
   public isFollowUp: boolean;
 
-  constructor(id: number, patient: string, gp: string, date: string, isFollowUp: boolean) {
+
+  constructor(id: number, patient: string, gp: string, startTime: Date, endTime: Date, isFollowUp: boolean) {
     this.id = id;
     this.patient = patient;
     this.gp = gp;
-    this.date = date;
+    this.startTime = startTime;
+    this.endTime = endTime;
     this.isFollowUp = isFollowUp;
   }
 
-  //Possible methods go here
+//Possible methods go here
 }
