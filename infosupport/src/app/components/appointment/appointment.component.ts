@@ -24,7 +24,12 @@ export class AppointmentComponent implements OnInit {
   createAppointment() {
     this.errorMessage = "";
     this.successMessage = "";
-    this.appointmentService.createAppointment(this.appointmentDate, this.appointmentTime, this.appointmentMessage)
+
+    // var endTime = new Date(this.appointmentTime.getTime() + 15*60000);
+    let startDate = new Date(this.appointmentDate);
+
+    var appointment = new Appointment(1, "Peter Vos", startDate, new Date())
+    this.appointmentService.createAppointment(appointment)
       .subscribe((createdAppointment: Appointment) => {
         this.appointmentDate = "";
         this.appointmentTime = "";
