@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {LoginService} from "./login.service";
 
 @Component({
   selector: 'app-login',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(private loginService: LoginService) { }
 
   ngOnInit(): void {
   }
@@ -17,19 +18,22 @@ export class LoginComponent implements OnInit {
       // Login for GP
       Id: 1,
       Username: 'Admin',
-      Password: 'Admin'
+      Password: 'Admin',
+      Role: 'GP'
     },
     {
       // Login for patient
       Id: 2,
       Username: 'Guest@guest.nl',
-      Password: 'Guest'
+      Password: 'Guest',
+      Role: 'Patient'
     }
   ]
 
   handleLogin(): void {
     // Find username and password
 
+    // Find role (GP, Patient, Assistent)
   }
 
 

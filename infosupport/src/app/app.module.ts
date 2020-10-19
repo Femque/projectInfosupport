@@ -21,6 +21,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { HomeComponent } from "./components/home/home.component";
 import { MatGridListModule, MatGridTile } from "@angular/material/grid-list";
 import {MatSelectModule} from "@angular/material/select";
+import {LoginComponent} from "./components/login/login.component";
+import {FooterComponent} from "./components/footer/footer.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +30,8 @@ import {MatSelectModule} from "@angular/material/select";
     CalenderComponent,
     AppointmentComponent,
     HomeComponent,
-
+    LoginComponent,
+    FooterComponent
 
   ],
 
