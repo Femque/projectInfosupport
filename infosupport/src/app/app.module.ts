@@ -24,6 +24,8 @@ import {MatSelectModule} from "@angular/material/select";
 import { ErrorComponent } from './components/error/error.component';
 import {RouterModule} from "@angular/router";
 import { AppRoutingModule } from "./app-routing-module";
+import {LoginComponent} from "./components/login/login.component";
+import {FooterComponent} from "./components/footer/footer.component";
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { AppRoutingModule } from "./app-routing-module";
     AppointmentComponent,
     HomeComponent,
     ErrorComponent,
+    LoginComponent,
+    FooterComponent
 
 
   ],
