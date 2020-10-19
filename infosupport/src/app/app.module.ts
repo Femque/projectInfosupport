@@ -9,7 +9,7 @@ import { ScheduleModule, RecurrenceEditorModule, DayService, WorkWeekService,
 import { HttpClientModule } from '@angular/common/http';
 import { AppointmentComponent } from './components/appointment/appointment.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -41,26 +41,26 @@ import {FooterComponent} from "./components/footer/footer.component";
 
   ],
 
-    imports: [
-        BrowserModule,
-        ScheduleModule, RecurrenceEditorModule,
-        BrowserModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        MatTableModule,
-        MatProgressSpinnerModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatToolbarModule,
-        MatGridListModule,
-        MatSelectModule, RouterModule,
-        AppRoutingModule
+  imports: [
+    BrowserModule,
+    ScheduleModule, RecurrenceEditorModule,
+    BrowserModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatToolbarModule,
+    MatGridListModule,
+    MatSelectModule, RouterModule,
+    AppRoutingModule, ReactiveFormsModule
 
-    ],
+  ],
   providers: [DayService, WorkWeekService,
     MonthService, MonthAgendaService],
   bootstrap: [AppComponent]
