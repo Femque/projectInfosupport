@@ -35,7 +35,7 @@ export class AppointmentComponent implements OnInit {
         this.appointmentTime = "";
         this.appointmentMessage = "";
         const appointmentDate = new Date(createdAppointment.startTime).toDateString();
-        this.successMessage = `Uw afspraak is succesvol geboekt op ${appointmentDate}`;
+        this.successMessage = `Uw afspraak is succesvol geboekt`;
         },
         (error: ErrorEvent) => {
         this.errorMessage = error.error.message;

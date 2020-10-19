@@ -1,36 +1,44 @@
-<h1>Afspraak maken</h1>
-<mat-toolbar *ngIf="successMessage" color="accent">{{ successMessage }}</mat-toolbar>
-<mat-toolbar *ngIf="errorMessage" color="warn">{{ errorMessage }}</mat-toolbar>
-<div class="form-container">
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-5">
+      <div class="jumbotron">
+        <h1>Afspraak maken</h1>
+        <mat-toolbar *ngIf="successMessage" color="accent">{{ successMessage }}</mat-toolbar>
+        <mat-toolbar *ngIf="errorMessage" color="warn">{{ errorMessage }}</mat-toolbar>
+        <div class="form-container">
 
-  <form (submit)="createAppointment()">
-    <mat-form-field>
-      <input [(ngModel)]="appointmentDate" name="appointmentDate" matInput [matDatepicker]="picker" placeholder="Kies een datum">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-      <mat-label>Tijd</mat-label>
-      <mat-select>
-        <mat-option value="9:30">9:30</mat-option>
-        <mat-option value="10:00">10:00</mat-option>
-        <mat-option value="10:15">10:15</mat-option>
-        <mat-option value="10:30">10:30</mat-option>
-        <mat-option value="10:45">10:45</mat-option>
-        <mat-option value="11:00">11:00</mat-option>
-        <mat-option value="11:15">11:15</mat-option>
-        <mat-option value="11:30">11:30</mat-option>
-        <mat-option value="12:00">12:00</mat-option>
-        <mat-option value="12:15">12:15</mat-option>
-        <mat-option value="12:30">12:30</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-      <textarea [(ngModel)]="appointmentMessage" name="message" matInput placeholder="Leg uit waar u last van heeft" type="text"></textarea>
-    </mat-form-field>
-    <br>
-    <button mat-raised-button color="primary">Afspraak inplannen</button>
-  </form>
+          <form (submit)="createAppointment()">
+            <mat-form-field>
+              <input [(ngModel)]="appointmentDate" name="appointmentDate" matInput [matDatepicker]="picker" placeholder="Kies een datum">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <mat-label>Tijd</mat-label>
+              <mat-select>
+                <mat-option value="9:30">9:30</mat-option>
+                <mat-option value="10:00">10:00</mat-option>
+                <mat-option value="10:15">10:15</mat-option>
+                <mat-option value="10:30">10:30</mat-option>
+                <mat-option value="10:45">10:45</mat-option>
+                <mat-option value="11:00">11:00</mat-option>
+                <mat-option value="11:15">11:15</mat-option>
+                <mat-option value="11:30">11:30</mat-option>
+                <mat-option value="12:00">12:00</mat-option>
+                <mat-option value="12:15">12:15</mat-option>
+                <mat-option value="12:30">12:30</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <textarea [(ngModel)]="appointmentMessage" name="message" matInput placeholder="Leg uit waar u last van heeft" type="text"></textarea>
+            </mat-form-field>
+            <br>
+            <button mat-raised-button color="primary">Afspraak inplannen</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

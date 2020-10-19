@@ -21,6 +21,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { HomeComponent } from "./components/home/home.component";
 import { MatGridListModule, MatGridTile } from "@angular/material/grid-list";
 import {MatSelectModule} from "@angular/material/select";
+import { ErrorComponent } from './components/error/error.component';
+import {RouterModule} from "@angular/router";
+import { AppRoutingModule } from "./app-routing-module";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,29 +32,31 @@ import {MatSelectModule} from "@angular/material/select";
     CalenderComponent,
     AppointmentComponent,
     HomeComponent,
+    ErrorComponent,
 
 
   ],
 
-  imports: [
-    BrowserModule,
-    ScheduleModule, RecurrenceEditorModule,
-    BrowserModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    MatTableModule,
-    MatProgressSpinnerModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatToolbarModule,
-    MatGridListModule,
-    MatSelectModule
+    imports: [
+        BrowserModule,
+        ScheduleModule, RecurrenceEditorModule,
+        BrowserModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        MatTableModule,
+        MatProgressSpinnerModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatToolbarModule,
+        MatGridListModule,
+        MatSelectModule, RouterModule,
+        AppRoutingModule
 
-  ],
+    ],
   providers: [DayService, WorkWeekService,
     MonthService, MonthAgendaService],
   bootstrap: [AppComponent]
