@@ -12,4 +12,26 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  event: object[] = [
+    {
+      // Login for GP
+      Id: 1,
+      Username: 'Admin',
+      Password: 'Admin'
+    },
+    {
+      // Login for patient
+      Id: 2,
+      Username: 'Guest@guest.nl',
+      Password: 'Guest'
+    }
+  ]
+
+  handleLogin(): void {
+    // Find username and password
+
+  }
+
+
+
 }
