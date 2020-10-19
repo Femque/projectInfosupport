@@ -1,10 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CalenderComponent } from './components/calender/calender.component';
-import { ScheduleModule, RecurrenceEditorModule, DayService, WeekService, WorkWeekService,
+import { ScheduleModule, RecurrenceEditorModule, DayService, WorkWeekService,
   MonthService, MonthAgendaService } from '@syncfusion/ej2-angular-schedule';
 import { HttpClientModule } from '@angular/common/http';
 import { AppointmentComponent } from './components/appointment/appointment.component';
@@ -28,7 +28,10 @@ import {MatSelectModule} from "@angular/material/select";
     CalenderComponent,
     AppointmentComponent,
     HomeComponent,
+
+
   ],
+
   imports: [
     BrowserModule,
     ScheduleModule, RecurrenceEditorModule,
@@ -44,9 +47,11 @@ import {MatSelectModule} from "@angular/material/select";
     MatDatepickerModule,
     MatNativeDateModule,
     MatToolbarModule,
-    MatGridListModule, MatSelectModule,
+    MatGridListModule,
+    MatSelectModule
+
   ],
-  providers: [DayService, WeekService, WorkWeekService,
+  providers: [DayService, WorkWeekService,
     MonthService, MonthAgendaService],
   bootstrap: [AppComponent]
 })

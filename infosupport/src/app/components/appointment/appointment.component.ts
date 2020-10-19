@@ -24,12 +24,17 @@ export class AppointmentComponent implements OnInit {
   createAppointment() {
     this.errorMessage = "";
     this.successMessage = "";
-    this.appointmentService.createAppointment(this.appointmentDate, this.appointmentTime, this.appointmentMessage)
+
+    // var endTime = new Date(this.appointmentTime.getTime() + 15*60000);
+    let startDate = new Date(this.appointmentDate);
+
+    var appointment = new Appointment(1, "Peter Vos", startDate, new Date(), "Huisartsenpost Zonnevelt")
+    this.appointmentService.createAppointment(appointment)
       .subscribe((createdAppointment: Appointment) => {
         this.appointmentDate = "";
         this.appointmentTime = "";
         this.appointmentMessage = "";
-        const appointmentDate = new Date(createdAppointment.date).toDateString();
+        const appointmentDate = new Date(createdAppointment.startTime).toDateString();
         this.successMessage = `Uw afspraak is succesvol geboekt op ${appointmentDate}`;
         },
         (error: ErrorEvent) => {

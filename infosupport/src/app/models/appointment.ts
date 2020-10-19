@@ -4,19 +4,19 @@ export class Appointment {
   public id: number;
   //Later vervangen door patient model
   public patient: string;
-  public gp: string;
   public startTime: Date;
   public endTime: Date;
+  public location: String;
   public isFollowUp: boolean;
+  public description: string;
 
 
-  constructor(id: number, patient: string, gp: string, startTime: Date, endTime: Date, isFollowUp: boolean) {
+  constructor(id: number, patient: string, startTime: Date, endTime: Date, location: String) {
     this.id = id;
     this.patient = patient;
-    this.gp = gp;
     this.startTime = startTime;
     this.endTime = endTime;
-    this.isFollowUp = isFollowUp;
+    this.location = location;
   }
 
 //Possible methods go here
