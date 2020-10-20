@@ -28,7 +28,7 @@ export class AppointmentComponent implements OnInit {
     // var endTime = new Date(this.appointmentTime.getTime() + 15*60000);
     let startDate = new Date(this.appointmentDate);
 
-    var appointment = new Appointment(1, "Peter Vos", startDate, new Date(), "Huisartsenpost Zonnevelt")
+    let appointment = new Appointment(1, "Peter Vos", startDate, new Date(), "Huisartsenpost Zonnevelt", null)
     this.appointmentService.createAppointment(appointment)
       .subscribe((createdAppointment: Appointment) => {
         this.appointmentDate = "";

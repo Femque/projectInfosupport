@@ -26,6 +26,7 @@ export class Appointment {
     this.endTime = endTime;
     this.description = description;
     this.location = location;
+    this.description = description;
   }
 
 //Possible methods go here
