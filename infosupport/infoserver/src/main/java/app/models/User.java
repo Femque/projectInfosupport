@@ -5,20 +5,18 @@ public class User {
   public long id;
 
   private String firstname;
-  private String surname;
+  private String lastname;
   private String email;
-  private String password;
   private int phonenumber;
-
+  private String password;
   //Gp, assistent or patient
-  public String role;
 
-  public User(long id, String firstname, String surname, String email, String password, int phonenumber) {
+  public User(long id, String firstname, String lastname, String email, int phonenumber, String password) {
     this.id = id;
     this.firstname = firstname;
-    this.surname = surname;
+    this.lastname = lastname;
     this.email = email;
-    this.password = password;
     this.phonenumber = phonenumber;
+    this.password = password;
   }
 }
