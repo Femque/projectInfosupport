@@ -14,6 +14,7 @@ import {
   View
 } from '@syncfusion/ej2-angular-schedule';
 import {Observable} from "rxjs";
+import {log} from "util";
 
 
 L10n.load({
@@ -36,37 +37,17 @@ export class CalenderComponent implements OnInit {
   constructor(private calendarService: CalendarService) {
   }
 
+  ngOnInit() {
+    this.getAppointments();
+    console.log("getting appointments");
+    console.log(this.appointments);
+  }
+
 
   appointments: Appointment[] = [];
   public scheduleViews: View[] = ['Day', 'Week', 'Month', 'Agenda'];
 
 
-
-
-  event: object[] = [
-    {
-      Id: 1,
-      Patient: 'Jesse Bijma',
-      Location: 'ZonneVeldt',
-      Description: '',
-      StartTime: new Date(2020, 9, 16, 1, 0),
-      EndTime: new Date(2020, 9, 16, 3, 0),
-    }, {
-      Id: 2,
-      Patient: 'Bram osborne',
-      Location: 'ZonneVeldt',
-      Description: '',
-      StartTime: new Date(2020, 9, 16, 5, 0),
-      EndTime: new Date(2020, 9, 16, 7, 0),
-
-    }, {
-      Id: 3,
-      Patient: 'Femke Hofland',
-      Location: 'ZonneVeldt',
-      Description: '',
-      StartTime: new Date(2020, 9, 16, 9, 0),
-      EndTime: new Date(2020, 9, 16, 10, 0),
-    }]
 
 
   // @ts-ignore
@@ -79,7 +60,7 @@ export class CalenderComponent implements OnInit {
       description: {name: 'description', title: 'Event Description'},
       startTime: {name: 'startTime', title: 'Start Duration'},
       endTime: {name: 'endTime', title: 'End Duration'},
-    }
+    },
   };
 
 
@@ -105,11 +86,7 @@ export class CalenderComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    console.log("getting appointments");
-    this.getAppointments();
-    console.log(this.appointments);
-  }
+
 
   createAppointment(appointment: Appointment): Observable<Appointment> {
     return this.calendarService.createAppointment(appointment)
