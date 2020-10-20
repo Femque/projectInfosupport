@@ -125,7 +125,8 @@ export class CalenderComponent implements OnInit {
             data[i].patient,
             data[i].startTime,
             data[i].endTime,
-            data[i].location
+            data[i].location,
+            data[i].description
           )
           this.appointments.push(newAppointment);
         }});

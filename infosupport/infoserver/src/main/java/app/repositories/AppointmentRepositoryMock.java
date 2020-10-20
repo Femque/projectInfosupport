@@ -42,7 +42,13 @@ public class AppointmentRepositoryMock implements AppointmentRepository {
   @Override
   public Appointment createAppointment(Appointment appointment) {
 
+    System.out.println("creating appointment");
     appointments.add(appointment);
+
+    for(int i = 0; i < appointments.size(); i++) {
+      System.out.println(appointments.get(i).getDescription());
+    }
+
     return appointment;
   }
 

@@ -11,12 +11,13 @@ export class Appointment {
   public description: string;
 
 
-  constructor(id: number, patient: string, startTime: Date, endTime: Date, location: String) {
+  constructor(id: number, patient: string, startTime: Date, endTime: Date, location: String, description: string) {
     this.id = id;
     this.patient = patient;
     this.startTime = startTime;
     this.endTime = endTime;
     this.location = location;
+    this.description = description;
   }
 
 //Possible methods go here
