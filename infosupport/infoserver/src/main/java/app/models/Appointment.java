@@ -1,6 +1,5 @@
 package app.models;
 
-import org.apache.tomcat.jni.Local;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -15,11 +14,11 @@ public class Appointment {
   public long id;
 
   //later aanpassen naar Patient patient
-  public String patient;
+  private String patient;
   //later aanpassen naar Gp gp
   private String gp;
 
-  private Date date;
+  private LocalDate date;
   private LocalTime startTime;
   private LocalTime endTime;
   private String description;
@@ -55,12 +54,44 @@ public class Appointment {
     return description;
   }
 
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public void setPatient(String patient) {
+    this.patient = patient;
+  }
+
+  public void setGp(String gp) {
+    this.gp = gp;
+  }
+
+  public void setDate(LocalDate date) {
+    this.date = date;
+  }
+
+  public void setStartTime(LocalTime startTime) {
+    this.startTime = startTime;
+  }
+
+  public void setEndTime(LocalTime endTime) {
+    this.endTime = endTime;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public void setLocation(String location) {
+    this.location = location;
+  }
+
   //  public boolean isFollowUp() {
 //    return isFollowUp;
 //  }
 
 
-  public Appointment(long id, String patient, String gp, Date date, LocalTime startTime, LocalTime endTime, String description, String location) {
+  public Appointment(long id, String patient, String gp, LocalDate date, LocalTime startTime, LocalTime endTime, String description, String location) {
     this.id = id;
     this.patient = patient;
     this.gp = gp;
@@ -74,14 +105,14 @@ public class Appointment {
   public static Appointment createAppointmentForTesting(int idCounter) {
     Appointment appointment = new Appointment(0, null, null, null, null, null, null, null);
 
-    appointment.id += appointment.id + idCounter;
-    appointment.patient = "Test patient " + idCounter;
-    appointment.description = "";
-//    appointment.gp = "Test GP " + idCounter;
-    appointment.location = "Test location " + idCounter;
-    appointment.startTime = LocalTime.now();
-    appointment.endTime = LocalTime.now();
-//    appointment.isFollowUp = false;
+    appointment.setId(appointment.id + idCounter);
+    appointment.setPatient("Test Patient" + idCounter);
+    appointment.setGp("Test GP" + idCounter);
+    appointment.setDate(LocalDate.now());
+    appointment.setStartTime(LocalTime.now());
+    appointment.setEndTime(LocalTime.now());
+    appointment.setDescription("");
+    appointment.setLocation("Zonneveldt");
 
     return appointment;
   }
