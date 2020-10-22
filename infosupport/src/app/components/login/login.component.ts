@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {LoginService} from "./login.service";
+// import {LoginService} from "./login.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {first} from "rxjs/operators";
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
 
   constructor(
-    private loginService: LoginService,
+    // private loginService: LoginService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
     }
 
     // Find username and password
-    this.loginService.login(this.form.username.value, this.form.password.value)
+    // this.loginService.login(this.form.username.value, this.form.password.value)
 
   }
 

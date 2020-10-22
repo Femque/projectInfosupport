@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 // @ts-ignore
 import { User } from '../../infoserver/src/main/java/app/models';
 import {Router} from "@angular/router";
-import {LoginService} from "./components/login/login.service";
+// import {LoginService} from "./components/login/login.service";
 
 @Component({
   selector: 'app-root',
@@ -15,13 +15,13 @@ export class AppComponent {
 
   constructor(
     private router: Router,
-    private loginService: LoginService
+    // private loginService: LoginService
   ) {
-    this.loginService.currentUser.subscribe(x => this.currentUser = x);
+    // this.loginService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   logout() {
-    this.loginService.logout();
+    // this.loginService.logout();
     this.router.navigate(['/login']);
   }
 }

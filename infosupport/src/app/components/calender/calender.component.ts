@@ -100,10 +100,12 @@ export class CalenderComponent implements OnInit {
           let newAppointment = new Appointment(
             data[i].id,
             data[i].patient,
+            data[i].gp,
+            data[i].date,
             data[i].startTime,
             data[i].endTime,
-            data[i].location,
-            data[i].description
+            data[i].description,
+            data[i].location
           )
           this.appointments.push(newAppointment);
         }});
