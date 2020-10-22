@@ -17,14 +17,13 @@ export class Appointment {
   // public isFollowUp: boolean;
 
 
-  constructor(id: number, patient: string, gp: string, date: Date, startTime: Time, endTime: Time, description: string, location: string) {
+  constructor(id?: number, patient?: string, gp?: string, date?: Date, startTime?: Time, endTime?: Time, description?: string, location?: string) {
     this.id = id;
     this.patient = patient;
     this.gp = gp;
     this.date = date;
     this.startTime = startTime;
     this.endTime = endTime;
-    this.description = description;
     this.location = location;
     this.description = description;
   }
