@@ -101,7 +101,6 @@ export class CalenderComponent implements OnInit {
             data[i].id,
             data[i].patient,
             data[i].gp,
-            data[i].date,
             data[i].startTime,
             data[i].endTime,
             data[i].description,

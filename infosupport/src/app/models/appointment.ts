@@ -9,7 +9,6 @@ export class Appointment {
   //Later vervangen door gp model
 
   public gp: string;
-  public date: Date;
   public startTime: Date;
   public endTime: Date;
   public description: string;
@@ -17,11 +16,10 @@ export class Appointment {
   // public isFollowUp: boolean;
 
 
-  constructor(id?: number, patient?: string, gp?: string, date?: Date, startTime?: Date, endTime?: Date, description?: string, location?: string) {
+  constructor(id?: number, patient?: string, gp?: string, startTime?: Date, endTime?: Date,  description?: string, location?: string) {
     this.id = id;
     this.patient = patient;
     this.gp = gp;
-    this.date = date;
     this.startTime = startTime;
     this.endTime = endTime;
     this.location = location;

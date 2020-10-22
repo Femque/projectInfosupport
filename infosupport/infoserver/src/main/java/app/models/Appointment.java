@@ -4,6 +4,8 @@ package app.models;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -17,14 +19,16 @@ public class Appointment {
   private String patient;
   //later aanpassen naar Gp gp
   private String gp;
-
-  private LocalDate date;
-  private LocalTime startTime;
-  private LocalTime endTime;
+//  private static LocalDateTime startDate;
+  private static LocalDateTime endDate;
+  private LocalDateTime date = LocalDateTime.now();
   private String description;
   private String location;
 
+
 //  private boolean isFollowUp;
+
+
 
   public long getId() {
     return id;
@@ -40,14 +44,6 @@ public class Appointment {
 
   public String getLocation() {
     return location;
-  }
-
-  public LocalTime getStartTime() {
-    return startTime;
-  }
-
-  public LocalTime getEndTime() {
-    return endTime;
   }
 
   public String getDescription() {
@@ -66,18 +62,6 @@ public class Appointment {
     this.gp = gp;
   }
 
-  public void setDate(LocalDate date) {
-    this.date = date;
-  }
-
-  public void setStartTime(LocalTime startTime) {
-    this.startTime = startTime;
-  }
-
-  public void setEndTime(LocalTime endTime) {
-    this.endTime = endTime;
-  }
-
   public void setDescription(String description) {
     this.description = description;
   }
@@ -86,33 +70,48 @@ public class Appointment {
     this.location = location;
   }
 
+  public void setStartDate(LocalDateTime date) {
+   this.date = date;
+  }
+
+  public void setEndDate(LocalDateTime endDate) {
+    Appointment.endDate = endDate;
+  }
+
+  public LocalDateTime getStartDate() {
+    return date;
+  }
+
+  public LocalDateTime getEndDate() {
+    return endDate;
+  }
+
   //  public boolean isFollowUp() {
 //    return isFollowUp;
 //  }
 
 
-  public Appointment(long id, String patient, String gp, LocalDate date, LocalTime startTime, LocalTime endTime, String description, String location) {
+  public Appointment(long id, String patient, String gp, LocalDateTime startDate, LocalDateTime endDate, String description, String location) {
     this.id = id;
     this.patient = patient;
     this.gp = gp;
-    this.date = date;
-    this.startTime = startTime;
-    this.endTime = endTime;
+    this.date = startDate;
+    Appointment.endDate = endDate;
     this.description = description;
     this.location = location;
   }
 
-  public static Appointment createAppointmentForTesting(int idCounter) {
-    Appointment appointment = new Appointment(0, null, null, null, null, null, null, null);
 
+  public static Appointment createAppointmentForTesting(int idCounter) {
+
+    Appointment appointment = new Appointment(0, null, null, LocalDateTime.now(), LocalDateTime.now(), null, null);
     appointment.setId(appointment.id + idCounter);
-    appointment.setPatient("Test Patient" + idCounter);
-    appointment.setGp("Test GP" + idCounter);
-    appointment.setDate(LocalDate.now());
-    appointment.setStartTime(LocalTime.now());
-    appointment.setEndTime(LocalTime.now());
-    appointment.setDescription("");
+    appointment.setPatient("Test Patient " + idCounter);
+    appointment.setGp("Test GP " + idCounter);
+    appointment.setStartDate(appointment.date);
+    appointment.setEndDate(endDate);
     appointment.setLocation("Zonneveldt");
+
 
     return appointment;
   }
