@@ -1,118 +1,83 @@
 package app.models;
 
 
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Calendar;
 
+@Entity
 public class Appointment {
 
-  public long id;
+  @Id
+  @Column(name = "appointment_code")
+  private Integer appointment_code;
 
-  //later aanpassen naar Patient patient
-  private String patient;
-  //later aanpassen naar Gp gp
-  private String gp;
-//  private static LocalDateTime startDate;
-  private static LocalDateTime endDate;
+  @Column(name = "patient")
+  private Patient patient;
+
+  @Column(name = "gp")
+  private GP gp;
+
+  @Column(name = "date")
   private LocalDateTime date = LocalDateTime.now();
+
+  @Column(name = "start_time")
+  private LocalDateTime start_time;
+
+  @Column(name = "end_time")
+  private LocalDateTime end_time;
+
+  @Column(name = "is_digital")
+  private boolean is_digital;
+
+  @Column(name = "description")
   private String description;
+
+  @Column(name = "location")
   private String location;
 
+  @Column(name = "is_follow_up")
+  private Boolean is_follow_up;
 
-//  private boolean isFollowUp;
+  @Column(name = "big_code")
+  private Integer big_code;
 
+  @Column(name = "patient_user_id")
+  private Integer patient_user_id;
 
-
-  public long getId() {
-    return id;
-  }
-
-  public String getPatient() {
-    return patient;
-  }
-
-  public String getGp() {
-    return gp;
-  }
-
-  public String getLocation() {
-    return location;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setId(long id) {
-    this.id = id;
-  }
-
-  public void setPatient(String patient) {
+  public Appointment(Integer appointment_code, Patient patient, GP gp, LocalDateTime date, LocalDateTime start_time,
+                     LocalDateTime end_time, boolean is_digital, String description, String location,
+                     Boolean is_follow_up, Integer big_code, Integer patient_user_id) {
+    this.appointment_code = appointment_code;
     this.patient = patient;
-  }
-
-  public void setGp(String gp) {
     this.gp = gp;
-  }
-
-  public void setDescription(String description) {
+    this.date = date;
+    this.start_time = start_time;
+    this.end_time = end_time;
+    this.is_digital = is_digital;
     this.description = description;
-  }
-
-  public void setLocation(String location) {
     this.location = location;
+    this.is_follow_up = is_follow_up;
+    this.big_code = big_code;
+    this.patient_user_id = patient_user_id;
   }
 
-  public void setStartDate(LocalDateTime date) {
-   this.date = date;
+  public Integer getAppointment_code() {
+    return appointment_code;
   }
 
-  public void setEndDate(LocalDateTime endDate) {
-    Appointment.endDate = endDate;
-  }
-
-  public LocalDateTime getStartDate() {
-    return date;
-  }
-
-  public LocalDateTime getEndDate() {
-    return endDate;
-  }
-
-  //  public boolean isFollowUp() {
-//    return isFollowUp;
+  //  public static Appointment createAppointmentForTesting(int idCounter) {
+//
+//    Appointment appointment = new Appointment(0, null, null, LocalDateTime.now(), LocalDateTime.now(), null, null);
+//    appointment.setId(appointment.id + idCounter);
+//    appointment.setPatient("Test Patient " + idCounter);
+//    appointment.setGp("Test GP " + idCounter);
+//    appointment.setStartDate(appointment.date);
+//    appointment.setEndDate(endDate);
+//    appointment.setLocation("Zonneveldt");
+//
+//
+//    return  appointment;
 //  }
-
-
-  public Appointment(long id, String patient, String gp, LocalDateTime startDate, LocalDateTime endDate, String description, String location) {
-    this.id = id;
-    this.patient = patient;
-    this.gp = gp;
-    this.date = startDate;
-    Appointment.endDate = endDate;
-    this.description = description;
-    this.location = location;
-  }
-
-
-  public static Appointment createAppointmentForTesting(int idCounter) {
-
-    Appointment appointment = new Appointment(0, null, null, LocalDateTime.now(), LocalDateTime.now(), null, null);
-    appointment.setId(appointment.id + idCounter);
-    appointment.setPatient("Test Patient " + idCounter);
-    appointment.setGp("Test GP " + idCounter);
-    appointment.setStartDate(appointment.date);
-    appointment.setEndDate(endDate);
-    appointment.setLocation("Zonneveldt");
-
-
-    return appointment;
-  }
 }
