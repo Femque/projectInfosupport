@@ -1,12 +1,13 @@
 package app.models;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@NamedQueries({
+  @NamedQuery(name = "find_all", query = "SELECT a FROM Appointment a")
+})
 public class Appointment {
 
   @Id
@@ -46,21 +47,7 @@ public class Appointment {
   @Column(name = "patient_user_id")
   private Integer patient_user_id;
 
-  public Appointment(Integer appointment_code, Patient patient, GP gp, LocalDateTime date, LocalDateTime start_time,
-                     LocalDateTime end_time, boolean is_digital, String description, String location,
-                     Boolean is_follow_up, Integer big_code, Integer patient_user_id) {
-    this.appointment_code = appointment_code;
-    this.patient = patient;
-    this.gp = gp;
-    this.date = date;
-    this.start_time = start_time;
-    this.end_time = end_time;
-    this.is_digital = is_digital;
-    this.description = description;
-    this.location = location;
-    this.is_follow_up = is_follow_up;
-    this.big_code = big_code;
-    this.patient_user_id = patient_user_id;
+  public Appointment() {
   }
 
   public Integer getAppointment_code() {

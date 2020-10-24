@@ -1,15 +1,24 @@
 package app.repositories;
 
 import app.models.Appointment;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-public class AppointmentRepositoryMock implements AppointmentRepository {
+@Primary
+@Repository
+public class AppointmentRepositoryMock implements AppointmentRepository  {
+
+  @PersistenceContext
+  private EntityManager em;
 
   public List<Appointment> appointments = new ArrayList<>();
   public Appointment appointment;
@@ -19,10 +28,11 @@ public class AppointmentRepositoryMock implements AppointmentRepository {
     findAll();
   }
 
-
+  @Transactional
   @Override
   public List<Appointment> findAll() {
-    return appointments;
+    TypedQuery<Appointment> query = em.createNamedQuery("find_all", Appointment.class);
+    return query.getResultList();
   }
 
   @Override
@@ -56,6 +66,4 @@ public class AppointmentRepositoryMock implements AppointmentRepository {
 
     return null;
   }
-
-
 }
