@@ -1,13 +1,15 @@
 package app.repositories;
 
 import app.models.Appointment;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-public interface AppointmentRepository  {
+@Repository
+public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
   public List<Appointment> findAll();
-  public Appointment findById(long id);
-  public Appointment createAppointment(Appointment appointment);
-  public Appointment deleteAppointment(long id);
 }
