@@ -8,13 +8,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
-@Primary
 @Repository
+@Transactional
 public class AppointmentRepositoryMock implements AppointmentRepository  {
 
   @PersistenceContext
@@ -66,4 +67,5 @@ public class AppointmentRepositoryMock implements AppointmentRepository  {
 
     return null;
   }
+
 }

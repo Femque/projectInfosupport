@@ -10,9 +10,10 @@ import java.util.List;
 
 @RestController
 public class InfosupportController {
-  AppointmentRepository repo;
 
   @Autowired
+  AppointmentRepository repo;
+
   public InfosupportController(AppointmentRepository repo) {this.repo = repo;}
 
   @CrossOrigin
