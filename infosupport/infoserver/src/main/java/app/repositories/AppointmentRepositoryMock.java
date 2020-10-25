@@ -18,8 +18,6 @@ import java.util.List;
 @Transactional
 public class AppointmentRepositoryMock implements AppointmentRepository  {
 
-  @PersistenceContext
-  private EntityManager em;
 
   public List<Appointment> appointments = new ArrayList<>();
   public Appointment appointment;
@@ -32,8 +30,10 @@ public class AppointmentRepositoryMock implements AppointmentRepository  {
   @Transactional
   @Override
   public List<Appointment> findAll() {
-    TypedQuery<Appointment> query = em.createNamedQuery("find_all", Appointment.class);
-    return query.getResultList();
+//    TypedQuery<Appointment> query = em.createNamedQuery("find_all", Appointment.class);
+//    return query.getResultList();
+
+    return null;
   }
 
   @Override
