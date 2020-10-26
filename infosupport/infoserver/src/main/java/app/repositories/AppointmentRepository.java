@@ -15,4 +15,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
 
 //  @Query("SELECT ... FROM Appointment a")
 //  public List<Appointment> findSpecific();
+  //=?1 =?2 =?3
+  //test(String email, int id);
 }
