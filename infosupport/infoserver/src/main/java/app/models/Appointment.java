@@ -21,7 +21,7 @@ public class Appointment {
   private LocalDateTime end_time;
 
   @Column(name = "is_digital")
-  private boolean is_digital;
+  private Boolean is_digital;
 
   @Column(name = "description")
   private String description;
@@ -44,7 +44,6 @@ public class Appointment {
   public void setAppointment_code(Integer appointment_code) {
     this.appointment_code = appointment_code;
   }
-
 
   public void setDate(LocalDateTime date) {
     this.date = date;

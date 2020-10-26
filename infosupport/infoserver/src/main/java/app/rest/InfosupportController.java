@@ -24,5 +24,5 @@ public class InfosupportController {
 //  @CrossOrigin
 //  @PostMapping("/appointments/create")
 //  public Appointment createAppointment(@RequestBody Appointment appointment) { return repo.createAppointment(appointment); }
-  
+
 }
