@@ -11,19 +11,18 @@ import java.util.List;
 
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
+  //JpaRepository heeft aan aantal ingebouwde functies, zoals deze findAll
+  //Pas op dat je niet perongeluk een functie dezelfde naam geeft als 1 van deze functies
+  //Ctrl+click op JpaRepository op regel 13 om ze te kunnen bekijken
+
   public List<Appointment> findAll();
+
+
+  //Query's geeft je aan met @Query, en dan tussen haakjes je query
+  //Variabelen geef je (volgens mij) aan met ?1, ?2 etc.
+  //Deze krijg je dan mee in je functies, test(String email, int id);
 
 //  @Query("SELECT ... FROM Appointment a")
 //  public List<Appointment> findSpecific();
   //=?1 =?2 =?3
-  //test(String email, int id);
-
-//  SELECT u.firstname, u.lastname, a.location,
-//  a.description, a.start_time, a.end_time
-//  FROM Appointment a
-//  INNER JOIN User u
-//  ON a.patient_user_id = u.user_id
-//  INNER JOIN General_practitioner g
-//  ON a.big_code = g.big_code
-//  WHERE a.big_code = 456
 }

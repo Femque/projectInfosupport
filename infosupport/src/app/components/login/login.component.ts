@@ -3,6 +3,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {first} from "rxjs/operators";
+import { GP } from 'src/app/models/gp';
+import { Patient } from 'src/app/models/patient';
 import {LoginService} from "./login.service";
 
 @Component({
@@ -48,12 +50,14 @@ export class LoginComponent implements OnInit {
       .subscribe(result => {
 
         //If user logs in as patient
+        if(this.form.username.value instanceof Patient) {
+          //Redirect to appointment
+          this.router.navigate(['./appointment.component.html'])
 
-        //If user logs in as GP
-
-
-        {
-          alert(result.message)
+          //If user logs in as GP
+        } else if (this.form.username.value instanceof GP) {
+          //Redirect to calender
+          this.router.navigate(['./calender.component.html'])
         }
       });
   }
