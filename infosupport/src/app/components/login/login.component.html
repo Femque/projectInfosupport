@@ -3,7 +3,7 @@
     <h2 class="mb-3">Inloggen</h2>
 
     <!-- Login form -->
-    <form [formGroup]="loginForm">
+    <form [formGroup]="loginForm" (ngSubmit)="handleLogin()">
       <div class="form-group">
         <label for="inputUsername">Gebruikersnaam</label>
         <input type="text" name="username" class="form-control" id="inputUsername"
@@ -22,7 +22,7 @@
       </div>
       <div class="error mb-3 text-danger"></div>
 
-      <button routerLink="/appointment" type="submit" class="btn btn-primary btn-block">Login</button>
+      <button type="submit" class="btn btn-primary btn-block">Login</button>
     </form>
 
     <!-- Login as different user -->

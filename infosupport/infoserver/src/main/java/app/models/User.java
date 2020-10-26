@@ -1,22 +1,82 @@
 package app.models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "user")
 public class User {
 
-  public long id;
+  @Id
+  @Column(name = "user_id")
+  private Integer user_id;
 
+  @Column(name= "firstname")
   private String firstname;
-  private String lastname;
-  private String email;
-  private int phonenumber;
-  private String password;
-  //Gp, assistent or patient
 
-  public User(long id, String firstname, String lastname, String email, int phonenumber, String password) {
-    this.id = id;
+  @Column(name = "lastname")
+  private String lastname;
+
+  @Column(name = "email")
+  private String email;
+
+  @Column(name = "phonenumber")
+  private String phonenumber;
+
+  @Column(name = "password")
+  private String password;
+
+  public User(){
+
+  }
+
+  public Integer getUser_id() {
+    return user_id;
+  }
+
+  public void setUser_id(Integer user_id) {
+    this.user_id = user_id;
+  }
+
+  public String getFirstname() {
+    return firstname;
+  }
+
+  public void setFirstname(String firstname) {
     this.firstname = firstname;
+  }
+
+  public String getLastname() {
+    return lastname;
+  }
+
+  public void setLastname(String lastname) {
     this.lastname = lastname;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
     this.email = email;
+  }
+
+  public String getPhonenumber() {
+    return phonenumber;
+  }
+
+  public void setPhonenumber(String phonenumber) {
     this.phonenumber = phonenumber;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
     this.password = password;
   }
 }
