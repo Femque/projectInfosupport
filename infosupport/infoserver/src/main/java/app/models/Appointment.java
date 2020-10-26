@@ -11,8 +11,6 @@ public class Appointment {
   @Column(name = "appointment_code")
   private Integer appointment_code;
 
-  @Column(name = "date")
-  private LocalDateTime date = LocalDateTime.now();
 
   @Column(name = "start_time")
   private LocalDateTime start_time;
@@ -46,10 +44,6 @@ public class Appointment {
   }
 
 
-  public void setDate(LocalDateTime date) {
-    this.date = date;
-  }
-
   public void setStart_time(LocalDateTime start_time) {
     this.start_time = start_time;
   }
@@ -80,10 +74,6 @@ public class Appointment {
 
   public void setPatient_user_id(Integer patient_user_id) {
     this.patient_user_id = patient_user_id;
-  }
-
-  public LocalDateTime getDate() {
-    return date;
   }
 
   public LocalDateTime getStart_time() {
