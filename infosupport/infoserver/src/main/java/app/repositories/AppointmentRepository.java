@@ -13,6 +13,6 @@ import java.util.List;
 public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
   public List<Appointment> findAll();
 
-  @Query("SELECT ... FROM Appointment a")
-  public List<Appointment> findSpecific();
+//  @Query("SELECT ... FROM Appointment a")
+//  public List<Appointment> findSpecific();
 }

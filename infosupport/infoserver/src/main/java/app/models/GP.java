@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "General_practitioner")
-public class GP extends User{
+public class GP {
 
   @Id
   @Column(name = "big_code")
@@ -37,11 +37,6 @@ public class GP extends User{
 
   public void setSpecialty(String specialty) {
     this.specialty = specialty;
-  }
-
-  @Override
-  public Integer getUser_id() {
-    return user_id;
   }
 
   public void setUser_id(Integer user_id) {
