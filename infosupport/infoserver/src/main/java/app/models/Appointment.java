@@ -19,7 +19,7 @@ public class Appointment {
   private LocalDateTime end_time;
 
   @Column(name = "is_digital")
-  private boolean is_digital;
+  private Boolean is_digital;
 
   @Column(name = "description")
   private String description;

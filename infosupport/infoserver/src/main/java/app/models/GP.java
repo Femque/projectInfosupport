@@ -10,7 +10,7 @@ import javax.persistence.Table;
 public class GP extends User{
 
   @Id
-  @Column(name = "big-code")
+  @Column(name = "big_code")
   private String big_code;
 
   @Column(name = "specialty")
