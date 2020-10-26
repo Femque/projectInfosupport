@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 // import {LoginService} from "./login.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {first} from "rxjs/operators";
+import {LoginService} from "./login.service";
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
 
   constructor(
-    // private loginService: LoginService,
+    private loginService: LoginService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder
@@ -23,26 +24,39 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  this.loginForm = this.formBuilder.group({
-    username: ['', Validators.required],
-    password: ['', Validators.required]
-  });
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
 
-  // Getter for access form fields
+  //Getter for access form fields
   get form() {
     return this.loginForm.controls;
   }
 
   handleLogin(): void {
     this.submitted = true;
+
+    //If invalid
     if (this.loginForm.invalid) {
       return;
     }
 
-    // Find username and password
-    // this.loginService.login(this.form.username.value, this.form.password.value)
+    this.loginService.login(this.loginForm.value)
+      .pipe(first())
+      .subscribe(result => {
 
+        //If user logs in as patient
+
+        //If user logs in as GP
+
+
+        {
+          alert(result.message)
+        }
+      });
   }
+
 
 }
