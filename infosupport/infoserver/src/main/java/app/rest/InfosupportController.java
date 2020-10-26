@@ -24,8 +24,5 @@ public class InfosupportController {
 //  @CrossOrigin
 //  @PostMapping("/appointments/create")
 //  public Appointment createAppointment(@RequestBody Appointment appointment) { return repo.createAppointment(appointment); }
-
-  @CrossOrigin
-  @GetMapping("/test")
-  public List<String> test() { return repo.test(); }
+  
 }
