@@ -17,4 +17,13 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
 //  public List<Appointment> findSpecific();
   //=?1 =?2 =?3
   //test(String email, int id);
+
+//  SELECT u.firstname, u.lastname, a.location,
+//  a.description, a.start_time, a.end_time
+//  FROM Appointment a
+//  INNER JOIN User u
+//  ON a.patient_user_id = u.user_id
+//  INNER JOIN General_practitioner g
+//  ON a.big_code = g.big_code
+//  WHERE a.big_code = 456
 }

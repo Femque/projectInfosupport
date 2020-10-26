@@ -54,12 +54,12 @@ export class CalenderComponent implements OnInit {
   public eventSettings: EventSettingsModel = {
     dataSource: this.appointments,
     fields: {
-      id: 'Id',
-      subject: {name: 'patient', title: 'Patient'},
+      id: 'appointment_code',
+      subject: {name: 'patient_user_id', title: 'Patient'},
       location: {name: 'location', title: 'Location'},
       description: {name: 'description', title: 'Event Description'},
-      startTime: {name: 'startTime', title: 'Start Duration'},
-      endTime: {name: 'endTime', title: 'End Duration'},
+      startTime: {name: 'start_time', title: 'Start Duration'},
+      endTime: {name: 'end_time', title: 'End Duration'},
     },
   };
 
@@ -77,10 +77,10 @@ export class CalenderComponent implements OnInit {
       let statusElement: HTMLInputElement = args.element.querySelector('#patient') as HTMLInputElement;
       if (!statusElement.classList.contains('e-dropdownlist')) {
         let dropDownListObject: DropDownList = new DropDownList({
-          dataSource: ["Test patient 1","Test patient 2","Test patient 3","Test patient 4","Test patient 5"], value: statusElement.value
+          dataSource: ["321", "456"], value: statusElement.value
         });
         dropDownListObject.appendTo(statusElement);
-        statusElement.setAttribute('patient', 'patient');
+        statusElement.setAttribute('patient', 'patient_user_id');
       }
 
     }
@@ -98,13 +98,15 @@ export class CalenderComponent implements OnInit {
       .subscribe(data => {
         for (let i = 0; i < data.length; i++) {
           let newAppointment = new Appointment(
-            data[i].id,
-            data[i].patient,
-            data[i].gp,
-            data[i].startTime,
-            data[i].endTime,
+            data[i].appointment_code,
+            data[i].start_time,
+            data[i].end_time,
+            data[i].is_digital,
             data[i].description,
-            data[i].location
+            data[i].location,
+            data[i].is_follow_up,
+            data[i].big_code,
+            data[i].patient_user_id
           )
           this.appointments.push(newAppointment);
         }});
