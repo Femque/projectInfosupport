@@ -6,6 +6,7 @@ import {LoginComponent} from "./components/login/login.component";
 import {Appointment} from "./models/appointment";
 import {AppointmentComponent} from "./components/appointment/appointment.component";
 import {CalenderComponent} from "./components/calender/calender.component";
+import {FullCalendarModule} from "@fullcalendar/angular";
 
 
 const routes: Routes = [
@@ -23,7 +24,7 @@ const routes: Routes = [
   },
   {
     path: 'calender',
-    component: CalenderComponent
+    component: FullCalendarModule
   },
   {
     path: '',

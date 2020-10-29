@@ -26,6 +26,12 @@ import {RouterModule} from "@angular/router";
 import { AppRoutingModule } from "./app-routing-module";
 import {LoginComponent} from "./components/login/login.component";
 import {FooterComponent} from "./components/footer/footer.component";
+import { FullCalendarModule } from '@fullcalendar/angular'; // the main connector. must go first
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin
+
+FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+  dayGridPlugin
+]);
 
 @NgModule({
   declarations: [
@@ -37,8 +43,6 @@ import {FooterComponent} from "./components/footer/footer.component";
     ErrorComponent,
     LoginComponent,
     FooterComponent
-
-
   ],
 
   imports: [
@@ -58,11 +62,10 @@ import {FooterComponent} from "./components/footer/footer.component";
     MatToolbarModule,
     MatGridListModule,
     MatSelectModule, RouterModule,
-    AppRoutingModule, ReactiveFormsModule
-
+    AppRoutingModule, ReactiveFormsModule,
+    FullCalendarModule
   ],
-  providers: [DayService, WorkWeekService,
-    MonthService, MonthAgendaService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
