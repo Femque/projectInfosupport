@@ -40,21 +40,21 @@ export class CalenderComponent implements OnInit {
     });
   }
 
-  getAppointments(): any {
-    this.calendarService.getAppointments()
-      .subscribe(data => {
-        for (let i = 0; i < data.length; i++) {
-          let newAppointment = new Appointment(
-            data[i].id,
-            data[i].patient,
-            data[i].gp,
-            data[i].startTime,
-            data[i].endTime,
-            data[i].description,
-            data[i].location
-          )
-          this.appointments.push(newAppointment);
-        }});
-  }
+  // getAppointments(): any {
+  //   this.calendarService.getAppointments()
+  //     .subscribe(data => {
+  //       for (let i = 0; i < data.length; i++) {
+  //         let newAppointment = new Appointment(
+  //           data[i].id,
+  //           data[i].patient,
+  //           data[i].gp,
+  //           data[i].startTime,
+  //           data[i].endTime,
+  //           data[i].description,
+  //           data[i].location
+  //         )
+  //         this.appointments.push(newAppointment);
+  //       }});
+  // }
 }
 

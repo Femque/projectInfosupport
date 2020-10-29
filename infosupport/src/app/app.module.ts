@@ -49,6 +49,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     BrowserModule,
     ScheduleModule, RecurrenceEditorModule,
     BrowserModule,
+    FullCalendarModule,
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -62,8 +63,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MatToolbarModule,
     MatGridListModule,
     MatSelectModule, RouterModule,
-    AppRoutingModule, ReactiveFormsModule,
-    FullCalendarModule
+    AppRoutingModule, ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
