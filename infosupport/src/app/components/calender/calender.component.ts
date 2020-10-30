@@ -1,102 +1,91 @@
 import {Component, OnInit} from '@angular/core';
 import {Appointment} from "../../models/appointment";
 import {CalendarService} from "./calendar.service";
-import {DropDownList} from '@syncfusion/ej2-dropdowns';
-import {DateTimePicker} from '@syncfusion/ej2-calendars';
-import {L10n} from '@syncfusion/ej2-base';
-import {
-  EventSettingsModel,
-  DayService,
-  WeekService,
-  MonthService,
-  AgendaService,
-  PopupOpenEventArgs,
-  View
-} from '@syncfusion/ej2-angular-schedule';
+import {Calendar} from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
 import {Observable} from "rxjs";
+import interactionPlugin from '@fullcalendar/interaction';
+import listPlugin from '@fullcalendar/list';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import { finalize } from "rxjs/operators";
 import {log} from "util";
-
-
-L10n.load({
-  'en-US': {
-    'schedule': {
-      'addTitle': 'New appointment'
-    }
-  }
-});
 
 @Component({
   selector: 'app-calender',
-  providers: [DayService, WeekService, MonthService, AgendaService, CalendarService],
+  providers: [CalendarService],
   templateUrl: './calender.component.html',
   styleUrls: ['./calender.component.css']
 })
 
 export class CalenderComponent implements OnInit {
+  appointments: Appointment[];
+  length: number;
 
   constructor(private calendarService: CalendarService) {
   }
 
-  ngOnInit() {
-    this.getAppointments();
-    console.log("getting appointments");
-    console.log(this.appointments);
+  async ngOnInit() {
+    this.appointments = [];
+    await this.getAppointments();
+    // this.createCalendar(this.appointments);
   }
-
-
-  appointments: Appointment[] = [];
-  public scheduleViews: View[] = ['Day', 'Week', 'Month', 'Agenda'];
-
-
-
-
-  // @ts-ignore
-  public eventSettings: EventSettingsModel = {
-    dataSource: this.appointments,
-    fields: {
-      id: 'appointment_code',
-      subject: {name: 'patient_user_id', title: 'Patient'},
-      location: {name: 'location', title: 'Location'},
-      description: {name: 'description', title: 'Event Description'},
-      startTime: {name: 'start_time', title: 'Start Duration'},
-      endTime: {name: 'end_time', title: 'End Duration'},
-    },
-  };
-
-
-  onPopupOpen(args: PopupOpenEventArgs): void {
-    if (args.type === 'Editor') {
-      let startElement: HTMLInputElement = args.element.querySelector('#startTime') as HTMLInputElement;
-      if (!startElement.classList.contains('e-datetimepicker')) {
-        new DateTimePicker({value: new Date(startElement.value) || new Date()}, startElement);
-      }
-      let endElement: HTMLInputElement = args.element.querySelector('#endTime') as HTMLInputElement;
-      if (!endElement.classList.contains('e-datetimepicker')) {
-        new DateTimePicker({value: new Date(endElement.value) || new Date()}, endElement);
-      }
-      let statusElement: HTMLInputElement = args.element.querySelector('#patient') as HTMLInputElement;
-      if (!statusElement.classList.contains('e-dropdownlist')) {
-        let dropDownListObject: DropDownList = new DropDownList({
-          dataSource: ["321", "456"], value: statusElement.value
-        });
-        dropDownListObject.appendTo(statusElement);
-        statusElement.setAttribute('patient', 'patient_user_id');
-      }
-
-    }
-  }
-
-
 
   createAppointment(appointment: Appointment): Observable<Appointment> {
     return this.calendarService.createAppointment(appointment)
   }
 
+  createCalendar(appointments: any[]) {
+    console.log('creating calendar');
 
-  getAppointments(): any {
+    document.addEventListener('DOMContentLoaded', function () {
+      const calendarEl = document.getElementById('calendar');
+
+      let calendar = new Calendar(calendarEl, {
+        plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        },
+        initialDate: '2018-01-12',
+        navLinks: true, // can click day/week names to navigate views
+        editable: true,
+        dayMaxEvents: true, // allow "more" link when too many events
+      });
+
+
+      // 'title': data[i].patient_user_id,
+      //   'description': data[i].description,
+      //   'start': data[i].start_time,
+      //   'allDay': false
+
+      console.log("for");
+      console.log(appointments);
+      console.log(appointments.length);
+      for (let i = 0; i < appointments.length; i++) {
+        console.log(i);
+        // calendar.addEvent(appointments[i].toJson());
+      }
+
+      calendar.render();
+    });
+  }
+
+  async getAppointments(): Promise<any> {
     this.calendarService.getAppointments()
       .subscribe(data => {
         for (let i = 0; i < data.length; i++) {
+          // let startDateTime = new Date(data[i].start_time).toLocaleString();
+          // let timeDateArray = startDateTime.split(" ");
+          //
+          // let startDateString = timeDateArray[0];
+          // let datePieces = startDateString.split("-");
+          // let startDate = datePieces[2] + "-" + datePieces[1] + "-" + datePieces[0];
+          // let startTime = timeDateArray[1];
+
+          // console.log(startDate);
+          // console.log(startTime);
+
           let newAppointment = new Appointment(
             data[i].appointment_code,
             data[i].start_time,
@@ -108,8 +97,13 @@ export class CalenderComponent implements OnInit {
             data[i].big_code,
             data[i].patient_user_id
           )
+
           this.appointments.push(newAppointment);
-        }});
+
+        }
+      }, error => console.log(error));
+
+    console.log("done getting appointments");
   }
 }
 

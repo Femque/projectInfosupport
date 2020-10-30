@@ -12,7 +12,6 @@ export class Appointment {
   big_code: number;
   patient_user_id: number;
 
-
   constructor(appointment_code?: number, start_time?: Date, end_time?: Date, is_digital?: boolean, description?: string, location?: string, is_follow_up?: boolean, big_code?: number, patient_user_id?: number) {
     this.appointment_code = appointment_code;
     this.start_time = start_time;

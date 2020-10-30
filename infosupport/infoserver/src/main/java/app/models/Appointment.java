@@ -11,7 +11,6 @@ public class Appointment {
   @Column(name = "appointment_code")
   private Integer appointment_code;
 
-
   @Column(name = "start_time")
   private LocalDateTime start_time;
 
