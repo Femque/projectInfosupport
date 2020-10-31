@@ -16,6 +16,9 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
 
+  username = '';
+  password = '';
+
   constructor(
     private loginService: LoginService,
     private route: ActivatedRoute,
@@ -30,6 +33,7 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
+    sessionStorage.setItem('token', '');
   }
 
   //Getter for access form fields
@@ -45,22 +49,15 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.loginService.login(this.loginForm.value)
-      .pipe(first())
-      .subscribe(result => {
+    if (this.loginService.authenticate(this.username, this.password)) {
+      //If user = patient
+      if (this.form.username.value instanceof Patient) {
+        this.router.navigate(['./appointment.component.html'])
 
-        //If user logs in as patient
-        if(this.form.username.value instanceof Patient) {
-          //Redirect to appointment
-          this.router.navigate(['./appointment.component.html'])
-
-          //If user logs in as GP
-        } else if (this.form.username.value instanceof GP) {
-          //Redirect to calender
-          this.router.navigate(['./calender.component.html'])
-        }
-      });
+        //If user = gp
+      } else if (this.form.username.value instanceof GP) {
+        this.router.navigate(['./calender.component.html'])
+      }
+    }
   }
-
-
 }
