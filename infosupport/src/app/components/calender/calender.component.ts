@@ -67,11 +67,12 @@ export class CalenderComponent implements OnInit {
       let date = new Date(appointments[i].start.toString() + 'T00:00:00');
 
       console.log("date = " + date);
+      console.log(appointments[i].start)
 
       calendar.addEvent({
         title: appointments[i].title,
-        start: date,
-        allDay: true
+        start: appointments[i].start,
+        end: appointments[i].end
       });
 
       calendar.render();
@@ -91,7 +92,7 @@ export class CalenderComponent implements OnInit {
           let test2 = test3[0] + "-" + test[1] + "-" + test[0];
           console.log(test2);
 
-          let appointmentsTest = new Calendar_appointment(data[i].patient_user_id.toString(), test2, data[i].end_time.toString());
+          let appointmentsTest = new Calendar_appointment(data[i].patient_user_id.toString(), data[i].start_time, data[i].end_time);
 
           this.appointments.push(appointmentsTest);
         }
