@@ -55,19 +55,17 @@ export class CalenderComponent implements OnInit {
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
         },
-        height: 500,
+        height: 600,
         navLinks: true, // can click day/week names to navigate views
         editable: true,
         dayMaxEvents: true, // allow "more" link when too many events
+        eventDisplay: 'block'
       });
 
     for (let i = 0; i < appointments.length; i++) {
 
       console.log(event);
       let date = new Date(appointments[i].start.toString() + 'T00:00:00');
-
-      console.log("date = " + date);
-      console.log(appointments[i].start)
 
       calendar.addEvent({
         title: appointments[i].title,
