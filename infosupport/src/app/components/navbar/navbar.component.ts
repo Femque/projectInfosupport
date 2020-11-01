@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
   isUserLoggedIn : boolean = false;
 
   constructor(
-    private loginService : LoginService
+    public loginService : LoginService
   ) { }
 
   ngOnInit(): void {
