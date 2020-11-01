@@ -44,31 +44,38 @@ export class CalenderComponent implements OnInit {
     // console.log(appointments[0]);
     console.log(appointments.length);
 
-    document.addEventListener('DOMContentLoaded', function () {
-      const calendarEl = document.getElementById('calendar');
+    const calendarEl = document.getElementById('calendar');
 
-      let calendar = new Calendar(calendarEl,
+    let calendar = new Calendar(calendarEl,
 
-        {
-          plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
-          headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-          },
-          height: 500,
-          navLinks: true, // can click day/week names to navigate views
-          editable: true,
-          dayMaxEvents: true, // allow "more" link when too many events
-        });
+      {
+        plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        },
+        height: 500,
+        navLinks: true, // can click day/week names to navigate views
+        editable: true,
+        dayMaxEvents: true, // allow "more" link when too many events
+      });
 
-      // 'title': data[i].patient_user_id,
-      //   'description': data[i].description,
-      //   'start': data[i].start_time,
-      //   'allDay': false
+    for (let i = 0; i < appointments.length; i++) {
+
+      console.log(event);
+      let date = new Date(appointments[i].start.toString() + 'T00:00:00');
+
+      console.log("date = " + date);
+
+      calendar.addEvent({
+        title: appointments[i].title,
+        start: date,
+        allDay: true
+      });
 
       calendar.render();
-    });
+    }
   }
 
 
@@ -76,17 +83,16 @@ export class CalenderComponent implements OnInit {
     this.calendarService.getAppointments()
       .subscribe(data => {
         for (let i = 0; i < data.length; i++) {
-          // let startDateTime = new Date(data[i].start_time).toLocaleString();
-          //           // let timeDateArray = startDateTime.split(" ");
-          //           //
-          //           // let startDateString = timeDateArray[0];
-          //           // let datePieces = startDateString.split("-");
-          //           // let startDate = datePieces[2] + "-" + datePieces[1] + "-" + datePieces[0];
-          //           // let startTime = timeDateArray[1];
+          let startDateTime = new Date(data[i].start_time).toLocaleString();
+                    let timeDateArray = startDateTime.split(" ");
 
-          let appointmentsTest = new Calendar_appointment(data[i].patient_user_id.toString(), data[i].start_time.toString(), data[i].end_time.toString());
+          let test = timeDateArray[0].split("/");
+          let test3 = test[2].split(",");
+          let test2 = test3[0] + "-" + test[1] + "-" + test[0];
+          console.log(test2);
 
-          // console.log("pushin " + appointmentsTest);
+          let appointmentsTest = new Calendar_appointment(data[i].patient_user_id.toString(), test2, data[i].end_time.toString());
+
           this.appointments.push(appointmentsTest);
         }
       }, error => console.log(error), () => this.createCalendar(this.appointments));
