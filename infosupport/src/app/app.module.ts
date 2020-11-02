@@ -8,6 +8,7 @@ import { ScheduleModule, RecurrenceEditorModule, DayService, WorkWeekService,
   MonthService, MonthAgendaService } from '@syncfusion/ej2-angular-schedule';
 import { HttpClientModule } from '@angular/common/http';
 import { AppointmentComponent } from './components/appointment/appointment.component';
+import { AppointmentViewComponent } from './components/appointmentView/appointmentView.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
@@ -39,6 +40,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     NavbarComponent,
     CalenderComponent,
     AppointmentComponent,
+    AppointmentViewComponent,
     HomeComponent,
     ErrorComponent,
     LoginComponent,
