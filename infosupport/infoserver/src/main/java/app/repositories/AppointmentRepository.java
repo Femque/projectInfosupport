@@ -17,7 +17,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
 
   public List<Appointment> findAll();
 
-
   //Query's geeft je aan met @Query, en dan tussen haakjes je query
   //Variabelen geef je (volgens mij) aan met ?1, ?2 etc.
   //Deze krijg je dan mee in je functies, test(String email, int id);
