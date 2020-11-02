@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-// import {LoginService} from "./login.service";
+import {LoginService} from "./login.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {first} from "rxjs/operators";
 import { GP } from 'src/app/models/gp';
 import { Patient } from 'src/app/models/patient';
-import {LoginService} from "./login.service";
 
 @Component({
   selector: 'app-login',
@@ -44,8 +43,11 @@ export class LoginComponent implements OnInit {
   handleLogin(): void {
     this.submitted = true;
 
+    console.log("hello")
+
     //If invalid
     if (this.loginForm.invalid) {
+      console.log("Invalid")
       return;
     }
 

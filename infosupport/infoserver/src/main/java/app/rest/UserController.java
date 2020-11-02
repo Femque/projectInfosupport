@@ -19,7 +19,8 @@ public class UserController {
   UserController(UserRepository repository) {
     this.repository = repository;
   }
-  @RequestMapping("/login")
+  
+  @RequestMapping("/user/login")
   public boolean login(@RequestBody User user) {
     return user.getUser_id().equals("id") && user.getPassword().equals("password");
   }
