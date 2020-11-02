@@ -41,8 +41,6 @@ export class CalenderComponent implements OnInit {
 
   async createCalendar(appointments: Calendar_appointment[]) {
     console.log('creating calendar');
-    // console.log(appointments[0]);
-    console.log(appointments.length);
 
     const calendarEl = document.getElementById('calendar');
 
@@ -53,21 +51,23 @@ export class CalenderComponent implements OnInit {
         headerToolbar: {
           left: 'prev,next today',
           center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek add_events'
         },
-        height: 500,
+        height: 700,
         navLinks: true, // can click day/week names to navigate views
         editable: true,
-        dayMaxEvents: true, // allow "more" link when too many events
+        dayMaxEvents: true, // allow "more" link when too many events,
+        customButtons: {
+          add_events: {
+            text: 'Afspraak toevoegen',
+            click: function () {
+              alert()
+            },
+          }
+        }
       });
 
     for (let i = 0; i < appointments.length; i++) {
-
-      console.log(event);
-      let date = new Date(appointments[i].start.toString() + 'T00:00:00');
-
-      console.log("date = " + date);
-      console.log(appointments[i].start)
 
       calendar.addEvent({
         title: appointments[i].title,
@@ -84,14 +84,6 @@ export class CalenderComponent implements OnInit {
     this.calendarService.getAppointments()
       .subscribe(data => {
         for (let i = 0; i < data.length; i++) {
-          let startDateTime = new Date(data[i].start_time).toLocaleString();
-                    let timeDateArray = startDateTime.split(" ");
-
-          let test = timeDateArray[0].split("/");
-          let test3 = test[2].split(",");
-          let test2 = test3[0] + "-" + test[1] + "-" + test[0];
-          console.log(test2);
-
           let appointmentsTest = new Calendar_appointment(data[i].patient_user_id.toString(), data[i].start_time, data[i].end_time);
 
           this.appointments.push(appointmentsTest);
