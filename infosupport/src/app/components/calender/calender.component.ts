@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Appointment} from "../../models/appointment";
 import {CalendarService} from "./calendar.service";
 import {Calendar} from '@fullcalendar/core';
@@ -8,14 +8,9 @@ import {CalendarOptions} from '@fullcalendar/angular'; // useful for typecheckin
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import {finalize} from "rxjs/operators";
-import {log} from "util";
-import {forEachComment} from "tslint";
-import {formatI18nPlaceholderName} from "@angular/compiler/src/render3/view/i18n/util";
-import {ArrayDataSource} from "@angular/cdk/collections";
-import {isElementScrolledOutsideView} from "@angular/cdk/overlay/position/scroll-clip";
-import {url} from "inspector";
 import {Calendar_appointment} from "../../models/calendar_appointment";
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {log} from "util";
 
 @Component({
   selector: 'app-calender',
@@ -26,23 +21,38 @@ import {Calendar_appointment} from "../../models/calendar_appointment";
 
 export class CalenderComponent implements OnInit {
   appointments: Calendar_appointment[] = [];
-  length: number;
+  closeResult = '';
 
-  constructor(private calendarService: CalendarService) {
+  @ViewChild('content')
+  content;
+
+  constructor(private calendarService: CalendarService, private modalService: NgbModal) {
   }
 
   async ngOnInit() {
     await this.getAppointments();
   }
 
-  createAppointment(appointment: Appointment): Observable<Appointment> {
-    return this.calendarService.createAppointment(appointment)
+  open() {
+    this.modalService.open(this.content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
   async createCalendar(appointments: Calendar_appointment[]) {
     console.log('creating calendar');
-    // console.log(appointments[0]);
-    console.log(appointments.length);
 
     const calendarEl = document.getElementById('calendar');
 
@@ -51,23 +61,22 @@ export class CalenderComponent implements OnInit {
       {
         plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
         headerToolbar: {
-          left: 'prev,next today',
+          left: 'prev,next today add_event',
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
         },
-        height: 500,
+        customButtons: {
+          add_event: {
+            click: () => this.open()
+          }
+        },
+        height: 700,
         navLinks: true, // can click day/week names to navigate views
         editable: true,
-        dayMaxEvents: true, // allow "more" link when too many events
+        dayMaxEvents: true, // allow "more" link when too many events,
       });
 
     for (let i = 0; i < appointments.length; i++) {
-
-      console.log(event);
-      let date = new Date(appointments[i].start.toString() + 'T00:00:00');
-
-      console.log("date = " + date);
-      console.log(appointments[i].start)
 
       calendar.addEvent({
         title: appointments[i].title,
@@ -79,19 +88,14 @@ export class CalenderComponent implements OnInit {
     }
   }
 
+  createAppointment(appointment: Appointment): Observable<Appointment> {
+    return this.calendarService.createAppointment(appointment)
+  }
 
   async getAppointments() {
     this.calendarService.getAppointments()
       .subscribe(data => {
         for (let i = 0; i < data.length; i++) {
-          let startDateTime = new Date(data[i].start_time).toLocaleString();
-                    let timeDateArray = startDateTime.split(" ");
-
-          let test = timeDateArray[0].split("/");
-          let test3 = test[2].split(",");
-          let test2 = test3[0] + "-" + test[1] + "-" + test[0];
-          console.log(test2);
-
           let appointmentsTest = new Calendar_appointment(data[i].patient_user_id.toString(), data[i].start_time, data[i].end_time);
 
           this.appointments.push(appointmentsTest);
@@ -99,4 +103,3 @@ export class CalenderComponent implements OnInit {
       }, error => console.log(error), () => this.createCalendar(this.appointments));
   }
 }
-
