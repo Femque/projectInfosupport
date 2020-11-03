@@ -75,6 +75,11 @@
             <artifactId>hibernate-entitymanager</artifactId>
             <version>4.2.8.Final</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.16</version>
+        </dependency>
     </dependencies>
 
     <build>
