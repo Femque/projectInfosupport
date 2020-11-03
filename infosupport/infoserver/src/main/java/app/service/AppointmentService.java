@@ -20,4 +20,8 @@ public class AppointmentService {
     return repository.findAll();
   }
 
+  public void createAppointment(Appointment appointment) {
+    repository.save(appointment);
+  }
+
 }
