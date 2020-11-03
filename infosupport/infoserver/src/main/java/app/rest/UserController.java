@@ -17,6 +17,10 @@ public class UserController {
   @Autowired
   private UserService service;
 
+  public UserController(UserService service) {
+    this.service = service;
+  }
+
   @GetMapping
   public ResponseEntity<List<User>> index() {
     List<User> users = service.findAll();

@@ -14,6 +14,10 @@ public class UserService {
   @Autowired
   private UserRepository repo;
 
+  public UserService(UserRepository repo) {
+    this.repo = repo;
+  }
+
   public Optional<User> fetchUserById(int id) {
     return repo.findById(id);
   }
