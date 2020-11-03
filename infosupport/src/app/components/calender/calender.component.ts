@@ -67,6 +67,7 @@ export class CalenderComponent implements OnInit {
         },
         customButtons: {
           add_event: {
+            text: 'Nieuwe afspraak',
             click: () => this.open()
           }
         },

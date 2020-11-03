@@ -18,6 +18,7 @@ public class AppointmentController {
 
 
   @GetMapping("/appointments")
+  @CrossOrigin
   public ResponseEntity<List<Appointment>> getAllAppointments() {
     List<Appointment> appointments = appointmentService.getAppointments();
     return ResponseEntity.ok(appointments);
