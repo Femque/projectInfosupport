@@ -27,8 +27,8 @@ public class User {
   private String password;
 
   //Patient
-  @JoinTable(name = "Patient", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-  private Set<Patient> patiens;
+//  @JoinTable(name = "Patient", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+//  private Set<Patient> patiens;
 
   public User(){
 

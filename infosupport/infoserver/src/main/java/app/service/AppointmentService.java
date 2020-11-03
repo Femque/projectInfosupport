@@ -4,6 +4,7 @@ package app.service;
 import app.models.Appointment;
 import app.repositories.AppointmentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,4 +19,5 @@ public class AppointmentService {
   public List<Appointment> getAppointments(){
     return repository.findAll();
   }
+
 }

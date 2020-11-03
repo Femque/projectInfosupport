@@ -27,21 +27,21 @@ public class UserController {
     return ResponseEntity.ok(users);
   }
 
-  @PostMapping("login")
-  public User loginUser(@RequestBody User user) throws Exception {
-    int tempId = user.getUser_id();
-    String tempPassword = user.getPassword();
-    User userObj = null;
-
-    if (tempId != 0 && tempPassword != null) {
-      userObj = service.fetchUserByIdAndPassword(tempId, tempPassword);
-    }
-
-    //If user doesn't exist
-    if (userObj == null) {
-      throw new Exception("Bad credentials");
-    }
-
-    return userObj;
-  }
+//  @PostMapping("login")
+//  public User loginUser(@RequestBody User user) throws Exception {
+//    int tempId = user.getUser_id();
+//    String tempPassword = user.getPassword();
+//    User userObj = null;
+//
+//    if (tempId != 0 && tempPassword != null) {
+//      userObj = service.fetchUserByIdAndPassword(tempId, tempPassword);
+//    }
+//
+//    //If user doesn't exist
+//    if (userObj == null) {
+//      throw new Exception("Bad credentials");
+//    }
+//
+//    return userObj;
+//  }
 }

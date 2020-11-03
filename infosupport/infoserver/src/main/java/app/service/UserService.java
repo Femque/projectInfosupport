@@ -22,9 +22,9 @@ public class UserService {
     return repo.findById(id);
   }
 
-  public User fetchUserByIdAndPassword(int id, String password) {
-    return repo.fetchUserByIdAndPassword(id, password);
-  }
+//  public User fetchUserByIdAndPassword(int id, String password) {
+//    return repo.fetchUserByIdAndPassword(id, password);
+//  }
 
   public List<User> findAll() {
     return repo.findAll();
