@@ -1,47 +1,47 @@
 package app.rest;
 
-import app.models.Patient;
 import app.models.User;
-import app.repositories.UserRepository;
+import app.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
-import java.util.Base64;
+
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
+@RequestMapping("user")
 public class UserController {
 
-  private UserRepository repository;
+  @Autowired
+  private UserService service;
 
-  UserController(UserRepository repository) {
-    this.repository = repository;
-  }
-  
-  @RequestMapping("/user/login")
-  public boolean login(@RequestBody User user) {
-    return user.getUser_id().equals("id") && user.getPassword().equals("password");
+  public UserController(UserService service) {
+    this.service = service;
   }
 
-  @RequestMapping("/user")
-  public Principal user(HttpServletRequest request) {
-    String authToken = request.getHeader("Authorization")
-      .substring("Basic".length()).trim();
-    return () -> new String(Base64.getDecoder().decode(authToken)).split(":")[0];
+  @GetMapping
+  public ResponseEntity<List<User>> index() {
+    List<User> users = service.findAll();
+    return ResponseEntity.ok(users);
   }
 
-  @GetMapping("/users")
-  List<User> all() {
-    return repository.findAll();
-  }
+  @PostMapping("login")
+  public User loginUser(@RequestBody User user) throws Exception {
+    int tempId = user.getUser_id();
+    String tempPassword = user.getPassword();
+    User userObj = null;
 
-  // find patient by id
-  @GetMapping("/users/{id}")
-  Optional<User> user(@PathVariable Integer id){
-    return repository.findById(id);
+    if (tempId != 0 && tempPassword != null) {
+      userObj = service.fetchUserByIdAndPassword(tempId, tempPassword);
+    }
 
+    //If user doesn't exist
+    if (userObj == null) {
+      throw new Exception("Bad credentials");
+    }
+
+    return userObj;
   }
 }
-
