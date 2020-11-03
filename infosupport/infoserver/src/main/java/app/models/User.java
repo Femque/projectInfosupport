@@ -1,9 +1,7 @@
 package app.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "User")
@@ -27,6 +25,10 @@ public class User {
 
   @Column(name = "password")
   private String password;
+
+  //Patient
+  @JoinTable(name = "Patient", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+  private Set<Patient> patiens;
 
   public User(){
 
