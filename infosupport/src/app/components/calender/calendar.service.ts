@@ -10,14 +10,13 @@ import {HandleError} from "../../http-error-handler-service";
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
-    Authorization: 'my-auth-token'
+    Authorization: 'my-auth-token',
   })
 };
 
 @Injectable()
 export class CalendarService {
-  appointmentUrl = 'http://localhost:8080/appointments' //Url to our service
-  //error handler?
+  appointmentsUrl = 'http://localhost:8080/appointments' //Url to get all appointments
 
   constructor(
     private http: HttpClient
@@ -25,8 +24,24 @@ export class CalendarService {
   }
 
   getAppointments(): Observable<Appointment[]> {
-    console.log("inside ")
-    return this.http.get<Appointment[]>(this.appointmentUrl)
+    console.log("getting appointments ")
+    return this.http.get<Appointment[]>(this.appointmentsUrl)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  createAppointment(appointment: Appointment): Observable<Appointment> {
+    console.log("creating appointment");
+    return this.http.post<Appointment>(this.appointmentsUrl + "/create", appointment)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  deleteAppointment(id: number): Observable<number> {
+    console.log("deleting appointment");
+    return this.http.post<number>(this.appointmentsUrl + "/delete", id)
       .pipe(
         catchError(this.handleError)
       );

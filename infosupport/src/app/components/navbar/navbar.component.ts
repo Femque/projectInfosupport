@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {LoginService} from "../login/login.service";
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  //Check if user is loggen in or not, decide if all nav-links are available
+  isUserLoggedIn : boolean = false;
+
+  constructor(
+    public loginService : LoginService
+  ) { }
 
   ngOnInit(): void {
+    this.isUserLoggedIn = this.loginService.isUserLoggedIn();
   }
 
 }

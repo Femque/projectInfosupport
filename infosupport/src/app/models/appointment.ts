@@ -1,20 +1,28 @@
+import {Time} from "@angular/common";
+
 export class Appointment {
 
-  //All attributes
-  public id: number;
-  //Later vervangen door patient model
-  public patient: string;
-  public gp: string;
-  public date: string;
-  public isFollowUp: boolean;
+  appointment_code: number;
+  start_time: Date;
+  end_time: Date;
+  is_digital: boolean;
+  description: string;
+  location: string;
+  is_follow_up: boolean;
+  big_code: number;
+  patient_user_id: number;
 
-  constructor(id: number, patient: string, gp: string, date: string, isFollowUp: boolean) {
-    this.id = id;
-    this.patient = patient;
-    this.gp = gp;
-    this.date = date;
-    this.isFollowUp = isFollowUp;
+  constructor(appointment_code?: number, start_time?: Date, end_time?: Date, is_digital?: boolean, description?: string, location?: string, is_follow_up?: boolean, big_code?: number, patient_user_id?: number) {
+    this.appointment_code = appointment_code;
+    this.start_time = start_time;
+    this.end_time = end_time;
+    this.is_digital = is_digital;
+    this.description = description;
+    this.location = location;
+    this.is_follow_up = is_follow_up;
+    this.big_code = big_code;
+    this.patient_user_id = patient_user_id;
   }
 
-  //Possible methods go here
+//Possible methods go here
 }

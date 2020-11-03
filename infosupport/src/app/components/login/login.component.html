@@ -3,25 +3,26 @@
     <h2 class="mb-3">Inloggen</h2>
 
     <!-- Login form -->
-    <form class="login-form">
+    <form [formGroup]="loginForm" (ngSubmit)="handleLogin()">
       <div class="form-group">
         <label for="inputUsername">Gebruikersnaam</label>
-        <input type="text" name="username" class="form-control" id="inputUsername"
-               placeholder="gebruikersnaam">
+        <input type="text" name="username" class="form-control" id="inputUsername" formControlName="username"
+               placeholder="gebruikersnaam" [ngClass]="{'is-invalid': submitted && form.username.errors}">
+        <div *ngIf="submitted && form.username.errors" class="invalid-feedback">
+          <div *ngIf="form.username.errors.required">Gebruiksersnaam is verplicht</div>
+        </div>
       </div>
       <div class="form-group">
         <label for="inputPassword">Wachtwoord</label>
-        <input type="password" name="password" class="form-control" id="inputPassword"
-               placeholder="wachtwoord">
+        <input type="password" name="password" class="form-control" id="inputPassword" formControlName="password"
+               placeholder="wachtwoord" [ngClass]="{ 'is-invalid': submitted && form.password.errors}">
+        <div *ngIf="submitted && form.password.errors" class="invalid-feedback">
+          <div *ngIf="form.password.errors.required">Wachtwoord is verplicht</div>
+        </div>
       </div>
       <div class="error mb-3 text-danger"></div>
 
-      <button type="submit" class="btn btn-primary btn-block">Login</button>
+      <button (click)="handleLogin()" type="submit" class="btn btn-primary btn-block">Login</button>
     </form>
-
-    <!-- Login as different user -->
-    <div id="formFooter">
-      <a class="underlineHover" href="#">Log in als huisarts</a>
-    </div>
   </div>
 </div>

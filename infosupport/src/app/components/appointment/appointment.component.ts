@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AppointmentService} from "./appointment.service";
 import {Appointment} from "../../models/appointment";
+import DateTimeFormat = Intl.DateTimeFormat;
 
 @Component({
   selector: 'app-appointment',
@@ -22,15 +23,20 @@ export class AppointmentComponent implements OnInit {
   }
 
   createAppointment() {
-    this.errorMessage = "";
+    this.errorMessage = "Er is iets fout gegaan";
     this.successMessage = "";
-    this.appointmentService.createAppointment(this.appointmentDate, this.appointmentTime, this.appointmentMessage)
+
+    // var endTime = new Date(this.appointmentTime.getTime() + 15*60000);
+    let startDate = new Date(this.appointmentDate);
+
+    let appointment = new Appointment()
+    this.appointmentService.createAppointment(appointment)
       .subscribe((createdAppointment: Appointment) => {
         this.appointmentDate = "";
         this.appointmentTime = "";
         this.appointmentMessage = "";
-        const appointmentDate = new Date(createdAppointment.date).toDateString();
-        this.successMessage = `Uw afspraak is succesvol geboekt op ${appointmentDate}`;
+        const appointmentDate = new Date()
+        this.successMessage = `Uw afspraak is succesvol geboekt`;
         },
         (error: ErrorEvent) => {
         this.errorMessage = error.error.message;

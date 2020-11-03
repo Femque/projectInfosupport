@@ -1,69 +1,59 @@
 package app.models;
 
-import org.apache.tomcat.jni.Local;
-
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.LocalDate;
+import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Calendar;
 
+@Entity
+@Table(name = "Appointment")
 public class Appointment {
 
-  public long id;
-
-  //later aanpassen naar Patient patient
-  public String patient;
-
-  //later aanpassen naar Gp gp
-  private String gp;
+  @Id
+  private Integer appointment_code;
+  private LocalDateTime start_time;
+  private LocalDateTime end_time;
+  private Boolean is_digital;
+  private String description;
   private String location;
-  private String date;
-  private boolean isFollowUp;
+  private Boolean is_follow_up;
+  private Integer big_code;
+  private Integer patient_user_id;
 
-  public long getId() {
-    return id;
+  public Appointment() {
   }
 
-  public String getPatient() {
-    return patient;
+  public LocalDateTime getStart_time() {
+    return start_time;
   }
 
-  public String getGp() {
-    return gp;
+  public LocalDateTime getEnd_time() {
+    return end_time;
+  }
+
+  public boolean isIs_digital() {
+    return is_digital;
+  }
+
+  public String getDescription() {
+    return description;
   }
 
   public String getLocation() {
     return location;
   }
 
-  public String getDate() {
-    return date;
+  public Boolean getIs_follow_up() {
+    return is_follow_up;
   }
 
-  public boolean isFollowUp() {
-    return isFollowUp;
+  public Integer getBig_code() {
+    return big_code;
   }
 
-  public Appointment(long id, String patient, String gp, String location, String date, boolean isFollowUp) {
-    this.id = id;
-    this.patient = patient;
-    this.gp = gp;
-    this.location = location;
-    this.date = date;
-    this.isFollowUp = isFollowUp;
+  public Integer getPatient_user_id() {
+    return patient_user_id;
   }
 
-  public static Appointment createAppointmentForTesting(int idCounter) {
-    Appointment appointment = new Appointment(0, null, null, null, null, false);
-
-    appointment.id += appointment.id + idCounter;
-    appointment.patient = "Test patient " + idCounter;
-    appointment.gp = "Test GP " + idCounter;
-    appointment.location = "Test location " + idCounter;
-    appointment.date = "Test date";
-    appointment.isFollowUp = false;
-
-    return appointment;
+  public Integer getAppointment_code() {
+    return appointment_code;
   }
 }

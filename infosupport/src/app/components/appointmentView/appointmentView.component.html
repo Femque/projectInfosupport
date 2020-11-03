@@ -1,0 +1,24 @@
+<div class="row justify-content-center m-0 pt-5">
+  <div class="jumbotron w-25 text-center ">
+
+    <!-- show card if data exist -->
+    <ng-container *ngIf="loadedAppointments != null; else elseText">
+      <div class="card" *ngFor="let appointment of loadedAppointments " style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Appointments: </h5>
+          <p class="card-text">{{appointment.appointment_code}}</p>
+          <p class="card-text">Begin Tijd: {{appointment.start_time}} - Eind tijd: {{appointment.end_time}} </p>
+          <p class="card-text">{{appointment.is_digital}}</p>
+          <p class="card-text">{{appointment.description}}</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- When no appointment has found -->
+    <ng-template #elseText>
+      <h5>There is no appointment</h5>
+    </ng-template>
+
+  </div>
+</div>
