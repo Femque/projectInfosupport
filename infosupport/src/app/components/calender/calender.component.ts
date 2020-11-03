@@ -71,6 +71,7 @@ export class CalenderComponent implements OnInit {
             click: () => this.open()
           }
         },
+        eventClick: () => this.open(),
         height: 700,
         navLinks: true, // can click day/week names to navigate views
         editable: true,
