@@ -11,13 +11,13 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping
+@RequestMapping("/appointments")
 public class AppointmentController {
 
   private final AppointmentService appointmentService;
 
 
-  @GetMapping("/appointments")
+  @GetMapping
   @CrossOrigin
   public ResponseEntity<List<Appointment>> getAllAppointments() {
     List<Appointment> appointments = appointmentService.getAppointments();
@@ -28,4 +28,9 @@ public class AppointmentController {
 //  @PostMapping("/appointments/create")
 //  public Appointment createAppointment(@RequestBody Appointment appointment) { return repo.createAppointment(appointment); }
 
+  @PostMapping
+  public ResponseEntity<Appointment> create(@RequestBody Appointment appointment) {
+    appointmentService.createAppointment(appointment);
+    return ResponseEntity.ok(appointment);
+  }
 }
