@@ -1,10 +1,11 @@
 package app.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity(name = "Patient")
-public class Patient extends User {
+public class Patient implements Serializable {
 
   @Id
   @Column(name = "user_id")
@@ -19,19 +20,7 @@ public class Patient extends User {
   @Column(name = "allergies")
   private String allergies;
 
-  public Patient(){
-
-  }
-
-  @Override
-  public Integer getUser_id() {
-    return user_id;
-  }
-
-  @Override
-  public void setUser_id(Integer user_id) {
-    this.user_id = user_id;
-  }
+  public Patient(){ }
 
   public LocalDate getDateOfBirth() {
     return dateOfBirth;

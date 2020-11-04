@@ -26,12 +26,16 @@ public class User {
   @Column(name = "password")
   private String password;
 
-  //Patient
-//  @JoinTable(name = "Patient", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-//  private Set<Patient> patiens;
 
-  public User(){
+  public User(){ }
 
+  public User(Integer user_id, String firstname, String lastname, String email, String phonenumber, String password) {
+    this.user_id = user_id;
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.email = email;
+    this.phonenumber = phonenumber;
+    this.password = password;
   }
 
   public Integer getUser_id() {

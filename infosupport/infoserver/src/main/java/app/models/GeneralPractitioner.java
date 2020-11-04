@@ -4,10 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "General_practitioner")
-public class GP {
+public class GeneralPractitioner implements Serializable {
 
   @Id
   @Column(name = "big_code")
@@ -16,12 +17,7 @@ public class GP {
   @Column(name = "specialty")
   private String specialty;
 
-  @Column(name = "user_id")
-  private Integer user_id;
-
-  public GP() {
-
-  }
+  public GeneralPractitioner() { }
 
   public String getBig_code() {
     return big_code;
@@ -39,7 +35,4 @@ public class GP {
     this.specialty = specialty;
   }
 
-  public void setUser_id(Integer user_id) {
-    this.user_id = user_id;
-  }
 }

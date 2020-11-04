@@ -2,7 +2,7 @@ package app.rest;
 
 import app.models.User;
 import app.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,37 +11,35 @@ import java.util.List;
 
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("user")
 public class UserController {
 
-  @Autowired
-  private UserService service;
+  private final UserService service;
 
-  public UserController(UserService service) {
-    this.service = service;
-  }
-
+  // "/user"
   @GetMapping
   public ResponseEntity<List<User>> index() {
     List<User> users = service.findAll();
     return ResponseEntity.ok(users);
   }
 
-//  @PostMapping("login")
-//  public User loginUser(@RequestBody User user) throws Exception {
-//    int tempId = user.getUser_id();
-//    String tempPassword = user.getPassword();
-//    User userObj = null;
-//
-//    if (tempId != 0 && tempPassword != null) {
-//      userObj = service.fetchUserByIdAndPassword(tempId, tempPassword);
-//    }
-//
-//    //If user doesn't exist
-//    if (userObj == null) {
-//      throw new Exception("Bad credentials");
-//    }
-//
-//    return userObj;
-//  }
+  // "user/login"
+  @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
+  public User loginUser(@RequestBody User user) throws Exception {
+    String tempEmail = user.getEmail();
+    String tempPassword = user.getPassword();
+    User userObj = null;
+
+    if (tempEmail != null && tempPassword != null) {
+      userObj = service.findUserByEmailAndPassword(tempEmail, tempPassword);
+    }
+
+    //If user doesn't exist
+    if (userObj == null) {
+      throw new Exception("Bad credentials");
+    }
+
+    return userObj;
+  }
 }
