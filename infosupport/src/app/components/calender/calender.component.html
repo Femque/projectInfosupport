@@ -3,6 +3,74 @@
 </div>
 
 
+<ng-template #create let-data>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="data.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="appointmentForm" (ngSubmit)="createAppointment(appointmentForm.value)">
+      <div class="form-group">
+
+      <div>
+        <label for="title">
+          Titel
+        </label>
+        <input id="title" type="text" formControlName="title">
+      </div>
+
+        <div>
+          <label for="description">
+            Beschrijving
+          </label>
+          <input id="description" type="text" formControlName="description">
+        </div>
+
+        <div>
+          <label for="location">
+            Locatie
+          </label>
+          <input id="location" type="text" formControlName="location">
+        </div>
+
+        <div>
+          <label for="start">
+            Begin tijd
+          </label>
+          <input id="start" type="datetime-local" formControlName="start">
+        </div>
+
+        <div>
+          <label for="end">
+            Eind tijd
+          </label>
+          <input id="end" type="datetime-local" formControlName="end">
+        </div>
+
+        <div>
+          <label for="is_digital">
+            Digitale afspraak?
+          </label>
+          <input id="is_digital" type="checkbox" formControlName="is_digital">
+        </div>
+
+        <div>
+          <label for="is_followup">
+            Vervolg afspraak?
+          </label>
+          <input id="is_followup" type="checkbox" formControlName="is_followup">
+        </div>
+
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-outline-dark">Save</button>
+      </div>
+    </form>
+  </div>
 <ng-template style="height: 70%" #content let-data>
   <table cellpadding="15px" class="custom-event-editor">
     <tbody>
@@ -64,3 +132,4 @@
     </tbody>
   </table>
 </ng-template>
+

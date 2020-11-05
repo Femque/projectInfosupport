@@ -17,6 +17,7 @@ public class AppointmentController {
 
   private final AppointmentService appointmentService;
 
+  @GetMapping
 
   @GetMapping("/appointments")
   @CrossOrigin
@@ -25,6 +26,10 @@ public class AppointmentController {
     return ResponseEntity.ok(appointments);
   }
 
+  @PostMapping("/create")
+  @CrossOrigin
+  public ResponseEntity<Appointment> store(@RequestBody Appointment appointment) {
+    System.out.println(appointment);
 //  @CrossOrigin
 //  @PostMapping("/appointments/create")
 //  public Appointment createAppointment(@RequestBody Appointment appointment) { return repo.createAppointment(appointment); }

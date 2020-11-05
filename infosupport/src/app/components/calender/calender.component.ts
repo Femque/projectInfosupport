@@ -10,6 +10,8 @@ import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import {Calendar_appointment} from "../../models/calendar_appointment";
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {log} from "util";
+import {FormBuilder} from "@angular/forms";
 
 @Component({
   selector: 'app-calender',
@@ -21,6 +23,21 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 export class CalenderComponent implements OnInit {
   appointments: Appointment[] = [];
   closeResult = '';
+  appointmentForm;
+
+  @ViewChild('create')
+  create;
+
+  constructor(private calendarService: CalendarService, private modalService: NgbModal, private formBuilder: FormBuilder) {
+    this.appointmentForm = this.formBuilder.group({
+      title: [''],
+      description: [''],
+      location: [''],
+      start: [''],
+      end: [''],
+      is_digital: [false],
+      is_followup: [false]
+    })
   selectedAppointment: any;
 
   patient_user_id: number;
@@ -44,7 +61,8 @@ export class CalenderComponent implements OnInit {
   }
 
   open() {
-    this.modalService.open(this.content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modalService.open(this.create, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      console.log(result);
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -130,8 +148,15 @@ export class CalenderComponent implements OnInit {
 
   }
 
-  createAppointment(appointment: Appointment): Observable<Appointment> {
-    return this.calendarService.createAppointment(appointment)
+  createAppointment(appointmentdata) {
+    let appointment = new Appointment(appointmentdata.start, appointmentdata.end, appointmentdata.is_digital,
+      appointmentdata.description, appointmentdata.location, appointmentdata.is_followup, 321, 123);
+    console.log(appointment);
+      this.calendarService.createAppointment(appointment)
+      .subscribe( data => {
+       let newAppointment = new Calendar_appointment(data.patient_user_id.toString(), data.start_time, data.end_time);
+        this.appointments.push(newAppointment);
+      })
   }
 
   async getAppointments() {

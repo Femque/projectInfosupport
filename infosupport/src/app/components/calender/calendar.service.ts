@@ -31,6 +31,8 @@ export class CalendarService {
 
   createAppointment(appointment: Appointment): Observable<Appointment> {
     console.log("creating appointment");
+    const url = `${this.appointmentsUrl + "/create"}`
+    return this.http.post<Appointment>(url, appointment)
     return this.http.put<Appointment>(this.appointmentsUrl + "/create", appointment)
       .pipe(
         catchError(this.handleError)
