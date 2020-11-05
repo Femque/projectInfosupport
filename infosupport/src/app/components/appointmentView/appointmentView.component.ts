@@ -45,9 +45,9 @@ export class AppointmentViewComponent implements OnInit {
         // let test2 = test3[0] + "-" + test[1] + "-" + test[0];
         // console.log(test2);
 
-        let newAppointment = new Appointment(appointment[i].appointment_code, appointment[i].start_time,
+        let newAppointment = new Appointment(appointment[i].start_time,
           appointment[i].end_time, appointment[i].is_digital, appointment[i].description, appointment[i].location,
-          appointment[i].is_follow_up, appointment[i].big_code, appointment[i].patient_user_id);
+          appointment[i].is_follow_up, appointment[i].big_code, appointment[i].patient_user_id,appointment[i].appointment_code);
 
         this.loadedAppointments.push(newAppointment);
       }
