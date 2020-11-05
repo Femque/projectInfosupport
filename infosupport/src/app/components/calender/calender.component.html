@@ -3,51 +3,73 @@
 </div>
 
 
-<ng-template style="height: 70%" #content let-data>
-  <table class="custom-event-editor">
-    <tbody>
-    <tr>
-      <td class="e-textlabel">Patient</td>
-      <td colspan="4">
-        <input  class="e-field e-input" type="text" value="" name="Patient" id="Patient" style="width: 100%" />
-      </td>
-    </tr>
-    <tr>
-      <td class="e-textlabel">Locatie</td>
-      <td colspan="4">
-        <input class="e-field e-input" type="text" id="EventType" name="Location" style="width: 100%" />
-      </td>
-    </tr>
-    <tr>
-      <td class="e-textlabel">Starttijd</td>
-      <td colspan="4">
-        <input id="StartTime" class="e-field" type="datetime-local" name="StartTime" />
-      </td>
-    </tr>
-    <tr>
-      <td class="e-textlabel">Eindtijd</td>
-      <td colspan="4">
-        <input id="EndTime" class="e-field" type="datetime-local" name="EndTime" />
-      </td>
-    </tr>
-    <tr>
-      <td class="e-textlabel">Is vervolg afspraak</td>
-              <td colspan="4">
-                  <input class=" e-field" type="checkbox" name="isFollowUpAppointment" value="" id="isFollowUpAppointment" title="isFollowUpAppointment">
-              </td>
-    </tr>
-    <tr>
-      <td class="e-textlabel">Is digitaal</td>
-              <td colspan="4">
-                  <input class=" e-field" type="checkbox" name="isDigital" value="" id="isDigital" title="isDigital">
-              </td>
-    </tr>
-    <tr>
-      <td class="e-textlabel">Beschrijving</td>
-      <td colspan="4">
-        <textarea id="Description" class="e-field e-input" name="Description" rows="3" cols="50" style="width: 100%; height: 60px !important; resize: vertical"></textarea>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+<ng-template #content let-data>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="data.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="appointmentForm" (ngSubmit)="createAppointment(appointmentForm.value)">
+      <div class="form-group">
+
+      <div>
+        <label for="title">
+          Titel
+        </label>
+        <input id="title" type="text" formControlName="title">
+      </div>
+
+        <div>
+          <label for="description">
+            Beschrijving
+          </label>
+          <input id="description" type="text" formControlName="description">
+        </div>
+
+        <div>
+          <label for="location">
+            Locatie
+          </label>
+          <input id="location" type="text" formControlName="location">
+        </div>
+
+        <div>
+          <label for="start">
+            Begin tijd
+          </label>
+          <input id="start" type="datetime-local" formControlName="start">
+        </div>
+
+        <div>
+          <label for="end">
+            Eind tijd
+          </label>
+          <input id="end" type="datetime-local" formControlName="end">
+        </div>
+
+        <div>
+          <label for="is_digital">
+            Digitale afspraak?
+          </label>
+          <input id="is_digital" type="checkbox" formControlName="is_digital">
+        </div>
+
+        <div>
+          <label for="is_followup">
+            Vervolg afspraak?
+          </label>
+          <input id="is_followup" type="checkbox" formControlName="is_followup">
+        </div>
+
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-outline-dark">Save</button>
+      </div>
+    </form>
+  </div>
 </ng-template>
+

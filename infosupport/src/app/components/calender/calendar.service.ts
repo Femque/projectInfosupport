@@ -33,7 +33,8 @@ export class CalendarService {
 
   createAppointment(appointment: Appointment): Observable<Appointment> {
     console.log("creating appointment");
-    return this.http.post<Appointment>(this.appointmentsUrl + "/create", appointment)
+    const url = `${this.appointmentsUrl + "/create"}`
+    return this.http.post<Appointment>(url, appointment)
       .pipe(
         catchError(this.handleError)
       );

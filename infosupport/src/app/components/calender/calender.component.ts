@@ -11,6 +11,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import {Calendar_appointment} from "../../models/calendar_appointment";
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {log} from "util";
+import {FormBuilder} from "@angular/forms";
 
 @Component({
   selector: 'app-calender',
@@ -22,11 +23,21 @@ import {log} from "util";
 export class CalenderComponent implements OnInit {
   appointments: Calendar_appointment[] = [];
   closeResult = '';
+  appointmentForm;
 
   @ViewChild('content')
   content;
 
-  constructor(private calendarService: CalendarService, private modalService: NgbModal) {
+  constructor(private calendarService: CalendarService, private modalService: NgbModal, private formBuilder: FormBuilder) {
+    this.appointmentForm = this.formBuilder.group({
+      title: '',
+      description: '',
+      location: '',
+      start: '',
+      end: '',
+      is_digital: '',
+      is_followup: ''
+    })
   }
 
   async ngOnInit() {
@@ -35,6 +46,7 @@ export class CalenderComponent implements OnInit {
 
   open() {
     this.modalService.open(this.content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      console.log(result);
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -90,8 +102,11 @@ export class CalenderComponent implements OnInit {
     }
   }
 
-  createAppointment(appointment: Appointment): Observable<Appointment> {
-    return this.calendarService.createAppointment(appointment)
+  createAppointment(appointmentdata) {
+    let appointment = new Appointment(123, appointmentdata.start, appointmentdata.end, appointmentdata.is_digital,
+      appointmentdata.description, appointmentdata.location, appointmentdata.is_followup, 321, 123);
+    console.log(appointment);
+    this.calendarService.createAppointment(appointment)
   }
 
   async getAppointments() {

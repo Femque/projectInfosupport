@@ -21,6 +21,7 @@ public class AppointmentService {
   }
 
   public void createAppointment(Appointment appointment) {
+    System.out.println("creating: " + appointment);
     repository.save(appointment);
   }
 
