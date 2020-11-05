@@ -57,7 +57,7 @@ export class AppointmentViewComponent implements OnInit {
   //delete appointment when cancelling appointment in overview
   //method called when user clicks cancel
   public clickedAppointment(id) {
-    if (id != null) {
+    if (id != null && confirm("Are you sure to delete "+ id)) {
       // this.onSelect(id);
       console.log(id);
       this.deleteAppointment(id);
