@@ -17,8 +17,6 @@ public class AppointmentController {
 
   private final AppointmentService appointmentService;
 
-  @GetMapping
-
   @GetMapping("/appointments")
   @CrossOrigin
   public ResponseEntity<List<Appointment>> getAllAppointments() {
@@ -29,14 +27,6 @@ public class AppointmentController {
   @PostMapping("/create")
   @CrossOrigin
   public ResponseEntity<Appointment> store(@RequestBody Appointment appointment) {
-    System.out.println(appointment);
-//  @CrossOrigin
-//  @PostMapping("/appointments/create")
-//  public Appointment createAppointment(@RequestBody Appointment appointment) { return repo.createAppointment(appointment); }
-
-  @PostMapping("/appointments/save")
-  @CrossOrigin
-  public ResponseEntity<Appointment> create(@RequestBody Appointment appointment) {
     appointmentService.createAppointment(appointment);
     return ResponseEntity.ok(appointment);
   }
@@ -46,18 +36,15 @@ public class AppointmentController {
   @CrossOrigin
   @Transactional
   public ResponseEntity<Appointment> update(@RequestBody Appointment appointment) {
-    appointmentService.updateAppointment( appointment.getStart_time(), appointment.getEnd_time(),
+    appointmentService.updateAppointment(appointment.getStart_time(), appointment.getEnd_time(),
       appointment.isIs_digital(), appointment.getDescription(), appointment.getLocation(), appointment.getIs_follow_up(), appointment.getAppointment_code());
     return ResponseEntity.ok(appointment);
   }
 
   @PostMapping("/appointments/delete")
   @CrossOrigin
-  public ResponseEntity<Appointment> delete (@RequestBody Appointment appointment){
+  public ResponseEntity<Appointment> delete(@RequestBody Appointment appointment) {
     appointmentService.deleteAppointment(appointment);
     return ResponseEntity.ok(appointment);
   }
-
-
-
 }
