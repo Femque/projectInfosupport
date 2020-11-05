@@ -9,12 +9,16 @@ export class User {
   public password: String;
 
 
-  constructor(user_id?: number, firstname?: String, lastname?: String, email?: String, phonenumber?: String, password?: String) {
-    this.user_id = user_id;
-    this.firstname = firstname;
-    this.lastname = lastname;
-    this.email = email;
-    this.phonenumber = phonenumber;
-    this.password = password;
+  // constructor(user_id?: number, firstname?: String, lastname?: String, email?: String, phonenumber?: String, password?: String) {
+  //   this.user_id = user_id;
+  //   this.firstname = firstname;
+  //   this.lastname = lastname;
+  //   this.email = email;
+  //   this.phonenumber = phonenumber;
+  //   this.password = password;
+  // }
+
+  constructor() {
   }
+
 }

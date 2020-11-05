@@ -19,13 +19,15 @@ public class UserController {
 
   // "/user"
   @GetMapping
+  @CrossOrigin(origins = "http://localhost:4200")
   public ResponseEntity<List<User>> index() {
     List<User> users = service.findAll();
     return ResponseEntity.ok(users);
   }
-
+  
   // "user/login"
   @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
+  @CrossOrigin(origins = "http://localhost:4200")
   public User loginUser(@RequestBody User user) throws Exception {
     String tempEmail = user.getEmail();
     String tempPassword = user.getPassword();

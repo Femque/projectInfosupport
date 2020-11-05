@@ -8,8 +8,9 @@ import {User} from "../../models/user";
 export class LoginService {
   public user: Observable<User>;
   private userSubject: BehaviorSubject<User>;
+  private email;
 
-  usersUrl = 'http://localhost:8080/user';
+  usersUrl = "http://localhost:8080/user";
 
   constructor(
     private http: HttpClient,
@@ -19,23 +20,19 @@ export class LoginService {
     this.user = this.userSubject.asObservable();
   }
 
-  authenticate(username, password) {
-    if (username === "" && password === "") {
-      sessionStorage.setItem('username', username)
-      return this.http.post<User>(this.usersUrl + "/login", username);
-    } else {
-      return false;
-    }
+  public loginUserFromRemote(user: User):Observable<any> {
+    sessionStorage.setItem('email', this.email)
+    return this.http.post<any>(this.usersUrl + "/login" , user)
   }
 
   isUserLoggedIn() {
-    let user = sessionStorage.getItem('username')
+    let user = sessionStorage.getItem('email')
     // console.log(!(user === null))
     return !(user === null)
   }
 
   logOut() {
-    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('email');
     this.userSubject.next(null);
   }
 }

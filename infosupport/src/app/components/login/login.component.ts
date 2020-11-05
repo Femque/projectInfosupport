@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {LoginService} from "./login.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import {first} from "rxjs/operators";
-import { GP } from 'src/app/models/gp';
-import { Patient } from 'src/app/models/patient';
+import {User} from "../../models/user";
+import {Patient} from "../../models/patient";
+import {GP} from "../../models/gp";
+
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,9 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
 
-  username = '';
+  user = new User();
+
+  email = '';
   password = '';
 
   constructor(
@@ -29,7 +32,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required]
     });
     sessionStorage.setItem('token', '');
@@ -40,26 +43,25 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls;
   }
 
-  handleLogin(): void {
+  handleLogin() {
     this.submitted = true;
+    this.loginService.loginUserFromRemote(this.user).subscribe(
+      data => console.log("Response received"),
+      error => console.log("Something went wrong")
+    )
 
-    console.log("hello")
 
-    //If invalid
-    if (this.loginForm.invalid) {
-      console.log("Invalid")
-      return;
-    }
 
-    if (this.loginService.authenticate(this.username, this.password)) {
-      //If user = patient
-      if (this.form.username.value instanceof Patient) {
-        this.router.navigate(['./appointment.component.html'])
+    console.log(this.user)
 
-        //If user = gp
-      } else if (this.form.username.value instanceof GP) {
-        this.router.navigate(['./calender.component.html'])
-      }
+    if (this.form.email.value instanceof Patient) {
+      console.log("Logging in as patient")
+      this.router.navigate(['./appointment.component.html'])
+    } else if (this.form.email.value instanceof GP) {
+      console.log("Logging in as general practitioner")
+      this.router.navigate(['./calender.component.html'])
+    } else {
+      console.log("It's not working yet")
     }
   }
 }
