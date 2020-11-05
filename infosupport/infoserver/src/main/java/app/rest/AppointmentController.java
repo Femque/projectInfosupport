@@ -55,7 +55,7 @@ public class AppointmentController {
   }
 
   @CrossOrigin
-  @DeleteMapping("/delete/{id}")
+  @DeleteMapping("/appointments/delete/{id}")
   public ResponseEntity<Integer> delete(@PathVariable int id) {
     appointmentService.deleteAppointment(id);
     return ResponseEntity.ok(id);
