@@ -24,8 +24,9 @@ public class AppointmentController {
     return ResponseEntity.ok(appointments);
   }
 
-  @PostMapping("/create")
+  @PostMapping("/appointments/create")
   @CrossOrigin
+  @Transactional
   public ResponseEntity<Appointment> store(@RequestBody Appointment appointment) {
     appointmentService.createAppointment(appointment);
     return ResponseEntity.ok(appointment);
