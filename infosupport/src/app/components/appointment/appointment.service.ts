@@ -12,6 +12,7 @@ export class AppointmentService {
   createAppointmentUrl = 'http://localhost:8080/appointments/create' //Url to create appointment
   getAppointmentUrl = 'http://localhost:8080/appointments'
 
+
   constructor(private http: HttpClient) {
   }
 
@@ -25,5 +26,17 @@ export class AppointmentService {
   getAppointments(): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(this.getAppointmentUrl)
   }
+
+  // //deleting appointment
+  // deleteAppointment(id: number) {
+  //   console.log("deleting appointment");
+  //   return this.http.delete(this.getAppointmentUrl + "/delete", id)
+  // }
+
+  deleteAppointment(id: number): Observable<{}> {
+    const url = `${this.getAppointmentUrl + "/delete"}/${id}`; // DELETE api/heroes/42
+    return this.http.delete(url)
+  }
+
 
 }

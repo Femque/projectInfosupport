@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit} from '@angular/core';
 import {AppointmentService} from "../appointment/appointment.service";
 import {Appointment} from "../../models/appointment";
-import {Subscription} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {ActivatedRoute, Params} from "@angular/router";
 import {Calendar_appointment} from "../../models/calendar_appointment";
 import {map} from "rxjs/operators";
+import {HttpClient} from "@angular/common/http";
 
 
 @Component({
@@ -24,12 +25,13 @@ export class AppointmentViewComponent implements OnInit {
   //list of appointments
   loadedAppointments: Appointment[] = [];
 
-  constructor(private appointmentService: AppointmentService) {
+  constructor(private http: HttpClient,private appointmentService: AppointmentService) {
   }
 
   ngOnInit() {
     this.getAppointments();
   }
+
 
   //show appointments
   getAppointments(): any {
@@ -43,7 +45,7 @@ export class AppointmentViewComponent implements OnInit {
         // let test2 = test3[0] + "-" + test[1] + "-" + test[0];
         // console.log(test2);
 
-        let newAppointment = new Appointment(appointment[i].appointment_code,appointment[i].start_time,
+        let newAppointment = new Appointment(appointment[i].appointment_code, appointment[i].start_time,
           appointment[i].end_time, appointment[i].is_digital, appointment[i].description, appointment[i].location,
           appointment[i].is_follow_up, appointment[i].big_code, appointment[i].patient_user_id);
 
@@ -51,4 +53,30 @@ export class AppointmentViewComponent implements OnInit {
       }
     }, error => console.log(error));
   }
+
+  //delete appointment when cancelling appointment in overview
+  //method called when user clicks cancel
+  public clickedAppointment(id) {
+    if (id != null) {
+      // this.onSelect(id);
+      console.log(id);
+      this.deleteAppointment(id);
+    } else {
+      // this.onSelect(-1)
+    }
+  }
+
+  //delete current appointment
+  // @ts-ignore
+  deleteAppointment(id): any {
+    console.log("loggieee ===" + id)
+    this.appointmentService.deleteAppointment(id).subscribe(() => {
+        this.loadedAppointments = [];
+        this.getAppointments();
+      }
+    );
+
+  }
+
+
 }
