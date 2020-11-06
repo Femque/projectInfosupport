@@ -2,12 +2,27 @@ import {User} from "./user";
 
 export class GP extends User{
 
-  public big_code: String;
-  public specialty: String;
+  private _big_code: number;
+  private _specialty: String;
 
-  constructor(user_id?: number, firstname?: String, lastname?: String, email?: String, phonenumber?: String, password?: String, big_code?: String, specialty?: String) {
-    super(user_id, firstname, lastname, email, phonenumber, password);
-    this.big_code = big_code;
-    this.specialty = specialty;
+
+  constructor() {
+    super();
+  }
+
+  get big_code(): number {
+    return this._big_code;
+  }
+
+  set big_code(value: number) {
+    this._big_code = value;
+  }
+
+  get specialty(): String {
+    return this._specialty;
+  }
+
+  set specialty(value: String) {
+    this._specialty = value;
   }
 }

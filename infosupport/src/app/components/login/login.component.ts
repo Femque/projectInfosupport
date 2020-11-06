@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
   submitted = false;
 
   user = new User();
+  gp = new GP();
+  patient = new Patient();
 
   email = '';
   password = '';
@@ -50,16 +52,12 @@ export class LoginComponent implements OnInit {
       error => console.log("Something went wrong")
     )
 
-
-
-    console.log(this.user)
-
-    if (this.form.email.value instanceof Patient) {
-      console.log("Logging in as patient")
-      this.router.navigate(['./appointment.component.html'])
-    } else if (this.form.email.value instanceof GP) {
+    if (this.user.user_id == this.gp.big_code) {
       console.log("Logging in as general practitioner")
       this.router.navigate(['./calender.component.html'])
+    } else if (this.user.user_id == this.patient.user_id) {
+      console.log("Logging in as patient")
+      this.router.navigate(['./appointment.component.html'])
     } else {
       console.log("It's not working yet")
     }

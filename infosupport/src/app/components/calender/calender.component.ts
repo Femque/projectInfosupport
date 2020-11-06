@@ -10,7 +10,6 @@ import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import {Calendar_appointment} from "../../models/calendar_appointment";
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {log} from "util";
 
 @Component({
   selector: 'app-calender',
@@ -20,8 +19,19 @@ import {log} from "util";
 })
 
 export class CalenderComponent implements OnInit {
-  appointments: Calendar_appointment[] = [];
+  appointments: Appointment[] = [];
   closeResult = '';
+  selectedAppointment: any;
+
+  patient_user_id: number;
+  location: string;
+  start_time: Date;
+  end_time: Date;
+  is_follow_up: boolean;
+  is_digital: boolean;
+  description: string;
+  big_code: number;
+  appointment_code: number;
 
   @ViewChild('content')
   content;
@@ -41,6 +51,26 @@ export class CalenderComponent implements OnInit {
     });
   }
 
+  openUpdate(event: any) {
+    this.selectedAppointment = event;
+    this.patient_user_id = event.patient_user_id
+    this.location = event.location
+    this.start_time = event.start_time
+    this.end_time = event.end_time
+    this.is_follow_up = event.is_follow_up
+    this.is_digital = event.is_digital
+    this.description = event.description
+    this.big_code = event.big_code
+    this.appointment_code = event.appointment_code
+
+    console.log(event)
+    this.modalService.open(this.content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -51,7 +81,7 @@ export class CalenderComponent implements OnInit {
     }
   }
 
-  async createCalendar(appointments: Calendar_appointment[]) {
+  async createCalendar(appointments: Appointment[]) {
     console.log('creating calendar');
 
     const calendarEl = document.getElementById('calendar');
@@ -71,23 +101,33 @@ export class CalenderComponent implements OnInit {
             click: () => this.open()
           }
         },
-        eventClick: () => this.open(),
+        eventClick: (event,) =>this.openUpdate(event.event._def.extendedProps),
         height: 700,
         navLinks: true, // can click day/week names to navigate views
         editable: true,
         dayMaxEvents: true, // allow "more" link when too many events,
+        eventDisplay: "block"
       });
 
     for (let i = 0; i < appointments.length; i++) {
-
       calendar.addEvent({
-        title: appointments[i].title,
-        start: appointments[i].start,
-        end: appointments[i].end
+        title: appointments[i].patient_user_id.toLocaleString(),
+        start: appointments[i].start_time,
+        end: appointments[i].end_time,
+        start_time: appointments[i].start_time,
+        end_time: appointments[i].end_time,
+        is_digital: appointments[i].is_digital,
+        description: appointments[i].description,
+        location: appointments[i].location,
+        is_follow_up: appointments[i].is_follow_up,
+        big_code: appointments[i].big_code,
+        appointment_code: appointments[i].appointment_code,
+        patient_user_id: appointments[i].patient_user_id
       });
 
-      calendar.render();
     }
+    calendar.render();
+
   }
 
   createAppointment(appointment: Appointment): Observable<Appointment> {
@@ -98,10 +138,57 @@ export class CalenderComponent implements OnInit {
     this.calendarService.getAppointments()
       .subscribe(data => {
         for (let i = 0; i < data.length; i++) {
-          let appointmentsTest = new Calendar_appointment(data[i].patient_user_id.toString(), data[i].start_time, data[i].end_time);
+          let appointmentsTest = new Appointment(data[i].appointment_code, data[i].start_time, data[i].end_time, data[i].is_digital,
+            data[i].description, data[i].location, data[i].is_follow_up, data[i].big_code, data[i].patient_user_id)
 
           this.appointments.push(appointmentsTest);
         }
       }, error => console.log(error), () => this.createCalendar(this.appointments));
+  }
+
+  updateAppoitment(){
+    let updatedAppointment = new Appointment(
+      this.appointment_code,
+      this.start_time,
+      this.end_time,
+      this.is_digital,
+      this.description,
+      this.location,
+      this.is_follow_up,
+      this.big_code,
+      this.patient_user_id
+    )
+    console.log(updatedAppointment)
+    console.log(this.location)
+    this.calendarService.updateAppointment(updatedAppointment).subscribe(
+      (data) => {}, (error) => {
+        alert('HTTP Error: Status' + error.status+ '-' + error.message)
+      }
+    )
+    this.modalService.dismissAll()
+    window.location.reload()
+
+  }
+
+  deleteAppointment(){
+    let deleted = new Appointment(
+      this.appointment_code,
+      this.start_time,
+      this.end_time,
+      this.is_digital,
+      this.description,
+      this.location,
+      this.is_follow_up,
+      this.big_code,
+      this.patient_user_id
+    )
+
+    this.calendarService.deleteAppointment(deleted).subscribe(
+      (data) => {}, (error) => {
+        alert('HTTP Error: Status' + error.status+ '-' + error.message)
+      }
+    )
+    this.modalService.dismissAll()
+    window.location.reload()
   }
 }
