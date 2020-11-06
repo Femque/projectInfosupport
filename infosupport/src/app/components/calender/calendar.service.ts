@@ -6,7 +6,6 @@ import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {Appointment} from "../../models/appointment";
 import {HandleError} from "../../http-error-handler-service";
-import {$} from "protractor";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,7 +18,10 @@ const httpOptions = {
 export class CalendarService {
   appointmentsUrl = 'http://localhost:8080/appointments' //Url to get all appointments
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient
+  ) {
+  }
 
   getAppointments(): Observable<Appointment[]> {
     console.log("getting appointments ")
@@ -31,23 +33,16 @@ export class CalendarService {
 
   createAppointment(appointment: Appointment): Observable<Appointment> {
     console.log("creating appointment");
-    return this.http.put<Appointment>(this.appointmentsUrl + "/create", appointment)
+    const url = `${this.appointmentsUrl + "/create"}`
+    return this.http.post<Appointment>(url, appointment)
       .pipe(
         catchError(this.handleError)
       );
   }
 
-  deleteAppointment(appointment): Observable<Appointment> {
+  deleteAppointment(id: number): Observable<number> {
     console.log("deleting appointment");
-    return this.http.post<Appointment>(this.appointmentsUrl + "/delete", appointment)
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
-
-  updateAppointment(appointment: Appointment): Observable<Appointment>{
-    console.log("Updating appointment");
-    return this.http.put<Appointment>( this.appointmentsUrl + '/update', appointment)
+    return this.http.post<number>(this.appointmentsUrl + "/delete", id)
       .pipe(
         catchError(this.handleError)
       );
