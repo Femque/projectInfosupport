@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../models/user";
 import {Patient} from "../../models/patient";
 import {GP} from "../../models/gp";
+import {Observable} from "rxjs";
 
 
 @Component({
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
 
   email = '';
   password = '';
+  id: number = 0;
 
   constructor(
     private loginService: LoginService,
@@ -52,10 +54,18 @@ export class LoginComponent implements OnInit {
       error => console.log("Something went wrong")
     )
 
-    if (this.user.user_id == this.gp.big_code) {
+    // @ts-ignore
+    this.id = this.loginService.fetchUserId(this.user.email).subscribe(
+      data => console.log("Received"),
+      error => console.log("Something went wrong fetching id")
+    )
+
+    console.log(this.id)
+
+    if (this.id == this.gp.big_code) {
       console.log("Logging in as general practitioner")
       this.router.navigate(['./calender.component.html'])
-    } else if (this.user.user_id == this.patient.user_id) {
+    } else if (this.id == this.patient.user_id) {
       console.log("Logging in as patient")
       this.router.navigate(['./appointment.component.html'])
     } else {

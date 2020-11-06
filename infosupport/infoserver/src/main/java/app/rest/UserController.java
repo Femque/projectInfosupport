@@ -24,7 +24,7 @@ public class UserController {
     List<User> users = service.findAll();
     return ResponseEntity.ok(users);
   }
-  
+
   // "user/login"
   @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
   @CrossOrigin(origins = "http://localhost:4200")
@@ -43,5 +43,23 @@ public class UserController {
     }
 
     return userObj;
+  }
+
+  //Fetch id
+  @PostMapping(value = "/id")
+  @CrossOrigin
+  public int findId(@RequestBody User user) throws Exception {
+     String tempEmail = user.getEmail();
+     int userId = 0;
+
+     if (tempEmail != null) {
+       userId = service.user_id(tempEmail);
+     }
+
+     if (userId == 0) {
+       throw new Exception("Doesn't exist");
+     }
+
+     return userId;
   }
 }

@@ -25,6 +25,10 @@ export class LoginService {
     return this.http.post<any>(this.usersUrl + "/login" , user)
   }
 
+  fetchUserId(email: String){
+    return this.http.post(this.usersUrl + "/id" , email)
+  }
+
   isUserLoggedIn() {
     let user = sessionStorage.getItem('email')
     // console.log(!(user === null))
@@ -35,4 +39,6 @@ export class LoginService {
     sessionStorage.removeItem('email');
     this.userSubject.next(null);
   }
+
+
 }

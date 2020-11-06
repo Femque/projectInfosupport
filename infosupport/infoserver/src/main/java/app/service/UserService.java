@@ -22,6 +22,10 @@ public class UserService {
   public List<User> findAll() {
     return repo.findAll();
   }
+
+  public int user_id(String email) {
+    return repo.user_id(email);
+  }
 }
 
 
