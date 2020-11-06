@@ -29,7 +29,8 @@ import {LoginComponent} from "./components/login/login.component";
 import {FooterComponent} from "./components/footer/footer.component";
 import { FullCalendarModule } from '@fullcalendar/angular'; // the main connector. must go first
 import dayGridPlugin from '@fullcalendar/daygrid';
-import { ChatComponent } from './components/chat/chat.component'; // a plugin
+import { ChatComponent } from './components/chat/chat.component';
+import { PersonalInformationComponent } from './components/personal-information/personal-information.component'; // a plugin
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin
@@ -46,7 +47,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ErrorComponent,
     LoginComponent,
     FooterComponent,
-    ChatComponent
+    ChatComponent,
+    PersonalInformationComponent
   ],
 
   imports: [
