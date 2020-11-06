@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 public class Appointment {
 
   @Id
+  @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer appointment_code;
   private LocalDateTime start_time;
   private LocalDateTime end_time;
