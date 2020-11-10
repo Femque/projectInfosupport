@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   email = '';
   password = '';
-  id: number = 0;
+  id: number ;
 
   constructor(
     private loginService: LoginService,
@@ -50,17 +50,11 @@ export class LoginComponent implements OnInit {
   handleLogin() {
     this.submitted = true;
     this.loginService.loginUserFromRemote(this.user).subscribe(
-      data => console.log("Response received"),
+      data => this.user = data,
       error => console.log("Something went wrong")
     )
 
-    // @ts-ignore
-    this.id = this.loginService.fetchUserId(this.user.email).subscribe(
-      data => console.log("Received"),
-      error => console.log("Something went wrong fetching id")
-    )
-
-    console.log(this.id)
+    console.log(this.user.user_id);
 
     if (this.id == this.gp.big_code) {
       console.log("Logging in as general practitioner")

@@ -22,7 +22,26 @@ public class UserController {
   @CrossOrigin(origins = "http://localhost:4200")
   public ResponseEntity<List<User>> index() {
     List<User> users = service.findAll();
+
     return ResponseEntity.ok(users);
+  }
+
+  //Fetch id
+  @GetMapping(value = "/id")
+  @CrossOrigin
+  public int findId(@RequestBody User user) throws Exception {
+    String tempEmail = user.getEmail();
+    int userId = 0;
+
+    if (tempEmail != null) {
+      userId = service.user_id(tempEmail);
+    }
+
+    if (userId == 0) {
+      throw new Exception("Doesn't exist");
+    }
+
+    return userId;
   }
 
   // "user/login"
@@ -31,10 +50,13 @@ public class UserController {
   public User loginUser(@RequestBody User user) throws Exception {
     String tempEmail = user.getEmail();
     String tempPassword = user.getPassword();
+
     User userObj = null;
+    int user_id = 0;
 
     if (tempEmail != null && tempPassword != null) {
       userObj = service.findUserByEmailAndPassword(tempEmail, tempPassword);
+      user_id = userObj.getUser_id();
     }
 
     //If user doesn't exist
@@ -43,23 +65,5 @@ public class UserController {
     }
 
     return userObj;
-  }
-
-  //Fetch id
-  @PostMapping(value = "/id")
-  @CrossOrigin
-  public int findId(@RequestBody User user) throws Exception {
-     String tempEmail = user.getEmail();
-     int userId = 0;
-
-     if (tempEmail != null) {
-       userId = service.user_id(tempEmail);
-     }
-
-     if (userId == 0) {
-       throw new Exception("Doesn't exist");
-     }
-
-     return userId;
   }
 }

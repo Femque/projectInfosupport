@@ -1,13 +1,15 @@
 package app.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name = "User")
-public class User {
+public class User implements Serializable {
 
   @Id
+  @GeneratedValue(strategy=GenerationType.IDENTITY)
   @Column(name = "user_id")
   private Integer user_id;
 
