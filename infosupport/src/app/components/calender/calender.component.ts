@@ -152,18 +152,23 @@ export class CalenderComponent implements OnInit {
     console.log(appointment);
     this.calendarService.createAppointment(appointment)
       .subscribe(data => {
-        let newAppointment = new Appointment(
-          data.start_time,
-          data.end_time,
-          data.is_digital,
-          data.description,
-          data.location,
-          data.is_follow_up,
-          data.big_code,
-          data.patient_user_id
-        );
-        this.appointments.push(newAppointment);
+        this.appointments = [];
+        // let newAppointment = new Appointment(
+        //   data.start_time,
+        //   data.end_time,
+        //   data.is_digital,
+        //   data.description,
+        //   data.location,
+        //   data.is_follow_up,
+        //   data.big_code,
+        //   data.patient_user_id
+        // );
+        // this.appointments.push(newAppointment);
+        this.getAppointments();
+
       })
+
+    this.modalService.dismissAll();
   }
 
   async
