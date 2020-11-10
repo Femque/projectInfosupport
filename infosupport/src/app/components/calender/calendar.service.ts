@@ -40,9 +40,17 @@ export class CalendarService {
       );
   }
 
-  deleteAppointment(id: number): Observable<number> {
+  deleteAppointment(appointment: Appointment): Observable<Appointment> {
     console.log("deleting appointment");
-    return this.http.post<number>(this.appointmentsUrl + "/delete", id)
+    return this.http.post<Appointment>(this.appointmentsUrl + "/delete", appointment)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  updateAppointment(appointment: Appointment): Observable<Appointment>{
+    console.log("Updating appointment");
+    return this.http.put<Appointment>( this.appointmentsUrl + '/update', appointment)
       .pipe(
         catchError(this.handleError)
       );
