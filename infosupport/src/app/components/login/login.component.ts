@@ -51,19 +51,19 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
     this.loginService.loginUserFromRemote(this.user).subscribe(
       data => this.user = data,
-      error => console.log("Something went wrong")
+      error => error
     )
 
-    console.log(this.user.user_id);
+    console.log(this.user);
 
-    if (this.id == this.gp.big_code) {
-      console.log("Logging in as general practitioner")
-      this.router.navigate(['./calender.component.html'])
-    } else if (this.id == this.patient.user_id) {
-      console.log("Logging in as patient")
-      this.router.navigate(['./appointment.component.html'])
-    } else {
-      console.log("It's not working yet")
-    }
+    // if (this.id == this.gp.big_code) {
+    //   console.log("Logging in as general practitioner")
+    //   this.router.navigate(['./calender.component.html'])
+    // } else if (this.id == this.patient.user_id) {
+    //   console.log("Logging in as patient")
+    //   this.router.navigate(['./appointment.component.html'])
+    // } else {
+    //   console.log("It's not working yet")
+    // }
   }
 }

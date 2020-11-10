@@ -25,9 +25,9 @@ export class LoginService {
     return this.http.post<any>(this.usersUrl + "/login" , user)
   }
 
-  fetchUserId(email: String): Observable<number>{
-    return this.http.post<number>(this.usersUrl + "/id" , email)
-  }
+  // fetchUserId(email: String): Observable<number>{
+  //   return this.http.post<number>(this.usersUrl + "/id" , email)
+  // }
 
   isUserLoggedIn() {
     let user = sessionStorage.getItem('email')
