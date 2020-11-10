@@ -1,5 +1,7 @@
 package app.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -10,8 +12,12 @@ public class Appointment {
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer appointment_code;
+
+  @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
   private LocalDateTime start_time;
+  @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
   private LocalDateTime end_time;
+  
   private Boolean is_digital;
   private String description;
   private String location;
