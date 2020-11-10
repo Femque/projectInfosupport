@@ -46,7 +46,8 @@ export class AppointmentComponent implements OnInit {
         appointmentData.description = "";
         appointmentData.start = "";
         appointmentData.is_digital = "";
-        this.successMessage = `Uw afspraak is succesvol geboekt`;
+        const appointmentDate = new Date(appointment.start_time).toLocaleString();
+        this.successMessage = `Uw afspraak is succesvol geboekt op ${appointmentDate}`;
         },
         (error: ErrorEvent) => {
         this.errorMessage = error.error.message;
