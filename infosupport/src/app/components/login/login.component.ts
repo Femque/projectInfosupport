@@ -54,16 +54,23 @@ export class LoginComponent implements OnInit {
       error => error
     )
 
-    console.log(this.user);
+    console.log(this.getUser_id());
 
     // if (this.id == this.gp.big_code) {
     //   console.log("Logging in as general practitioner")
-    //   this.router.navigate(['./calender.component.html'])
+    //   this.router.navigate(['./calender'])
     // } else if (this.id == this.patient.user_id) {
     //   console.log("Logging in as patient")
-    //   this.router.navigate(['./appointment.component.html'])
+    //   this.router.navigate(['./appointment'])
     // } else {
     //   console.log("It's not working yet")
     // }
+  }
+
+  getUser_id() {
+    this.loginService.fetchUserId(this.id).subscribe(
+      data => this.id = data,
+        error => error
+      )
   }
 }
