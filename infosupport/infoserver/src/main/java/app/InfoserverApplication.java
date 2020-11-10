@@ -8,7 +8,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 @SpringBootApplication
-@ComponentScan("app.repositories")
 public class InfoserverApplication {
 
   private final static Logger log = LoggerFactory.getLogger(InfoserverApplication.class);
