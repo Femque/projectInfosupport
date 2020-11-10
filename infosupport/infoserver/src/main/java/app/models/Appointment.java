@@ -13,11 +13,9 @@ public class Appointment {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer appointment_code;
 
-  @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
   private LocalDateTime start_time;
-  @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
   private LocalDateTime end_time;
-  
+
   private Boolean is_digital;
   private String description;
   private String location;
@@ -25,13 +23,10 @@ public class Appointment {
   private Integer big_code;
   private Integer patient_user_id;
 
-  public Appointment() {
-  }
 
   public LocalDateTime getStart_time() {
     return start_time;
   }
-
   public LocalDateTime getEnd_time() {
     return end_time;
   }

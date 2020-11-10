@@ -17,7 +17,8 @@ public class AppointmentService {
   private final AppointmentRepository repository;
 
 
-  public List<Appointment> getAppointments(){
+  public List<Appointment> getAppointments()
+  {
     return repository.findAll();
   }
 
