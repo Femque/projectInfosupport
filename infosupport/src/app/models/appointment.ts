@@ -21,7 +21,7 @@ export class Appointment {
     this.is_follow_up = is_follow_up;
     this.big_code = big_code;
     this.patient_user_id = patient_user_id;
-    this.appointment_code = appointment_code;   
+    this.appointment_code = appointment_code;
   }
 
 //Possible methods go here

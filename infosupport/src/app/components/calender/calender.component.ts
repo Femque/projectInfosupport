@@ -171,7 +171,7 @@ export class CalenderComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  async
+
 
   getAppointments() {
     this.calendarService.getAppointments()
@@ -181,6 +181,7 @@ export class CalenderComponent implements OnInit {
             data[i].description, data[i].location, data[i].is_follow_up, data[i].big_code, data[i].patient_user_id, data[i].appointment_code)
 
           console.log(data[i].appointment_code)
+
           this.appointments.push(appointmentsTest);
         }
       }, error => console.log(error), () => this.createCalendar(this.appointments));
