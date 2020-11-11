@@ -1,6 +1,10 @@
 package app.rest;
 
+import app.models.GeneralPractitioner;
+import app.models.Patient;
 import app.models.User;
+import app.service.GeneralPractitionerService;
+import app.service.PatientService;
 import app.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +20,8 @@ import java.util.List;
 public class UserController {
 
   private final UserService service;
+  private final PatientService p_service;
+  private final GeneralPractitionerService gp_service;
 
   // "/user"
   @GetMapping
@@ -30,16 +36,45 @@ public class UserController {
   @CrossOrigin
   public ResponseEntity<Integer> getId(@RequestParam String email) {
     List<User> users = service.findAll();
-    for(User user : users) {
+    for (User user : users) {
       if (user.getEmail().equals(email)) {
         System.out.println(user.getEmail());
         return ResponseEntity.ok(user.getUser_id());
       } else {
-        System.out.println("elp");
+        System.out.println("");
       }
     }
     return null;
   }
+
+  @GetMapping(value = "/role")
+  @CrossOrigin
+  public ResponseEntity<Boolean> getRole(@RequestParam String email) {
+    List<User> users = service.findAll();
+    List<Patient> patients = p_service.findAll();
+    List<GeneralPractitioner> doctors = gp_service.findAll();
+
+    for (User user : users) {
+      if (user.getEmail().equals(email)) {
+        int id = user.getUser_id();
+
+        //check if patient
+        for (Patient patient : patients) {
+          if (id == patient.getUser_id()) {
+            return ResponseEntity.ok(true);
+          } else {
+            //check if doctor
+            for (GeneralPractitioner gp : doctors) {
+              if (id == gp.getBig_code()) {
+                return ResponseEntity.ok(false);
+              }
+            }
+          }
+        }
+    }
+  }
+    return null;
+}
 
   // "user/login"
   @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")

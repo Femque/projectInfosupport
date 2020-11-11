@@ -53,12 +53,14 @@ export class LoginComponent implements OnInit {
 
     let id = this.getUser_id(this.user.email);
 
-    // if () {
-    //   console.log("Logging in as general practitioner")
-    //   this.router.navigate(['./calender'])
-    // } else if () {
+    // let role = this.getUserRole(this.user.email); // Value True = Patient, False = GP
+    
+    // if (true) {
     //   console.log("Logging in as patient")
     //   this.router.navigate(['./appointment'])
+    // } else if (false) {
+    //   console.log("Logging in as general practitioner")
+    //   this.router.navigate(['./calender'])
     // } else {
     //   console.log("It's not working yet")
     // }
@@ -71,9 +73,9 @@ export class LoginComponent implements OnInit {
       )
   }
 
-  getPatientId(id: number) {
-    return this.loginService.patientId(id).subscribe(
-      data => id = data,
+  getUserRole(email: string) {
+    return this.loginService.getUserRole(email).subscribe(
+      data => (console.log(data)),
       error => error
     )
   }

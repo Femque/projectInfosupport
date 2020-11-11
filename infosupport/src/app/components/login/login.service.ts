@@ -31,8 +31,8 @@ export class LoginService {
       .pipe(catchError(this.handleError));
   }
 
-  public patientId(id: number): Observable<number> {
-    return this.http.get<number>(`${this.patientUrl + "/id"}?id=${id}`)
+  public getUserRole(email: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.patientUrl + "/role"}?email=${email}`)
       .pipe(catchError(this.handleError));
   }
 

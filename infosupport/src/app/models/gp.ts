@@ -1,13 +1,12 @@
 import {User} from "./user";
 
-export class GP extends User{
+export class GP {
 
   private _big_code: number;
-  private _specialty: String;
+  private _specialty: string;
 
 
   constructor() {
-    super();
   }
 
   get big_code(): number {
@@ -18,11 +17,11 @@ export class GP extends User{
     this._big_code = value;
   }
 
-  get specialty(): String {
+  get specialty(): string {
     return this._specialty;
   }
 
-  set specialty(value: String) {
+  set specialty(value: string) {
     this._specialty = value;
   }
 }

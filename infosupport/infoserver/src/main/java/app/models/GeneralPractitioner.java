@@ -12,18 +12,18 @@ public class GeneralPractitioner implements Serializable {
 
   @Id
   @Column(name = "big_code")
-  private String big_code;
+  private int big_code;
 
   @Column(name = "specialty")
   private String specialty;
 
   public GeneralPractitioner() { }
 
-  public String getBig_code() {
+  public int getBig_code() {
     return big_code;
   }
 
-  public void setBig_code(String big_code) {
+  public void setBig_code(int big_code) {
     this.big_code = big_code;
   }
 
