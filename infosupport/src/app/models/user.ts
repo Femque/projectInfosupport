@@ -2,11 +2,11 @@
 export class User {
 
   public user_id: number;
-  public firstname: String;
-  public lastname: String;
-  public email: String;
-  public phonenumber: String;
-  public password: String;
+  public firstname: string;
+  public lastname: string;
+  public email: string;
+  public phonenumber: string;
+  public password: string;
 
   constructor() {
   }
