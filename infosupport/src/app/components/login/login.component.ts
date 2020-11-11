@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../models/user";
 import {Patient} from "../../models/patient";
 import {GP} from "../../models/gp";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 
 
 @Component({
@@ -54,12 +54,15 @@ export class LoginComponent implements OnInit {
       error => error
     )
 
-    console.log(this.getUser_id());
+    let id = this.getUser_id(this.user.email);
 
-    // if (this.id == this.gp.big_code) {
+    console.log(id);
+
+
+    // if () {
     //   console.log("Logging in as general practitioner")
     //   this.router.navigate(['./calender'])
-    // } else if (this.id == this.patient.user_id) {
+    // } else if () {
     //   console.log("Logging in as patient")
     //   this.router.navigate(['./appointment'])
     // } else {
@@ -67,9 +70,9 @@ export class LoginComponent implements OnInit {
     // }
   }
 
-  getUser_id() {
-    this.loginService.fetchUserId(this.id).subscribe(
-      data => this.id = data,
+  getUser_id(email: string) {
+    return this.loginService.fetchUserId(email).subscribe(
+      data => console.log(data),
         error => error
       )
   }

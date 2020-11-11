@@ -28,15 +28,17 @@ public class UserController {
 
   @GetMapping(value = "/id")
   @CrossOrigin
-  public ResponseEntity<Integer> getId(@RequestBody User user) {
-    String tempEmail = user.getEmail();
-    int user_id = 0;
-
-    if (tempEmail != null) {
-      user_id = service.user_id(tempEmail);
+  public ResponseEntity<Integer> getId(@RequestParam String email) {
+    List<User> users = service.findAll();
+    for(User user : users) {
+      if (user.getEmail().equals(email)) {
+        System.out.println(user.getEmail());
+        return ResponseEntity.ok(user.getUser_id());
+      } else {
+        System.out.println("elp");
+      }
     }
-
-    return ResponseEntity.ok(user_id);
+    return null;
   }
 
   // "user/login"
