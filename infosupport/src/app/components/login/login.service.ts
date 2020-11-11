@@ -30,7 +30,7 @@ export class LoginService {
 
   //ToDO:
   public fetchUserId(email: string): Observable<number>{
-    return this.http.get<number>(`${this.usersUrl}?email=${email}`)
+    return this.http.get<number>(`${this.usersUrl + "/id"}?email=${email}`)
       .pipe(catchError(this.handleError));
   }
 

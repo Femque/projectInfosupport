@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
       data => this.user = data,
       error => error
     )
-
+    console.log(this.user.email);
     let id = this.getUser_id(this.user.email);
 
     console.log(id);
