@@ -21,11 +21,8 @@ export class AppComponent {
   };
 
   constructor(
-    private router: Router,
-    // private loginService: LoginService
-  ) {
-    // this.loginService.currentUser.subscribe(x => this.currentUser = x);
-  }
+    private router: Router
+  ) { }
 
   logout() {
     // this.loginService.logout();

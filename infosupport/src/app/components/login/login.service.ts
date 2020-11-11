@@ -5,42 +5,45 @@ import {Router} from "@angular/router";
 import {User} from "../../models/user";
 import {catchError} from "rxjs/operators";
 
-@Injectable({ providedIn: "root"})
+@Injectable({providedIn: "root"})
 export class LoginService {
   public user: Observable<User>;
   private userSubject: BehaviorSubject<User>;
-  public email;
 
   usersUrl = "http://localhost:8080/user";
+  patientUrl = "http://localhost:8080/patient";
 
   constructor(
     private http: HttpClient,
     private router: Router
   ) {
-    this.userSubject = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('user')));
+    this.userSubject = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('user_id')));
     this.user = this.userSubject.asObservable();
   }
 
-  public loginUserFromRemote(user: User):Observable<any> {
-    sessionStorage.setItem('email', this.email)
-    return this.http.post<any>(this.usersUrl + "/login" , user)
+  public loginUserFromRemote(user: User): Observable<any> {
+    return this.http.post<any>(this.usersUrl + "/login", user)
       .pipe(catchError(this.handleError));
   }
 
-
-  //ToDO:
-  public fetchUserId(email: string): Observable<number>{
+  public fetchUserId(email: string): Observable<number> {
     return this.http.get<number>(`${this.usersUrl + "/id"}?email=${email}`)
       .pipe(catchError(this.handleError));
   }
 
+  public patientId(id: number): Observable<number> {
+    return this.http.get<number>(`${this.patientUrl + "/id"}?id=${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
   isUserLoggedIn() {
-    let user = sessionStorage.getItem('email')
+    let user = sessionStorage.getItem('user_id')
     return !(user === null)
   }
 
   logOut() {
-    sessionStorage.removeItem('email');
+    sessionStorage.removeItem('user_id');
+    window.sessionStorage.clear()
     this.userSubject.next(null);
   }
 

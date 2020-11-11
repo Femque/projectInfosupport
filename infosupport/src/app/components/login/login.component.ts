@@ -5,8 +5,6 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../models/user";
 import {Patient} from "../../models/patient";
 import {GP} from "../../models/gp";
-import {Observable, Subscription} from "rxjs";
-
 
 @Component({
   selector: 'app-login',
@@ -39,7 +37,6 @@ export class LoginComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
-    sessionStorage.setItem('token', '');
   }
 
   //Getter for access form fields
@@ -53,11 +50,8 @@ export class LoginComponent implements OnInit {
       data => this.user = data,
       error => error
     )
-    console.log(this.user.email);
+
     let id = this.getUser_id(this.user.email);
-
-    console.log(id);
-
 
     // if () {
     //   console.log("Logging in as general practitioner")
@@ -72,8 +66,15 @@ export class LoginComponent implements OnInit {
 
   getUser_id(email: string) {
     return this.loginService.fetchUserId(email).subscribe(
-      data => console.log(data),
+      data => sessionStorage.setItem('user_id' , JSON.stringify(data)),
         error => error
       )
+  }
+
+  getPatientId(id: number) {
+    return this.loginService.patientId(id).subscribe(
+      data => id = data,
+      error => error
+    )
   }
 }
