@@ -5,6 +5,10 @@ import {Router} from "@angular/router";
 import {User} from "../../models/user";
 import {catchError} from "rxjs/operators";
 
+export interface booleanReturn {
+  retData: boolean;
+}
+
 @Injectable({providedIn: "root"})
 export class LoginService {
   public user: Observable<User>;
@@ -32,8 +36,10 @@ export class LoginService {
   }
 
   public getUserRole(email: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.patientUrl + "/role"}?email=${email}`)
+    let role = this.http.get<boolean>(`${this.usersUrl + "/role"}?email=${email}`)
       .pipe(catchError(this.handleError));
+
+    return role;
   }
 
   isUserLoggedIn() {

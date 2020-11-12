@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService} from "./login.service";
+import {booleanReturn, LoginService} from "./login.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../models/user";
@@ -23,13 +23,14 @@ export class LoginComponent implements OnInit {
   password = '';
   id: number ;
 
+  role : boolean;
+
   constructor(
     private loginService: LoginService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder
   ) {
-
   }
 
   ngOnInit(): void {
@@ -53,17 +54,8 @@ export class LoginComponent implements OnInit {
 
     let id = this.getUser_id(this.user.email);
 
-    // let role = this.getUserRole(this.user.email); // Value True = Patient, False = GP
-    
-    // if (true) {
-    //   console.log("Logging in as patient")
-    //   this.router.navigate(['./appointment'])
-    // } else if (false) {
-    //   console.log("Logging in as general practitioner")
-    //   this.router.navigate(['./calender'])
-    // } else {
-    //   console.log("It's not working yet")
-    // }
+    let role = this.getUserRole(this.user.email); // Value True = Patient, False = GP
+
   }
 
   getUser_id(email: string) {
@@ -75,7 +67,20 @@ export class LoginComponent implements OnInit {
 
   getUserRole(email: string) {
     return this.loginService.getUserRole(email).subscribe(
-      data => (console.log(data)),
+      data => {
+        this.role = (data);
+        if (data == true) {
+          console.log("Logging in as patient")
+          this.router.navigate(['./appointment'])
+        } else if (data == false) {
+          console.log("Logging in as general practitioner")
+          this.router.navigate(['./calender'])
+        } else {
+          console.log("It's not working yet")
+        }
+        console.log(data, "Data Value"); //prints true "X Value"
+        console.log(this.role);
+      },
       error => error
     )
   }
