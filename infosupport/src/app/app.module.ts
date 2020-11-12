@@ -30,11 +30,14 @@ import {FooterComponent} from "./components/footer/footer.component";
 import { FullCalendarModule } from '@fullcalendar/angular'; // the main connector. must go first
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { ChatComponent } from './components/chat/chat.component';
-import { PersonalInformationComponent } from './components/personal-information/personal-information.component'; // a plugin
+import { PersonalInformationComponent } from './components/personal-information/personal-information.component';
+import {SocketIoConfig, SocketIoModule} from 'ngx-socket-io';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin
 ]);
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {origin: '*:*'} };
 
 @NgModule({
   declarations: [
@@ -69,7 +72,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MatToolbarModule,
     MatGridListModule,
     MatSelectModule, RouterModule,
-    AppRoutingModule, ReactiveFormsModule
+    AppRoutingModule, ReactiveFormsModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [],
   bootstrap: [AppComponent]
