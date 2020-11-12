@@ -31,8 +31,13 @@
     "@ng-bootstrap/ng-bootstrap": "^7.0.0",
     "@syncfusion/ej2-angular-schedule": "^18.3.35",
     "@syncfusion/ej2-material-theme": "~18.2.47",
+    "express": "latest",
     "ngb-modal": "^2.0.3",
+    "ngx-socket-io": "^3.2.0",
+    "nodeman": "^1.1.2",
     "rxjs": "~6.6.0",
+    "socket.io": "^3.0.1",
+    "socket.io-client": "^3.0.1",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },
