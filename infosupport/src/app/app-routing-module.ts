@@ -8,6 +8,7 @@ import {AppointmentComponent} from "./components/appointment/appointment.compone
 import {AppointmentViewComponent} from "./components/appointmentView/appointmentView.component";
 import {CalenderComponent} from "./components/calender/calender.component";
 import {FullCalendarModule} from "@fullcalendar/angular";
+import {ChatComponent} from './components/chat/chat.component';
 
 
 const routes: Routes = [
@@ -30,6 +31,10 @@ const routes: Routes = [
   {
     path: 'calender',
     component: CalenderComponent
+  },
+  {
+    path: 'chat',
+    component: ChatComponent
   },
   {
     path: '',
