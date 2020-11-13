@@ -48,7 +48,7 @@ public class UserController {
   }
 
   @GetMapping(value = "/role")
-  @CrossOrigin
+  @CrossOrigin(origins = "http://localhost:4200")
   public ResponseEntity<Boolean> getRole(@RequestParam String email) {
     List<User> users = service.findAll();
     List<Patient> patients = p_service.findAll();
@@ -61,11 +61,13 @@ public class UserController {
         //check if patient
         for (Patient patient : patients) {
           if (id == patient.getUser_id()) {
+            System.out.println("LOGIN AS PATIENT");
             return ResponseEntity.ok(true);
           } else {
             //check if doctor
             for (GeneralPractitioner gp : doctors) {
               if (id == gp.getBig_code()) {
+                System.out.println("LOGIN AS DOCTOR");
                 return ResponseEntity.ok(false);
               }
             }
