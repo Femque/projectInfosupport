@@ -17,6 +17,8 @@ public class GeneralPractitioner implements Serializable {
   @Column(name = "specialty")
   private String specialty;
 
+  private int user_id;
+
   public GeneralPractitioner() { }
 
   public int getBig_code() {
@@ -35,4 +37,11 @@ public class GeneralPractitioner implements Serializable {
     this.specialty = specialty;
   }
 
+  public int getUser_id() {
+    return user_id;
+  }
+
+  public void setUser_id(int user_id) {
+    this.user_id = user_id;
+  }
 }

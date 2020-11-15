@@ -36,8 +36,13 @@ public class AppointmentService {
     repository.deleteById(id);
   }
 
+
   public List<String> getPatientsForGp(int gp_user_id){
     return repository.getPatients(gp_user_id);
+  }
+
+  public List<Appointment> getAppointmentsForGp(int bigCode){
+    return repository.getAppointmentsByBigCode(bigCode);
   }
 
 }

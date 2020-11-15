@@ -31,6 +31,14 @@ public class AppointmentController {
     return ResponseEntity.ok(appointments);
   }
 
+
+  @GetMapping("/appointments/gp/{big_code}")
+  @CrossOrigin
+  public ResponseEntity<List<Appointment>> getAppointmentsByBig( @PathVariable int big_code) {
+    List<Appointment> appointments = appointmentService.getAppointmentsForGp(big_code);
+    return ResponseEntity.ok(appointments);
+  }
+
 //  @CrossOrigin
 //  @PostMapping("/appointments/create")
 //  public Appointment createAppointment(@RequestBody Appointment appointment) { return repo.createAppointment(appointment); }

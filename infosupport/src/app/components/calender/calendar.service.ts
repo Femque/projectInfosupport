@@ -31,6 +31,14 @@ export class CalendarService {
       );
   }
 
+  getAppointmentsGp(big_code : number): Observable<Appointment[]> {
+    console.log("getting appointments ")
+    return this.http.get<Appointment[]>(this.appointmentsUrl + "/gp/" + big_code)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   createAppointment(appointment: Appointment): Observable<Appointment> {
     console.log("creating appointment with " + appointment);
     const url = `${this.appointmentsUrl + "/create"}`
@@ -40,12 +48,9 @@ export class CalendarService {
       );
   }
 
-  deleteAppointment(appointment: Appointment): Observable<Appointment> {
-    console.log("deleting appointment");
-    return this.http.post<Appointment>(this.appointmentsUrl + "/delete", appointment)
-      .pipe(
-        catchError(this.handleError)
-      );
+  deleteAppointment(id: number): Observable<{}> {
+    const url = `${this.appointmentsUrl + "/delete"}/${id}`; // DELETE api/heroes/42
+    return this.http.delete(url)
   }
 
   updateAppointment(appointment: Appointment): Observable<Appointment>{
