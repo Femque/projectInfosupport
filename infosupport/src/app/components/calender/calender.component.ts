@@ -25,9 +25,11 @@ export class CalenderComponent implements OnInit {
   closeResult = '';
   appointmentForm;
   patients = [];
+  patients : Array<string> = [];
 
   selectedAppointment: any;
 
+  title: string;
   patient_user_id: number;
   location: string;
   start_time: Date;
@@ -53,15 +55,18 @@ export class CalenderComponent implements OnInit {
       end: [''],
       is_digital: [false],
       is_followup: [false]
-    })
+    });
   }
 
    ngOnInit() {
-     this.getAppointments();
-     console.log(sessionStorage.getItem("user_id"));
      this.getPatients(sessionStorage.getItem("user_id"))
+     this.getAppointments();
      console.log(this.patients);
+  }
 
+  selected(e) {
+    this.title = e;
+    console.log(this.title);
   }
 
   open() {
@@ -157,23 +162,13 @@ export class CalenderComponent implements OnInit {
   }
 
   createAppointment(appointmentdata) {
+    console.log(appointmentdata.title);
     let appointment = new Appointment(appointmentdata.start, appointmentdata.end, appointmentdata.is_digital,
-      appointmentdata.description, appointmentdata.location, appointmentdata.is_followup, 321, 123);
+      appointmentdata.description, appointmentdata.location, appointmentdata.is_followup, 321, 123, appointmentdata.title );
     console.log(appointment);
     this.calendarService.createAppointment(appointment)
       .subscribe(data => {
         this.appointments = [];
-        // let newAppointment = new Appointment(
-        //   data.start_time,
-        //   data.end_time,
-        //   data.is_digital,
-        //   data.description,
-        //   data.location,
-        //   data.is_follow_up,
-        //   data.big_code,
-        //   data.patient_user_id
-        // );
-        // this.appointments.push(newAppointment);
         this.getAppointments();
 
       })
@@ -211,8 +206,6 @@ export class CalenderComponent implements OnInit {
       this.title,
       this.appointment_code
     )
-    console.log(updatedAppointment)
-    console.log(this.location)
     this.calendarService.updateAppointment(updatedAppointment).subscribe(
       (data) => {
       }, (error) => {
@@ -252,12 +245,17 @@ export class CalenderComponent implements OnInit {
     this.modalService.dismissAll()
   }
 
-  getPatients(gp_user_id){
+  getPatients(gp_user_id) {
     this.calendarService.getPatientsForGp(gp_user_id).subscribe(data => {
       for (let i = 0; i <data.length ; i++) {
-        this.patients.push(data[i])
+        let test = data[i].split(",");
+        let test2 = test[0] + " " + test[1];
+        console.log(test2);
+        this.patients.push(test2)
       }
     })
+
+    return this.patients;
   }
 
   setTitle(title : string){
