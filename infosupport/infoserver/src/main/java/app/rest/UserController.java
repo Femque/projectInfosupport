@@ -1,6 +1,6 @@
 package app.rest;
 
-import app.models.GeneralPractitioner;
+import app.models.General_practitioner;
 import app.models.Patient;
 import app.models.User;
 import app.service.GeneralPractitionerService;
@@ -52,7 +52,7 @@ public class UserController {
   public ResponseEntity<Boolean> getRole(@RequestParam String email) {
     List<User> users = service.findAll();
     List<Patient> patients = p_service.findAll();
-    List<GeneralPractitioner> doctors = gp_service.findAll();
+    List<General_practitioner> doctors = gp_service.findAll();
 
     for (User user : users) {
       if (user.getEmail().equals(email)) {
@@ -65,7 +65,7 @@ public class UserController {
             return ResponseEntity.ok(true);
           } else {
             //check if doctor
-            for (GeneralPractitioner gp : doctors) {
+            for (General_practitioner gp : doctors) {
               if (id == gp.getBig_code()) {
                 System.out.println("LOGIN AS DOCTOR");
                 return ResponseEntity.ok(false);

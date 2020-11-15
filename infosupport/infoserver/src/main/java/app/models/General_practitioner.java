@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "General_practitioner")
-public class GeneralPractitioner implements Serializable {
+public class General_practitioner implements Serializable {
 
   @Id
   @Column(name = "big_code")
@@ -17,9 +17,19 @@ public class GeneralPractitioner implements Serializable {
   @Column(name = "specialty")
   private String specialty;
 
-  private int user_id;
+  private Integer user_id;
 
-  public GeneralPractitioner() { }
+  private String email;
+
+  private String firstname;
+
+  private String lastname;
+
+  private String password;
+
+  private Integer phonenumber;
+
+  public General_practitioner() { }
 
   public int getBig_code() {
     return big_code;
@@ -37,11 +47,6 @@ public class GeneralPractitioner implements Serializable {
     this.specialty = specialty;
   }
 
-  public int getUser_id() {
-    return user_id;
-  }
 
-  public void setUser_id(int user_id) {
-    this.user_id = user_id;
-  }
+
 }
