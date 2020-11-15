@@ -55,8 +55,9 @@ public class AppointmentController {
   @CrossOrigin
   @Transactional
   public ResponseEntity<Appointment> update(@RequestBody Appointment appointment) {
+    System.out.println(appointment.getTitle());
     appointmentService.updateAppointment(appointment.getStart_time(), appointment.getEnd_time(),
-      appointment.isIs_digital(), appointment.getDescription(), appointment.getLocation(), appointment.getIs_follow_up(), appointment.getAppointment_code());
+      appointment.isIs_digital(), appointment.getDescription(), appointment.getLocation(), appointment.getIs_follow_up(), appointment.getTitle(), appointment.getAppointment_code());
     System.out.println(appointment.getStart_time());
     return ResponseEntity.ok(appointment);
   }

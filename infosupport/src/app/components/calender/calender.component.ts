@@ -24,7 +24,7 @@ export class CalenderComponent implements OnInit {
   appointments: Appointment[] = [];
   closeResult = '';
   appointmentForm;
-  patients : string[]= [];
+  patients = [];
 
   selectedAppointment: any;
 
@@ -37,6 +37,7 @@ export class CalenderComponent implements OnInit {
   description: string;
   big_code: number;
   appointment_code: number;
+  title: string;
 
   @ViewChild('create')
   create;
@@ -83,6 +84,8 @@ export class CalenderComponent implements OnInit {
     this.description = event.description
     this.big_code = event.big_code
     this.appointment_code = event.appointment_code
+    this.title = event.titlePatient
+
 
     console.log(event)
     this.modalService.open(this.content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
@@ -144,7 +147,8 @@ export class CalenderComponent implements OnInit {
         is_follow_up: appointments[i].is_follow_up,
         big_code: appointments[i].big_code,
         appointment_code: appointments[i].appointment_code,
-        patient_user_id: appointments[i].patient_user_id
+        patient_user_id: appointments[i].patient_user_id,
+        titlePatient: appointments[i].title
       });
 
     }
@@ -183,8 +187,9 @@ export class CalenderComponent implements OnInit {
     this.calendarService.getAppointments()
       .subscribe(data => {
         for (let i = 0; i < data.length; i++) {
+
           let appointmentsTest = new Appointment(data[i].start_time, data[i].end_time, data[i].is_digital,
-            data[i].description, data[i].location, data[i].is_follow_up, data[i].big_code, data[i].patient_user_id, data[i].appointment_code, data[i].title)
+            data[i].description, data[i].location, data[i].is_follow_up, data[i].big_code, data[i].patient_user_id, data[i].title, data[i].appointment_code)
 
           console.log(data[i].title)
 
@@ -203,6 +208,7 @@ export class CalenderComponent implements OnInit {
       this.is_follow_up,
       this.big_code,
       this.patient_user_id,
+      this.title,
       this.appointment_code
     )
     console.log(updatedAppointment)
@@ -214,7 +220,7 @@ export class CalenderComponent implements OnInit {
       }
     )
     this.modalService.dismissAll()
-    window.location.reload()
+    // window.location.reload()
 
   }
 
@@ -228,6 +234,7 @@ export class CalenderComponent implements OnInit {
       this.is_follow_up,
       this.big_code,
       this.patient_user_id,
+      this.title,
       this.appointment_code
     )
 
@@ -251,5 +258,9 @@ export class CalenderComponent implements OnInit {
         this.patients.push(data[i])
       }
     })
+  }
+
+  setTitle(title : string){
+    this.title = title
   }
 }
