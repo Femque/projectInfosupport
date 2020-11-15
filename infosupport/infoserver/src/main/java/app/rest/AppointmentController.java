@@ -46,6 +46,7 @@ public class AppointmentController {
   @CrossOrigin
   @Transactional
   public ResponseEntity<Appointment> store(@RequestBody Appointment appointment) {
+    System.out.println(appointment);
     appointmentService.createAppointment(appointment);
     return ResponseEntity.ok(appointment);
   }

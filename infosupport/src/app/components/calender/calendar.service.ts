@@ -32,7 +32,7 @@ export class CalendarService {
   }
 
   createAppointment(appointment: Appointment): Observable<Appointment> {
-    console.log("creating appointment");
+    console.log("creating appointment with " + appointment);
     const url = `${this.appointmentsUrl + "/create"}`
     return this.http.post<Appointment>(url, appointment)
       .pipe(
