@@ -32,7 +32,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
                          );
 
   @Modifying
-  @Query("SELECT p.firstname FROM Patient p WHERE p.gp_user_id = ?1")
+  @Query("SELECT p.firstname, p.lastname FROM Patient p WHERE p.gp_user_id = ?1")
   List<String> getPatients(@Param("gp_user_id") int gp_user_id);
 
 

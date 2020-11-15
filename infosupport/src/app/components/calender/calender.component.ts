@@ -24,12 +24,10 @@ export class CalenderComponent implements OnInit {
   appointments: Appointment[] = [];
   closeResult = '';
   appointmentForm;
-  patients = [];
   patients : Array<string> = [];
 
   selectedAppointment: any;
 
-  title: string;
   patient_user_id: number;
   location: string;
   start_time: Date;
