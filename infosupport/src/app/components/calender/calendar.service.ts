@@ -31,6 +31,15 @@ export class CalendarService {
       );
   }
 
+  getBigCode(user_id: number) {
+    console.log(user_id);
+    const url = `http://localhost:8080/doctor/big_code/${user_id}`;
+    return this.http.get<number>(url)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+
   createAppointment(appointment: Appointment): Observable<Appointment> {
     console.log("creating appointment with " + appointment);
     const url = `${this.appointmentsUrl + "/create"}`

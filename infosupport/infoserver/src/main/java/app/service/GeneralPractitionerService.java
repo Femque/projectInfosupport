@@ -1,6 +1,6 @@
 package app.service;
 
-import app.models.GeneralPractitioner;
+import app.models.General_practitioner;
 import app.repositories.GeneralPractitionerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,9 @@ public class GeneralPractitionerService {
 
   private final GeneralPractitionerRepository repo;
 
-  public List<GeneralPractitioner> findAll() {
+  public List<General_practitioner> findAll() {
     return repo.findAll();
   }
+
+  public Integer findBigCodeByUserId(Integer user_id) { return repo.findBigCodeByUserId(user_id); }
 }

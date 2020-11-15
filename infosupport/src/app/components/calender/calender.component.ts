@@ -1,17 +1,17 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Appointment} from "../../models/appointment";
-import {CalendarService} from "./calendar.service";
+import {Appointment} from '../../models/appointment';
+import {CalendarService} from './calendar.service';
 import {Calendar} from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import {Observable} from "rxjs";
+import {Observable} from 'rxjs';
 import {CalendarOptions} from '@fullcalendar/angular'; // useful for typechecking
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import {Calendar_appointment} from "../../models/calendar_appointment";
+import {Calendar_appointment} from '../../models/calendar_appointment';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {log} from "util";
-import {FormBuilder} from "@angular/forms";
+import {log} from 'util';
+import {FormBuilder} from '@angular/forms';
 
 @Component({
   selector: 'app-calender',
@@ -24,7 +24,7 @@ export class CalenderComponent implements OnInit {
   appointments: Appointment[] = [];
   closeResult = '';
   appointmentForm;
-  patients : Array<string> = [];
+  patients: Array<string> = [];
 
   selectedAppointment: any;
 
@@ -56,20 +56,18 @@ export class CalenderComponent implements OnInit {
     });
   }
 
-   ngOnInit() {
-     this.getPatients(sessionStorage.getItem("user_id"))
-     this.getAppointments();
-     console.log(this.patients);
+  ngOnInit() {
+    this.getBigCode(sessionStorage.getItem('user_id'));
+    this.getPatients(sessionStorage.getItem('user_id'));
+    this.getAppointments();
   }
 
   selected(e) {
     this.title = e;
-    console.log(this.title);
   }
 
   open() {
     this.modalService.open(this.create, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      console.log(result);
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -78,19 +76,17 @@ export class CalenderComponent implements OnInit {
 
   openUpdate(event: any) {
     this.selectedAppointment = event;
-    this.patient_user_id = event.patient_user_id
-    this.location = event.location
-    this.start_time = event.start_time
-    this.end_time = event.end_time
-    this.is_follow_up = event.is_follow_up
-    this.is_digital = event.is_digital
-    this.description = event.description
-    this.big_code = event.big_code
-    this.appointment_code = event.appointment_code
-    this.title = event.titlePatient
+    this.patient_user_id = event.patient_user_id;
+    this.location = event.location;
+    this.start_time = event.start_time;
+    this.end_time = event.end_time;
+    this.is_follow_up = event.is_follow_up;
+    this.is_digital = event.is_digital;
+    this.description = event.description;
+    this.big_code = event.big_code;
+    this.appointment_code = event.appointment_code;
+    this.title = event.titlePatient;
 
-
-    console.log(event)
     this.modalService.open(this.content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -109,8 +105,6 @@ export class CalenderComponent implements OnInit {
   }
 
   async createCalendar(appointments: Appointment[]) {
-    console.log('creating calendar');
-
     const calendarEl = document.getElementById('calendar');
 
     let calendar = new Calendar(calendarEl,
@@ -133,7 +127,7 @@ export class CalenderComponent implements OnInit {
         navLinks: true, // can click day/week names to navigate views
         editable: true,
         dayMaxEvents: true, // allow "more" link when too many events,
-        eventDisplay: "block",
+        eventDisplay: 'block',
         contentHeight: 'auto'
       });
 
@@ -160,20 +154,17 @@ export class CalenderComponent implements OnInit {
   }
 
   createAppointment(appointmentdata) {
-    console.log(appointmentdata.title);
     let appointment = new Appointment(appointmentdata.start, appointmentdata.end, appointmentdata.is_digital,
-      appointmentdata.description, appointmentdata.location, appointmentdata.is_followup, 321, 123, appointmentdata.title );
-    console.log(appointment);
+      appointmentdata.description, appointmentdata.location, appointmentdata.is_followup, 321, 123, appointmentdata.title);
     this.calendarService.createAppointment(appointment)
       .subscribe(data => {
         this.appointments = [];
         this.getAppointments();
 
-      })
+      });
 
     this.modalService.dismissAll();
   }
-
 
 
   getAppointments() {
@@ -182,9 +173,7 @@ export class CalenderComponent implements OnInit {
         for (let i = 0; i < data.length; i++) {
 
           let appointmentsTest = new Appointment(data[i].start_time, data[i].end_time, data[i].is_digital,
-            data[i].description, data[i].location, data[i].is_follow_up, data[i].big_code, data[i].patient_user_id, data[i].title, data[i].appointment_code)
-
-          console.log(data[i].title)
+            data[i].description, data[i].location, data[i].is_follow_up, data[i].big_code, data[i].patient_user_id, data[i].title, data[i].appointment_code);
 
           this.appointments.push(appointmentsTest);
         }
@@ -203,14 +192,14 @@ export class CalenderComponent implements OnInit {
       this.patient_user_id,
       this.title,
       this.appointment_code
-    )
+    );
     this.calendarService.updateAppointment(updatedAppointment).subscribe(
       (data) => {
       }, (error) => {
-        alert('HTTP Error: Status' + error.status + '-' + error.message)
+        alert('HTTP Error: Status' + error.status + '-' + error.message);
       }
-    )
-    this.modalService.dismissAll()
+    );
+    this.modalService.dismissAll();
     // window.location.reload()
 
   }
@@ -227,36 +216,42 @@ export class CalenderComponent implements OnInit {
       this.patient_user_id,
       this.title,
       this.appointment_code
-    )
+    );
 
     this.calendarService.deleteAppointment(deleted).subscribe(
       (data) => {
       }, (error) => {
-        alert('HTTP Error: Status' + error.status + '-' + error.message)
+        alert('HTTP Error: Status' + error.status + '-' + error.message);
       }
-    )
-    this.modalService.dismissAll()
-    window.location.reload()
+    );
+    this.modalService.dismissAll();
+    window.location.reload();
   }
 
   cancelUpdate() {
-    this.modalService.dismissAll()
+    this.modalService.dismissAll();
+  }
+
+  getBigCode(user_id) {
+    this.calendarService.getBigCode(user_id).subscribe( data => {
+      sessionStorage.setItem("big_code", JSON.stringify(data))
+      console.log("big code = " + sessionStorage.getItem("big_code"));
+    });
   }
 
   getPatients(gp_user_id) {
     this.calendarService.getPatientsForGp(gp_user_id).subscribe(data => {
-      for (let i = 0; i <data.length ; i++) {
-        let test = data[i].split(",");
-        let test2 = test[0] + " " + test[1];
-        console.log(test2);
-        this.patients.push(test2)
+      for (let i = 0; i < data.length; i++) {
+        let test = data[i].split(',');
+        let test2 = test[0] + ' ' + test[1];
+        this.patients.push(test2);
       }
-    })
+    });
 
     return this.patients;
   }
 
-  setTitle(title : string){
-    this.title = title
+  setTitle(title: string) {
+    this.title = title;
   }
 }
