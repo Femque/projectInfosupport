@@ -155,7 +155,7 @@ export class CalenderComponent implements OnInit {
 
   createAppointment(appointmentdata) {
     let appointment = new Appointment(appointmentdata.start, appointmentdata.end, appointmentdata.is_digital,
-      appointmentdata.description, appointmentdata.location, appointmentdata.is_followup, 321, 123, appointmentdata.title);
+      appointmentdata.description, appointmentdata.location, appointmentdata.is_followup, parseInt(sessionStorage.getItem("big_code")), 123, appointmentdata.title);
     this.calendarService.createAppointment(appointment)
       .subscribe(data => {
         this.appointments = [];
