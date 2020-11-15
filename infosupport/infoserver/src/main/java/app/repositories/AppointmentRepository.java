@@ -29,6 +29,10 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
                          @Param("is_follow_up") boolean is_follow_up,
                          @Param("appointment_code") int appointment_code);
 
+  @Modifying
+  @Query("SELECT p.firstname , p.lastname FROM Patient p WHERE p.gp_user_id = ?1")
+  List<String> getPatients(@Param("gp_user_id") int gp_user_id);
+
 
 
 

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
 import {io} from 'socket.io-client';
+import {Observable} from 'rxjs';
 
 const SOCKET_ENDPOINT = 'localhost:3000';
 
@@ -13,12 +14,14 @@ export class ChatComponent implements OnInit {
 
   socket;
   message: string;
+  RoomName: number;
 
   constructor() {
   }
 
   ngOnInit(): void {
-    this.setupSocketConnection();
+    console.log(sessionStorage);
+    this.getMessages(this.RoomName)
   }
 
   setupSocketConnection() {
@@ -36,6 +39,8 @@ export class ChatComponent implements OnInit {
   }
 
   SendMessage() {
+    this.socket.emit('RoomName', this.RoomName)
+    console.log(this.RoomName);
     this.socket.emit('message', this.message);
     const element = document.createElement('li');
     element.innerHTML = this.message;
@@ -46,4 +51,33 @@ export class ChatComponent implements OnInit {
     document.getElementById('message-list').appendChild(element);
     this.message = '';
   }
+
+  room1(){
+    this.RoomName = 1
+    console.log(this.RoomName);
+    this.setupSocketConnection()
+  }
+
+  room2(){
+    this.RoomName = 2
+    console.log(this.RoomName);
+    this.setupSocketConnection()
+  }
+
+  getMessages(conversation_id) {
+
+    let observable = new Observable(observer => {
+
+      this.socket.on('message:send:response', (chat) => {
+        if (chat.conversation_id === conversation_id) {
+          observer.next(chat.msg);
+        }
+      })
+
+    });
+
+    return observable;
+
+  }
 }
+

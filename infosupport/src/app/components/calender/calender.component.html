@@ -4,71 +4,70 @@
 
 
 <ng-template #create let-data>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
-    <button type="button" class="close" aria-label="Close" (click)="data.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <form [formGroup]="appointmentForm" (ngSubmit)="createAppointment(appointmentForm.value)">
-      <div class="form-group">
-
-        <div>
-          <label for="title">
-            Titel
-          </label>
-          <input id="title" type="text" formControlName="title">
-        </div>
-
-        <div>
-          <label for="description">
-            Beschrijving
-          </label>
-          <input id="description" type="text" formControlName="description">
-        </div>
-
-        <div>
-          <label for="location">
-            Locatie
-          </label>
-          <input id="location" type="text" formControlName="location">
-        </div>
-
-        <div>
-          <label for="start">
-            Begin tijd
-          </label>
-          <input id="start" type="datetime-local" formControlName="start">
-        </div>
-
-        <div>
-          <label for="end">
-            Eind tijd
-          </label>
-          <input id="end" type="datetime-local" formControlName="end">
-        </div>
-
-        <div>
-          <label for="is_digital">
-            Digitale afspraak?
-          </label>
-          <input id="is_digital" type="checkbox" formControlName="is_digital">
-        </div>
-
-        <div>
-          <label for="is_followup">
-            Vervolg afspraak?
-          </label>
-          <input id="is_followup" type="checkbox" formControlName="is_followup">
-        </div>
-      </div>
-
+  <form [formGroup]="appointmentForm" (ngSubmit)="createAppointment(appointmentForm.value)">
+  <table cellpadding="15px" class="custom-event-editor">
+    <tbody>
+    <tr>
+      <td class="e-textlabel">Patient</td>
+      <td colspan="4">
+        <select class="dropdown" >
+          <option *ngFor="let patient of patients; let i = index" formControlName="title"
+                  class="title">{{patient}}</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td class="e-textlabel">Locatie</td>
+      <td colspan="4">
+        <input class="e-field e-input" type="text" formControlName="location"
+               id="location" name="Location"
+               style="width: 100%"/>
+      </td>
+    </tr>
+    <tr>
+      <td class="e-textlabel">Starttijd</td>
+      <td colspan="4" class="ml-4">
+        <input id="start" class="e-field" type="datetime-local" formControlName="start"
+               name="StartTime"/>
+      </td>
+    </tr>
+    <tr>
+      <td class="e-textlabel">Eindtijd</td>
+      <td colspan="4">
+        <input id="end" class="e-field" type="datetime-local" formControlName="end"
+               name="EndTime"/>
+      </td>
+    </tr>
+    <tr>
+      <td class="e-textlabel">Is vervolg afspraak</td>
+      <td colspan="4">
+        <input  class=" e-field" type="checkbox" name="isFollowUpAppointment"
+               id="is_followup" title="isFollowUpAppointment" formControlName="is_followup">
+      </td>
+    </tr>
+    <tr>
+      <td class="e-textlabel">Is digitaal</td>
+      <td colspan="4">
+        <input  class=" e-field" type="checkbox" formControlName="is_digital"
+                name="isDigital" id="is_digital"
+               title="isDigital">
+      </td>
+    </tr>
+    <tr>
+      <td class="e-textlabel">Beschrijving</td>
+      <td colspan="4">
+        <textarea  id="description" class="e-field e-input" formControlName="description"
+                   name="Description" rows="3"
+                  cols="50" style="width: 100%; height: 60px !important; resize: vertical"></textarea>
+      </td>
+    </tr>
+    <tr>
       <div class="modal-footer">
         <button type="submit" class="btn btn-outline-dark">Save</button>
-      </div>
-    </form>
-  </div>
+      </div>    </tr>
+    </tbody>
+  </table>
+</form>
 </ng-template>
 
 
@@ -78,8 +77,9 @@
       <tr>
         <td class="e-textlabel">Patient</td>
         <td colspan="4">
-          <input [(ngModel)]="patient_user_id" class="e-field e-input" type="text" value="" name="Patient" id="Patient"
-                 style="width: 100%"/>
+         <select class="dropdown" >
+           <option *ngFor="let patient of patients; let i = index" class="patient">{{patient}}</option>
+         </select>
         </td>
       </tr>
       <tr>

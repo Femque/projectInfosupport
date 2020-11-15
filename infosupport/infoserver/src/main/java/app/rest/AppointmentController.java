@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.Column;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -65,5 +66,12 @@ public class AppointmentController {
   public ResponseEntity<Integer> delete(@PathVariable int id) {
     appointmentService.deleteAppointment(id);
     return ResponseEntity.ok(id);
+  }
+
+  @CrossOrigin
+  @GetMapping("/appointments/getPatients/{gp_user_id}")
+  public ResponseEntity<List<String>> getPatients(@PathVariable int gp_user_id){
+    appointmentService.getPatientsForGp(gp_user_id);
+    return ResponseEntity.ok(appointmentService.getPatientsForGp(gp_user_id));
   }
 }

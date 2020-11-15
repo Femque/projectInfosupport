@@ -56,6 +56,11 @@ export class CalendarService {
       );
   }
 
+  getPatientsForGp(gp_user_id: number): Observable<string[]>{
+    console.log("getting patients");
+    return this.http.get<string[]>(this.appointmentsUrl + "/getPatients/" + gp_user_id)
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

@@ -24,6 +24,7 @@ export class CalenderComponent implements OnInit {
   appointments: Appointment[] = [];
   closeResult = '';
   appointmentForm;
+  patients : string[]= [];
 
   selectedAppointment: any;
 
@@ -54,8 +55,12 @@ export class CalenderComponent implements OnInit {
     })
   }
 
-  async ngOnInit() {
-    await this.getAppointments();
+   ngOnInit() {
+     this.getAppointments();
+     console.log(sessionStorage.getItem("user_id"));
+     this.getPatients(sessionStorage.getItem("user_id"))
+     console.log(this.patients);
+
   }
 
   open() {
@@ -122,12 +127,13 @@ export class CalenderComponent implements OnInit {
         navLinks: true, // can click day/week names to navigate views
         editable: true,
         dayMaxEvents: true, // allow "more" link when too many events,
-        eventDisplay: "block"
+        eventDisplay: "block",
+        contentHeight: 'auto'
       });
 
     for (let i = 0; i < appointments.length; i++) {
       calendar.addEvent({
-        title: appointments[i].patient_user_id.toLocaleString(),
+        title: appointments[i].title,
         start: appointments[i].start_time,
         end: appointments[i].end_time,
         start_time: appointments[i].start_time,
@@ -178,9 +184,9 @@ export class CalenderComponent implements OnInit {
       .subscribe(data => {
         for (let i = 0; i < data.length; i++) {
           let appointmentsTest = new Appointment(data[i].start_time, data[i].end_time, data[i].is_digital,
-            data[i].description, data[i].location, data[i].is_follow_up, data[i].big_code, data[i].patient_user_id, data[i].appointment_code)
+            data[i].description, data[i].location, data[i].is_follow_up, data[i].big_code, data[i].patient_user_id, data[i].appointment_code, data[i].title)
 
-          console.log(data[i].appointment_code)
+          console.log(data[i].title)
 
           this.appointments.push(appointmentsTest);
         }
@@ -237,5 +243,13 @@ export class CalenderComponent implements OnInit {
 
   cancelUpdate() {
     this.modalService.dismissAll()
+  }
+
+  getPatients(gp_user_id){
+    this.calendarService.getPatientsForGp(gp_user_id).subscribe(data => {
+      for (let i = 0; i <data.length ; i++) {
+        this.patients.push(data[i])
+      }
+    })
   }
 }
