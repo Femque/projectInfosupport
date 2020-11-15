@@ -37,6 +37,8 @@ export class CalendarService {
       .pipe(
         catchError(this.handleError)
       );
+  }
+
   getBigCode(user_id: number) {
     console.log(user_id);
     const url = `http://localhost:8080/doctor/big_code/${user_id}`;

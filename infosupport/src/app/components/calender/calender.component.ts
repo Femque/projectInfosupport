@@ -168,7 +168,7 @@ export class CalenderComponent implements OnInit {
 
 
   getAppointments() {
-    this.calendarService.getAppointmentsGp()
+    this.calendarService.getAppointmentsGp(parseInt(sessionStorage.getItem("big_code")))
       .subscribe(data => {
         for (let i = 0; i < data.length; i++) {
 
@@ -199,29 +199,14 @@ export class CalenderComponent implements OnInit {
         alert('HTTP Error: Status' + error.status + '-' + error.message);
       }
     );
+
+
     this.modalService.dismissAll();
-    // window.location.reload()
-    )
-    this.modalService.dismissAll()
     window.location.reload()
 
   }
 
   deleteAppointment() {
-    let deleted = new Appointment(
-      this.start_time,
-      this.end_time,
-      this.is_digital,
-      this.description,
-      this.location,
-      this.is_follow_up,
-      this.big_code,
-      this.patient_user_id,
-      this.title,
-      this.appointment_code
-    );
-
-    this.calendarService.deleteAppointment(deleted).subscribe(
     this.calendarService.deleteAppointment(this.appointment_code).subscribe(
       (data) => {
       }, (error) => {
