@@ -21,7 +21,9 @@ public class Appointment {
   private String location;
   private Boolean is_follow_up;
   private Integer big_code;
+  private String title;
   private Integer patient_user_id;
+
 
 
   public LocalDateTime getStart_time() {
@@ -55,7 +57,13 @@ public class Appointment {
     return patient_user_id;
   }
 
+  public String getTitle() {
+    return title;
+  }
+
   public Integer getAppointment_code() {
     return appointment_code;
   }
+
+
 }

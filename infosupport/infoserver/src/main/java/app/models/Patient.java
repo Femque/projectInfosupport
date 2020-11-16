@@ -20,6 +20,15 @@ public class Patient implements Serializable {
   @Column(name = "allergies")
   private String allergies;
 
+  @Column(name = "gp_user_id")
+  private int gp_user_id;
+
+  @Column(name = "firstname")
+  private String firstname;
+
+  @Column(name = "lastname")
+  private String lastname;
+
   public Patient(){ }
 
   public Integer getUser_id() {
@@ -52,5 +61,29 @@ public class Patient implements Serializable {
 
   public void setAllergies(String allergies) {
     this.allergies = allergies;
+  }
+
+  public int getGp_user_id() {
+    return gp_user_id;
+  }
+
+  public void setGp_user_id(int gp_user_id) {
+    this.gp_user_id = gp_user_id;
+  }
+
+  public String getFirstname() {
+    return firstname;
+  }
+
+  public void setFirstname(String firstname) {
+    this.firstname = firstname;
+  }
+
+  public String getLastname() {
+    return lastname;
+  }
+
+  public void setLastname(String lastname) {
+    this.lastname = lastname;
   }
 }
