@@ -7,7 +7,7 @@
 
   <ul class="nav justify-content-end">
     <li class="nav-item">
-      <a *ngIf="loginService.isUserLoggedIn()" class="nav-link" href="#" style="color: white;">MIJN GEGEVENS</a>
+      <a *ngIf="loginService.isUserLoggedIn()" class="nav-link" href="/#personalView" style="color: white;">MIJN GEGEVENS</a>
     </li>
     <li class="nav-item">
       <a *ngIf="loginService.isUserLoggedIn()" class="nav-link" role="button" (click)="loginService.logOut()" href="#" style="color: white;">LOG UIT</a>
