@@ -3,6 +3,7 @@ import {AppointmentService} from "./appointment.service";
 import {Appointment} from "../../models/appointment";
 import DateTimeFormat = Intl.DateTimeFormat;
 import {FormBuilder} from "@angular/forms";
+import {GP} from "../../models/gp";
 
 
 @Component({
@@ -41,8 +42,13 @@ export class AppointmentComponent implements OnInit {
     //Gets user id
     let userId = parseInt(sessionStorage.getItem('user_id'));
 
+    let GPUserId = this.appointmentService.getGPUSerId(userId);
+    console.log(GPUserId);
+    let bigCode = this.appointmentService.getBigCode(GPUserId);
+    console.log(bigCode);
+
     let appointment = new Appointment(appointmentData.start, endTime, appointmentData.is_digital,
-      appointmentData.description, "Zonnevelt Huisartsenpost", false, 321, userId);
+      appointmentData.description, "Zonnevelt Huisartsenpost", false, bigCode, userId);
     console.log(appointment)
     this.appointmentService.createAppointment(appointment)
       .subscribe((createdAppointment: Appointment) => {

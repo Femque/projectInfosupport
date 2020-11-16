@@ -55,4 +55,8 @@ public class AppointmentService {
   public int getBigCode(int userId){
     return repository.getBigCode(userId);
   }
+
+  public int getGPUserId(int userId){
+    return repository.getGPUserId(userId);
+  }
 }
