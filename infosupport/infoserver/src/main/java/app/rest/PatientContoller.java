@@ -1,5 +1,6 @@
 package app.rest;
 
+import app.models.Appointment;
 import app.models.Patient;
 import app.models.User;
 import app.service.PatientService;
@@ -37,4 +38,14 @@ public class PatientContoller {
     }
     return null;
   }
+
+  //getting the data of patient by id
+  @CrossOrigin
+  @GetMapping("/{id}")
+  public ResponseEntity<List<Patient>> getAllPatientDataById(@PathVariable int id) {
+    List<Patient> patientData = service.getPatient(id);
+    return ResponseEntity.ok(patientData);
+  }
+
+
 }
