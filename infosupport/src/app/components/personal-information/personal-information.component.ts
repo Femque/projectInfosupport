@@ -13,7 +13,7 @@ import {Patient} from '../../models/patient';
 export class PersonalInformationComponent implements OnInit {
 
   //list of appointments
-  loadedPatient: User[] = [];
+  loadedPatient: Patient;
 
   constructor(private http: HttpClient,private loginService: LoginService ) {
   }
@@ -21,7 +21,6 @@ export class PersonalInformationComponent implements OnInit {
   ngOnInit() {
     this.getUserInfo();
 
-    console.log(sessionStorage.getItem('user_id'));
   }
 
 
@@ -38,39 +37,51 @@ export class PersonalInformationComponent implements OnInit {
         // let test3 = test[2].split(",");
         // let test2 = test3[0] + "-" + test[1] + "-" + test[0];
         // console.log(test2);
+        let userId = parseInt(sessionStorage.getItem('user_id'));
+        if(patient[i].user_id == userId) {
+          let newPatient = new Patient(
+            patient[i].user_id,
+            patient[i].dateOfBirth,
+            patient[i].gender,
+            patient[i].allergies,
+            patient[i].email,
+            patient[i].firstname,
+            patient[i].lastname,
+            patient[i].phonenumber,
+            patient[i].password
+          );
+          this.loadedPatient = newPatient;
+          console.log(this.loadedPatient)
+          console.log(patient[i].user_id);
+        }
 
-        let newPatient = new Patient(patient[i].start_time,
-          appointment[i].end_time, appointment[i].is_digital, appointment[i].description, appointment[i].location,
-          appointment[i].is_follow_up, appointment[i].big_code, appointment[i].patient_user_id,appointment[i].appointment_code);
-
-        this.loadedPatient.push(newPatient);
       }
     }, error => console.log(error));
   }
 
   //delete appointment when cancelling appointment in overview
   //method called when user clicks cancel
-  public clickedAppointment(id) {
-    if (id != null && confirm("Are you sure to delete "+ id)) {
-      // this.onSelect(id);
-      console.log(id);
-      this.deleteAppointment(id);
-    } else {
-      // this.onSelect(-1)
-    }
-  }
+  // public clickedAppointment(id) {
+  //   if (id != null && confirm("Are you sure to delete "+ id)) {
+  //     // this.onSelect(id);
+  //     console.log(id);
+  //     this.deleteAppointment(id);
+  //   } else {
+  //     // this.onSelect(-1)
+  //   }
+  // }
 
   //delete current appointment
   // @ts-ignore
-  deleteAppointment(id): any {
-    console.log("loggieee ===" + id)
-    this.appointmentService.deleteAppointment(id).subscribe(() => {
-        this.loadedAppointments = [];
-        this.getAppointments();
-      }
-    );
-
-  }
+  // deleteAppointment(id): any {
+  //   console.log("loggieee ===" + id)
+  //   this.appointmentService.deleteAppointment(id).subscribe(() => {
+  //       this.loadedAppointments = [];
+  //       this.getAppointments();
+  //     }
+  //   );
+  //
+  // }
 
 
 }
