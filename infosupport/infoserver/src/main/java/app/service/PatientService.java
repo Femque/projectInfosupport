@@ -1,5 +1,6 @@
 package app.service;
 
+import app.models.Appointment;
 import app.models.Patient;
 import app.repositories.PatientRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,5 +16,10 @@ public class PatientService {
 
   public List<Patient> findAll() {
     return repo.findAll();
+  }
+
+  //find specific user with ID
+  public List<Patient> getPatient(int patient_user_id){
+    return repo.getPatientByUser_id(patient_user_id);
   }
 }

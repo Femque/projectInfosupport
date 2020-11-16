@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.Column;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,6 +37,10 @@ public class AppointmentController {
   @CrossOrigin
   public ResponseEntity<List<Appointment>> getAppointmentsByBig( @PathVariable int big_code) {
     List<Appointment> appointments = appointmentService.getAppointmentsForGp(big_code);
+  @CrossOrigin
+  @GetMapping("/appointments/{id}")
+  public ResponseEntity<List<Appointment>> getAllAppointmentsById(@PathVariable int id) {
+    List<Appointment> appointments = appointmentService.getAppointmentsById(id);
     return ResponseEntity.ok(appointments);
   }
 

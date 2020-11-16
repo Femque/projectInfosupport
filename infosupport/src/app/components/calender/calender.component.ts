@@ -128,7 +128,8 @@ export class CalenderComponent implements OnInit {
         editable: true,
         dayMaxEvents: true, // allow "more" link when too many events,
         eventDisplay: 'block',
-        contentHeight: 'auto'
+        contentHeight: 'auto',
+        eventBackgroundColor: "#57BA94"
       });
 
     for (let i = 0; i < appointments.length; i++) {

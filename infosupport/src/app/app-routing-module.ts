@@ -9,6 +9,7 @@ import {AppointmentViewComponent} from "./components/appointmentView/appointment
 import {CalenderComponent} from "./components/calender/calender.component";
 import {FullCalendarModule} from "@fullcalendar/angular";
 import {ChatComponent} from './components/chat/chat.component';
+import {PersonalInformationComponent} from './components/personal-information/personal-information.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'appointmentView',
     component: AppointmentViewComponent
+  },
+  {
+    path: 'personalView',
+    component: PersonalInformationComponent
   },
   {
     path: 'calender',

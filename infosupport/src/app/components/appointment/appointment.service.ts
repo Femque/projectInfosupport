@@ -11,6 +11,7 @@ export class AppointmentService {
 
   createAppointmentUrl = 'http://localhost:8080/appointments/create' //Url to create appointment
   getAppointmentUrl = 'http://localhost:8080/appointments'
+  getAppointmentsByIdUrl = 'http://localhost:8080/appointments/{id}'
 
 
   constructor(private http: HttpClient) {
@@ -26,6 +27,15 @@ export class AppointmentService {
   //getting appointments
   getAppointments(): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(this.getAppointmentUrl)
+  }
+
+  //getting appointment
+  getAppointmentsById(): Observable<Appointment[]> {
+    // return this.http.get<Appointment[]>${this.getAppointmentsByIdUrl}/${sessionStorage.getItem('user_id')}
+    const url = `${this.getAppointmentUrl}/${sessionStorage.getItem('user_id')}`; // DELETE api/heroes/42
+    return this.http.get<Appointment[]>(url)
+    console.log(sessionStorage.getItem('user_id')+ 'efkwefpowekfpokop');
+
   }
 
   // //deleting appointment

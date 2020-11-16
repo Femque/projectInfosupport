@@ -4,6 +4,8 @@ import {BehaviorSubject, config, Observable, throwError} from "rxjs";
 import {Router} from "@angular/router";
 import {User} from "../../models/user";
 import {catchError} from "rxjs/operators";
+import {Appointment} from '../../models/appointment';
+import {Patient} from '../../models/patient';
 
 export interface booleanReturn {
   retData: boolean;
@@ -40,6 +42,15 @@ export class LoginService {
       .pipe(catchError(this.handleError));
 
     return role;
+  }
+
+  //getting patient Info
+  getPatientInfoById(): Observable<Patient[]> {
+    // return this.http.get<Appointment[]>${this.getAppointmentsByIdUrl}/${sessionStorage.getItem('user_id')}
+    const url = `${this.patientUrl}/${sessionStorage.getItem('user_id')}`; // DELETE api/heroes/42
+    return this.http.get<Patient[]>(url)
+    console.log(sessionStorage.getItem('user_id')+ 'efkwefpowekfpokop');
+
   }
 
   isUserLoggedIn() {
