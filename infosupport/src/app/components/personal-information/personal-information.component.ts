@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Appointment} from '../../models/appointment';
 import {LoginService} from '../login/login.service';
-import {User} from '../../models/user';
 import {Patient} from '../../models/patient';
 
 @Component({
@@ -39,7 +37,7 @@ export class PersonalInformationComponent implements OnInit {
         // console.log(test2);
         let userId = parseInt(sessionStorage.getItem('user_id'));
         if(patient[i].user_id == userId) {
-          let newPatient = new Patient(
+          this.loadedPatient = new Patient(
             patient[i].user_id,
             patient[i].dateOfBirth,
             patient[i].gender,
@@ -50,7 +48,6 @@ export class PersonalInformationComponent implements OnInit {
             patient[i].phonenumber,
             patient[i].password
           );
-          this.loadedPatient = newPatient;
           console.log(this.loadedPatient)
           console.log(patient[i].user_id);
         }

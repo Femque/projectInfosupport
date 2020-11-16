@@ -99,4 +99,11 @@ public class AppointmentController {
     int big = appointmentService.getBigCode(user_id);
     return ResponseEntity.ok(big);
   }
+
+  @CrossOrigin
+  @GetMapping("/appointments/patient/gp/{user_id}")
+  public ResponseEntity<Integer> getGPUserId(@PathVariable int user_id){
+    int gpUserId = appointmentService.getGPUserId(user_id);
+    return ResponseEntity.ok(gpUserId);
+  }
 }

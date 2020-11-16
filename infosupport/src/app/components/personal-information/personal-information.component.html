@@ -10,7 +10,7 @@
               <h6 class="mb-0">Naam</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              {{loadedPatient.firstname}}
+              {{loadedPatient.firstname + " " + loadedPatient.lastname}}
             </div>
           </div>
           <hr>
@@ -70,10 +70,9 @@
         </div>
       </div>
     </div>
-
-    <button>Gegevens aanpassen</button>
-    <button>Medisch dossier bekijken</button>
-    <button>Aanvraag andere huissarts</button>
+    <button mat-raised-button color="primary" class="mr-1">Gegevens aanpassen</button>
+    <button mat-raised-button color="primary" class="mr-1">Medisch Dossier</button>
+    <button mat-raised-button color="primary">Andere huisarts aanvragen</button>
 
   </div>
 </div>
