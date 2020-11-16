@@ -37,6 +37,9 @@ public class AppointmentController {
   @CrossOrigin
   public ResponseEntity<List<Appointment>> getAppointmentsByBig( @PathVariable int big_code) {
     List<Appointment> appointments = appointmentService.getAppointmentsForGp(big_code);
+    return ResponseEntity.ok(appointments);
+  }
+
   @CrossOrigin
   @GetMapping("/appointments/{id}")
   public ResponseEntity<List<Appointment>> getAllAppointmentsById(@PathVariable int id) {
@@ -88,5 +91,12 @@ public class AppointmentController {
   public ResponseEntity<List<String>> getPatients(@PathVariable int gp_user_id){
     appointmentService.getPatientsForGp(gp_user_id);
     return ResponseEntity.ok(appointmentService.getPatientsForGp(gp_user_id));
+  }
+
+  @CrossOrigin
+  @GetMapping("/appointments/big_code/{user_id}")
+  public ResponseEntity<Integer> getBigCode(@PathVariable int user_id){
+    int big = appointmentService.getBigCode(user_id);
+    return ResponseEntity.ok(big);
   }
 }

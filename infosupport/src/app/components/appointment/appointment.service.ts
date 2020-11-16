@@ -49,6 +49,11 @@ export class AppointmentService {
     return this.http.delete(url)
   }
 
+  getBigCode(user_id: number): Observable<{}>{
+    const url = `${this.getAppointmentUrl + "/big_code"}/${user_id}`
+    return this.http.get(url)
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

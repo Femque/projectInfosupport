@@ -38,8 +38,11 @@ export class AppointmentComponent implements OnInit {
     console.log(startTime);
     var endTime = new Date(startTime.getTime() + 15*60000);
 
+    //Gets user id
+    let userId = parseInt(sessionStorage.getItem('user_id'));
+
     let appointment = new Appointment(appointmentData.start, endTime, appointmentData.is_digital,
-      appointmentData.description, "Zonnevelt Huisartsenpost", false, 321, 123);
+      appointmentData.description, "Zonnevelt Huisartsenpost", false, 321, userId);
     console.log(appointment)
     this.appointmentService.createAppointment(appointment)
       .subscribe((createdAppointment: Appointment) => {

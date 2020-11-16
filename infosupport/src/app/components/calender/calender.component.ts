@@ -196,26 +196,25 @@ export class CalenderComponent implements OnInit {
     );
     this.calendarService.updateAppointment(updatedAppointment).subscribe(
       (data) => {
-      }, (error) => {
-        alert('HTTP Error: Status' + error.status + '-' + error.message);
+      this.appointments = [];
+      this.getAppointments()
       }
     );
 
 
     this.modalService.dismissAll();
-    window.location.reload()
 
   }
 
   deleteAppointment() {
     this.calendarService.deleteAppointment(this.appointment_code).subscribe(
       (data) => {
-      }, (error) => {
-        alert('HTTP Error: Status' + error.status + '-' + error.message);
+
+        this.appointments = [];
+        this.getAppointments()
       }
     );
     this.modalService.dismissAll();
-    window.location.reload();
   }
 
   cancelUpdate() {
