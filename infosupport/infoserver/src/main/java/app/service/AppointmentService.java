@@ -30,9 +30,9 @@ public class AppointmentService {
   }
 
   public void updateAppointment(LocalDateTime start_time, LocalDateTime end_time, boolean is_digital,
-                                String description, String location, boolean is_follow_up, int appointment_code){
+                                String description, String location, boolean is_follow_up, String title, int appointment_code){
     repository.saveAppointmentBy(start_time, end_time, is_digital, description,
-      location, is_follow_up, appointment_code);
+      location, is_follow_up, title, appointment_code);
   }
 
   public void createAppointment(Appointment appointment) {
@@ -41,6 +41,15 @@ public class AppointmentService {
 
   public void deleteAppointment(int id) {
     repository.deleteById(id);
+  }
+
+
+  public List<String> getPatientsForGp(int gp_user_id){
+    return repository.getPatients(gp_user_id);
+  }
+
+  public List<Appointment> getAppointmentsForGp(int bigCode){
+    return repository.getAppointmentsByBigCode(bigCode);
   }
 
 }

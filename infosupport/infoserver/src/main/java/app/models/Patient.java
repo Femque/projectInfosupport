@@ -20,6 +20,8 @@ public class Patient implements Serializable {
   @Column(name = "allergies")
   private String allergies;
 
+  @Column(name = "gp_user_id")
+  private int gp_user_id;
   @Column(name = "email")
   private String email;
 
@@ -69,6 +71,12 @@ public class Patient implements Serializable {
     this.allergies = allergies;
   }
 
+  public int getGp_user_id() {
+    return gp_user_id;
+  }
+
+  public void setGp_user_id(int gp_user_id) {
+    this.gp_user_id = gp_user_id;
   public String getEmail() {
     return email;
   }

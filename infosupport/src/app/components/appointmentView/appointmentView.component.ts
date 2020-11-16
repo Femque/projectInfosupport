@@ -15,6 +15,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class AppointmentViewComponent implements OnInit {
 
+  public title: string;
   public errorMessage: string;
   public successMessage: string;
   public appointmentDate: string;
@@ -51,7 +52,7 @@ export class AppointmentViewComponent implements OnInit {
 
         let newAppointment = new Appointment(appointment[i].start_time,
           appointment[i].end_time, appointment[i].is_digital, appointment[i].description, appointment[i].location,
-          appointment[i].is_follow_up, appointment[i].big_code, appointment[i].patient_user_id,appointment[i].appointment_code);
+          appointment[i].is_follow_up, appointment[i].big_code, appointment[i].patient_user_id,appointment[i].title, appointment[i].appointment_code);
 
         this.loadedAppointments.push(newAppointment);
       }

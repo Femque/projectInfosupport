@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.Column;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +33,10 @@ public class AppointmentController {
   }
 
 
+  @GetMapping("/appointments/gp/{big_code}")
+  @CrossOrigin
+  public ResponseEntity<List<Appointment>> getAppointmentsByBig( @PathVariable int big_code) {
+    List<Appointment> appointments = appointmentService.getAppointmentsForGp(big_code);
   @CrossOrigin
   @GetMapping("/appointments/{id}")
   public ResponseEntity<List<Appointment>> getAllAppointmentsById(@PathVariable int id) {
@@ -54,6 +59,7 @@ public class AppointmentController {
   @CrossOrigin
   @Transactional
   public ResponseEntity<Appointment> store(@RequestBody Appointment appointment) {
+    System.out.println(appointment);
     appointmentService.createAppointment(appointment);
     return ResponseEntity.ok(appointment);
   }
@@ -63,8 +69,9 @@ public class AppointmentController {
   @CrossOrigin
   @Transactional
   public ResponseEntity<Appointment> update(@RequestBody Appointment appointment) {
+    System.out.println(appointment.getTitle());
     appointmentService.updateAppointment(appointment.getStart_time(), appointment.getEnd_time(),
-      appointment.isIs_digital(), appointment.getDescription(), appointment.getLocation(), appointment.getIs_follow_up(), appointment.getAppointment_code());
+      appointment.isIs_digital(), appointment.getDescription(), appointment.getLocation(), appointment.getIs_follow_up(), appointment.getTitle(), appointment.getAppointment_code());
     System.out.println(appointment.getStart_time());
     return ResponseEntity.ok(appointment);
   }
@@ -74,5 +81,12 @@ public class AppointmentController {
   public ResponseEntity<Integer> delete(@PathVariable int id) {
     appointmentService.deleteAppointment(id);
     return ResponseEntity.ok(id);
+  }
+
+  @CrossOrigin
+  @GetMapping("/appointments/getPatients/{gp_user_id}")
+  public ResponseEntity<List<String>> getPatients(@PathVariable int gp_user_id){
+    appointmentService.getPatientsForGp(gp_user_id);
+    return ResponseEntity.ok(appointmentService.getPatientsForGp(gp_user_id));
   }
 }

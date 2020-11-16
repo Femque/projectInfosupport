@@ -31,8 +31,25 @@ export class CalendarService {
       );
   }
 
+  getAppointmentsGp(big_code : number): Observable<Appointment[]> {
+    console.log("getting appointments ")
+    return this.http.get<Appointment[]>(this.appointmentsUrl + "/gp/" + big_code)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getBigCode(user_id: number) {
+    console.log(user_id);
+    const url = `http://localhost:8080/doctor/big_code/${user_id}`;
+    return this.http.get<number>(url)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+
   createAppointment(appointment: Appointment): Observable<Appointment> {
-    console.log("creating appointment");
+    console.log("creating appointment with " + appointment);
     const url = `${this.appointmentsUrl + "/create"}`
     return this.http.post<Appointment>(url, appointment)
       .pipe(
@@ -40,12 +57,9 @@ export class CalendarService {
       );
   }
 
-  deleteAppointment(appointment: Appointment): Observable<Appointment> {
-    console.log("deleting appointment");
-    return this.http.post<Appointment>(this.appointmentsUrl + "/delete", appointment)
-      .pipe(
-        catchError(this.handleError)
-      );
+  deleteAppointment(id: number): Observable<{}> {
+    const url = `${this.appointmentsUrl + "/delete"}/${id}`; // DELETE api/heroes/42
+    return this.http.delete(url)
   }
 
   updateAppointment(appointment: Appointment): Observable<Appointment>{
@@ -54,6 +68,11 @@ export class CalendarService {
       .pipe(
         catchError(this.handleError)
       );
+  }
+
+  getPatientsForGp(gp_user_id: number): Observable<string[]>{
+    console.log("getting patients");
+    return this.http.get<string[]>(this.appointmentsUrl + "/getPatients/" + gp_user_id)
   }
 
   private handleError(error: HttpErrorResponse) {

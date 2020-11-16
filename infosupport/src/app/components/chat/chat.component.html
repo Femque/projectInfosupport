@@ -1,6 +1,6 @@
 <div class="chat-messages">
   <div class="chat-messages-show-container">
-    <ul class="chat-messages-show-list">
+    <ul class="chat-messages-show-list" id="message-list">
     </ul>
   </div>
   <div class="chat-messages-create-container">
@@ -8,3 +8,9 @@
     <button  class="chat-messages-create-button" (click)="SendMessage()"> Send </button>
   </div>
 </div>
+
+<button  class="roomButton" (click)="room1()"> 1 </button>
+<button  class="roomButton" (click)="room2()"> 2 </button>
+
+
+
