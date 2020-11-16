@@ -1,9 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {AppointmentService} from "./appointment.service";
-import {Appointment} from "../../models/appointment";
+import {AppointmentService} from './appointment.service';
+import {Appointment} from '../../models/appointment';
 import DateTimeFormat = Intl.DateTimeFormat;
-import {FormBuilder} from "@angular/forms";
-import {GP} from "../../models/gp";
+import {FormBuilder} from '@angular/forms';
+import {GP} from '../../models/gp';
+import {error} from '@angular/compiler/src/util';
 
 
 @Component({
@@ -14,6 +15,8 @@ import {GP} from "../../models/gp";
 export class AppointmentComponent implements OnInit {
 
   appointmentForm;
+  GpuserId: number;
+  bigCode: number;
 
   public errorMessage: string;
   public successMessage: string;
@@ -24,43 +27,54 @@ export class AppointmentComponent implements OnInit {
       description: [''],
       start: [''],
       is_digital: [false],
-    })
+    });
   }
 
   ngOnInit(): void {
   }
 
   createAppointment(appointmentData) {
-    this.errorMessage = "Er is iets fout gegaan";
-    this.successMessage = "";
+    this.errorMessage = 'Er is iets fout gegaan';
+    this.successMessage = '';
 
     //Endtime calculation by adding 15 minutes to the starttime.
     var startTime = new Date(Date.parse(appointmentData.start));
     console.log(startTime);
-    var endTime = new Date(startTime.getTime() + 15*60000);
+    var endTime = new Date(startTime.getTime() + 15 * 60000);
 
     //Gets user id
     let userId = parseInt(sessionStorage.getItem('user_id'));
 
-    let GPUserId = this.appointmentService.getGPUSerId(userId);
-    console.log(GPUserId);
-    let bigCode = this.appointmentService.getBigCode(GPUserId);
-    console.log(bigCode);
+
+    // this.appointmentService.getGPUSerId(userId).subscribe(data => {
+    //   this.GpuserId = data;
+    //   console.log(this.GpuserId);
+    // });
+    //
+    // this.appointmentService.getBigCode(this.GpuserId).subscribe(data => {
+    //   console.log(this.GpuserId);
+    //   this.bigCode = data;
+    // });
 
     let appointment = new Appointment(appointmentData.start, endTime, appointmentData.is_digital,
-      appointmentData.description, "Zonnevelt Huisartsenpost", false, bigCode, userId);
-    console.log(appointment)
+      appointmentData.description, 'Zonnevelt Huisartsenpost', false, 12, userId);
+    console.log(appointment);
     this.appointmentService.createAppointment(appointment)
       .subscribe((createdAppointment: Appointment) => {
-        appointmentData.description = "";
-        appointmentData.start = "";
-        appointmentData.is_digital = "";
-        const appointmentDate = new Date(appointment.start_time).toLocaleString();
-        this.successMessage = `Uw afspraak is succesvol geboekt op ${appointmentDate}`;
-        },
-        (error: ErrorEvent) => {
-        this.errorMessage = error.error.message;
-        });
+          const appointmentDate = new Date(appointment.start_time).toLocaleString();
+          this.successMessage = `Succesvol geboekt`;
+        })
+  }
+
+  getGpUser_id(): number {
+    let userId = parseInt(sessionStorage.getItem('user_id'));
+    let gp_user_id : number = 0
+
+    this.appointmentService.getGPUSerId(userId).subscribe(data => {
+     gp_user_id = data
+      console.log(data);
+    });
+    return gp_user_id
   }
 
 }
