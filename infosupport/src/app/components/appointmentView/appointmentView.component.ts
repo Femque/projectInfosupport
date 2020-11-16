@@ -30,12 +30,16 @@ export class AppointmentViewComponent implements OnInit {
 
   ngOnInit() {
     this.getAppointments();
+
+    console.log(sessionStorage.getItem('user_id'));
   }
+
+
 
 
   //show appointments
   getAppointments(): any {
-    this.appointmentService.getAppointments().subscribe(appointment => {
+    this.appointmentService.getAppointmentsById().subscribe(appointment => {
       for (let i = 0; i < appointment.length; i++) {
         // let app = new Date(data[i].start_time).toLocaleString();
         // let timeDateArray = startDateTime.split(" ");

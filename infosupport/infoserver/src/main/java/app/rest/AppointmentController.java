@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,6 +28,14 @@ public class AppointmentController {
   public ResponseEntity<List<Appointment>> getAllAppointments() {
     List<Appointment> appointments = appointmentService.getAppointments();
     System.out.println(appointments.get(0).getStart_time());
+    return ResponseEntity.ok(appointments);
+  }
+
+
+  @CrossOrigin
+  @GetMapping("/appointments/{id}")
+  public ResponseEntity<List<Appointment>> getAllAppointmentsById(@PathVariable int id) {
+    List<Appointment> appointments = appointmentService.getAppointmentsById(id);
     return ResponseEntity.ok(appointments);
   }
 

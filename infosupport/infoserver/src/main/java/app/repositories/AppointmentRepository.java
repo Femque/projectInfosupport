@@ -14,6 +14,7 @@ import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
@@ -30,6 +31,12 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
                          @Param("appointment_code") int appointment_code);
 
 
+
+//  @Query("SELECT a FROM Appointment a WHERE a.patient_user_id = ?1")
+  @Query(
+    value = "SELECT * FROM Appointment a WHERE a.patient_user_id = ?1",
+    nativeQuery = true)
+  List<Appointment> getAppointmentsByPatient_user_id(@Param("patient_user_id") int patient_user_id);
 
 
 }

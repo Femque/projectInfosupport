@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +22,11 @@ public class AppointmentService {
   public List<Appointment> getAppointments()
   {
     return repository.findAll();
+  }
+
+
+  public List<Appointment> getAppointmentsById(int patient_user_id){
+    return repository.getAppointmentsByPatient_user_id(patient_user_id);
   }
 
   public void updateAppointment(LocalDateTime start_time, LocalDateTime end_time, boolean is_digital,
