@@ -13,7 +13,7 @@ export class Patient {
   private _password: string;
 
 
-  constructor(user_id: number, dateOfBirth: Date, gender: string, allergies: string, email: string, firstname: string, lastname: string, phonenumber: string, password: string) {
+  constructor(user_id?: number, dateOfBirth?: Date, gender?: string, allergies?: string, email?: string, firstname?: string, lastname?: string, phonenumber?: string, password?: string) {
     this._user_id = user_id;
     this._dateOfBirth = dateOfBirth;
     this._gender = gender;

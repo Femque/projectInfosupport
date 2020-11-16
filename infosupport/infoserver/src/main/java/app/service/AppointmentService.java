@@ -52,4 +52,7 @@ public class AppointmentService {
     return repository.getAppointmentsByBigCode(bigCode);
   }
 
+  public int getBigCode(int userId){
+    return repository.getBigCode(userId);
+  }
 }

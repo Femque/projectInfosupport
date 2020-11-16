@@ -22,6 +22,7 @@ public class Patient implements Serializable {
 
   @Column(name = "gp_user_id")
   private int gp_user_id;
+
   @Column(name = "email")
   private String email;
 
@@ -77,6 +78,8 @@ public class Patient implements Serializable {
 
   public void setGp_user_id(int gp_user_id) {
     this.gp_user_id = gp_user_id;
+  }
+
   public String getEmail() {
     return email;
   }

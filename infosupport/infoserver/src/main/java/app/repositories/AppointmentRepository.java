@@ -51,4 +51,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
   List<Appointment> getAppointmentsByPatient_user_id(@Param("patient_user_id") int patient_user_id);
 
 
+  @Query("SELECT g.big_code FROM General_practitioner g WHERE g.user_id = ?1")
+  int getBigCode(@Param("user_id") int user_id);
+
+
 }
