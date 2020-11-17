@@ -12,6 +12,8 @@ import {Calendar_appointment} from '../../models/calendar_appointment';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {log} from 'util';
 import {FormBuilder} from '@angular/forms';
+import set = Reflect.set;
+import {timeout} from 'rxjs/operators';
 
 @Component({
   selector: 'app-calender',
@@ -59,7 +61,9 @@ export class CalenderComponent implements OnInit {
    ngOnInit() {
     this.getBigCode(sessionStorage.getItem('user_id'));
     this.getPatients(sessionStorage.getItem('user_id'));
-     this.getAppointments();
+     setTimeout(() => {
+       this.getAppointments()
+     }, 1)
   }
 
   selected(e) {
@@ -169,6 +173,7 @@ export class CalenderComponent implements OnInit {
 
 
   getAppointments() {
+    this.getBigCode(sessionStorage.getItem('user_id'))
     this.calendarService.getAppointmentsGp(parseInt(sessionStorage.getItem("big_code")))
       .subscribe(data => {
         for (let i = 0; i < data.length; i++) {
@@ -230,6 +235,7 @@ export class CalenderComponent implements OnInit {
 
   getPatients(gp_user_id) {
     this.calendarService.getPatientsForGp(gp_user_id).subscribe(data => {
+      console.log(data);
       for (let i = 0; i < data.length; i++) {
         let test = data[i].split(',');
         let test2 = test[0] + ' ' + test[1];
