@@ -5,10 +5,31 @@
 
 
       <div class="card mb-3">
+        <h2> Afgelopen afspraken : </h2>
+        <ng-container *ngIf="loadedAppointments != null; else elseText">
+          <div class="card-body" *ngFor="let appointment of loadedAppointments">
+            <div class="row">
+              <div class="col-sm-3">
+                <h3>Afspraak van {{appointment.start_time | date: 'shortDate'}}</h3>
+              </div>
+              <div class="col-sm">
+                <div class="col-sm-9 text-secondary">
+                  <h3>Beschrijving: {{appointment.description}}</h3>
+                  <h3>Locatie: {{appointment.location}}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+
+      <div class="card mb-3">
+        <h2>Allergiën</h2>
         <div class="card-body">
           <div class="row">
             <div class="col-sm-3">
-              <h6 class="mb-0">Afgelopen afspraken</h6>
+              
             </div>
             <div class="col-sm-9 text-secondary">
               <ul>
@@ -21,22 +42,9 @@
         </div>
       </div>
 
-      <div class="card mb-3">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-sm-3">
-              <h6 class="mb-0">Allergiën</h6>
-            </div>
-            <div class="col-sm-9 text-secondary">
-              <ul>
-                <li>
-                  {{loadedPatient.allergies}}
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+      <ng-template #elseText>
+        <h5>Geen gedocumenteerde afspraken gevonden</h5>
+      </ng-template>
 
     </div>
   </div>

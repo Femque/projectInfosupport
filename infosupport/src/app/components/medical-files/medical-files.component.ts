@@ -4,6 +4,8 @@ import {HttpClient} from "@angular/common/http";
 import {LoginService} from "../login/login.service";
 import {AppointmentService} from "../appointment/appointment.service";
 import {Appointment} from "../../models/appointment";
+import {dateComparator} from "@ng-bootstrap/ng-bootstrap/datepicker/datepicker-tools";
+import {getLocaleDateFormat} from "@angular/common";
 
 @Component({
   selector: 'app-medical-files',
@@ -67,7 +69,15 @@ export class MedicalFilesComponent implements OnInit {
             appointment[i].appointment_code
           );
 
-          this.loadedAppointments.push(pastAppointment);
+          let startDate = new Date(appointment[i].start_time);
+
+          console.log("Current date = " +  this.currentDate);
+          console.log("Existing appointments dates = " +  startDate);
+
+          // Check if startdate of appointment is before the currentdate
+          if (startDate < this.currentDate) {
+            this.loadedAppointments.push(pastAppointment);
+          }
         }
       }, error => console.log(error));
   }
