@@ -3,7 +3,6 @@ import {AppointmentService} from './appointment.service';
 import {Appointment} from '../../models/appointment';
 import DateTimeFormat = Intl.DateTimeFormat;
 import {FormBuilder} from '@angular/forms';
-import {GP} from '../../models/gp';
 import {error} from '@angular/compiler/src/util';
 
 
@@ -41,6 +40,7 @@ export class AppointmentComponent implements OnInit {
     var startTime = new Date(Date.parse(appointmentData.start));
     console.log(startTime);
     var endTime = new Date(startTime.getTime() + 15 * 60000);
+    console.log(endTime);
 
     //Gets user id
     let userId = parseInt(sessionStorage.getItem('user_id'));
@@ -56,9 +56,10 @@ export class AppointmentComponent implements OnInit {
     //   this.bigCode = data;
     // });
 
-    let appointment = new Appointment(appointmentData.start, endTime, appointmentData.is_digital,
-      appointmentData.description, 'Zonnevelt Huisartsenpost', false, 12, userId);
+    let appointment = new Appointment(startTime, endTime, appointmentData.is_digital,
+      appointmentData.description, 'Zonnevelt Huisartsenpost', false, 6, userId);
     console.log(appointment);
+    console.log("Created appointment for id: " + userId);
     this.appointmentService.createAppointment(appointment)
       .subscribe((createdAppointment: Appointment) => {
           const appointmentDate = new Date(appointment.start_time).toLocaleString();
