@@ -1,1 +1,43 @@
-<p>medical-files works!</p>
+<div class="container">
+  <div class="main-body">
+    <div class="col-md-9">
+      <h1>Medisch dossier van {{loadedPatient.firstname}} {{loadedPatient.lastname}}</h1>
+
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Afgelopen afspraken</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <ul>
+                <li>
+                  {{loadedPatient.allergies}}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Allergiën</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <ul>
+                <li>
+                  {{loadedPatient.allergies}}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
