@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center">
-      <h1> Upcoming appointments:</h1>
+      <h1> opkomende afspraken:</h1>
     </div>
 
     <!-- show card if data exist -->
@@ -10,7 +10,7 @@
            *ngFor="let appointment of loadedAppointments; let rowIndex=index">
         <div class="tile">
           <div class="wrapper">
-            <div class="header">appointment: {{rowIndex + 1}}</div>
+            <div class="header">Afspraak: {{rowIndex + 1}}</div>
 
             <div class="banner-img">
               <img src="https://images.unsplash.com/photo-1522241112606-b5d35a468795?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOj
@@ -19,11 +19,11 @@
 
             <div class="dates">
               <div class="start">
-                <strong>STARTS </strong> {{appointment.start_time}}
+                <strong>BeginTijd </strong> {{appointment.start_time.toLocaleString()}}
                 <span></span>
               </div>
               <div class="ends">
-                <strong>ENDS</strong> {{appointment.start_time}}
+                <strong>EindTijd </strong> {{appointment.end_time.toLocaleString()}}
               </div>
             </div>
 
@@ -31,43 +31,43 @@
 
               <div class="stats">
                 <div>
-                  <strong>your appointment code is:</strong> {{appointment.appointment_code}}
+                  <strong>Uw afspraak code is:</strong> {{appointment.appointment_code}}
                 </div>
               </div>
 
               <div class="stats">
                 <div>
-                  <strong>Your docter is: </strong> {{appointment.big_code}}
+                  <strong>Uw dokter is: </strong> {{appointment.big_code}}
                 </div>
               </div>
 
               <div>
-                <strong>description for appointment:</strong> {{appointment.description}}
+                <strong>Beschrijving van uw afspraak:</strong> {{appointment.description}}
               </div>
             </div>
 
             <div class="stats">
               <div>
-                <strong>Is it digital:</strong> {{appointment.is_digital}}
+                <strong>Is het digitaal:</strong> {{(appointment.is_digital ? "Ja" : "Nee")}}
               </div>
             </div>
 
             <div class="stats">
               <div>
-                <strong>where does this take place?</strong> {{appointment.location}}
+                <strong>waar bevind de afspraak?</strong> {{appointment.location}}
               </div>
             </div>
 
             <div class="stats">
               <div>
-                <strong>is there a new appointment needed after this</strong> {{appointment.is_follow_up}}
+                <strong>Nieuwe afspraak?</strong> {{(appointment.is_follow_up ? "Ja" : "Nee")}}
               </div>
             </div>
 
             <div class="footer">
-              <div class="cancelAppointment">Click here to cancel your appointment:</div>
+              <div class="cancelAppointment">Klik hier om uw afspraak te annuleren:</div>
               <button class="Cbtn Cbtn-danger" (click)="clickedAppointment
-                    (appointment.appointment_code)">Cancel
+                    (appointment.appointment_code)">annuleer
               </button>
             </div>
           </div>
@@ -77,7 +77,7 @@
 
     <!-- When no appointment has found -->
     <ng-template #elseText>
-      <h5>There is no appointment</h5>
+      <h5>Er is geen afspraak voor u</h5>
     </ng-template>
 
   </div>

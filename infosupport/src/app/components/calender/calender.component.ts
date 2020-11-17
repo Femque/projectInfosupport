@@ -56,10 +56,10 @@ export class CalenderComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+   ngOnInit() {
     this.getBigCode(sessionStorage.getItem('user_id'));
     this.getPatients(sessionStorage.getItem('user_id'));
-    this.getAppointments();
+     this.getAppointments();
   }
 
   selected(e) {

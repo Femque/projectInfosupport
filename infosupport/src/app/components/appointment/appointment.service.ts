@@ -49,15 +49,17 @@ export class AppointmentService {
     return this.http.delete(url)
   }
 
-  getBigCode(user_id: Observable<number>): Observable<number>{
+  getGPUSerId(user_id: number){
+    const url = `${this.getAppointmentUrl + "/patient/gp"}/${user_id}`
+    return this.http.get<number>(url)
+  }
+
+  getBigCode(user_id: number){
     const url = `${this.getAppointmentUrl + "/big_code"}/${user_id}`
     return this.http.get<number>(url)
   }
 
-  getGPUSerId(user_id: number): Observable<number>{
-    const url = `${this.getAppointmentUrl + "patient/gp"}/${user_id}`
-    return this.http.get<number>(url)
-  }
+
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
