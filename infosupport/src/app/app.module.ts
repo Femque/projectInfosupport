@@ -32,6 +32,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import { ChatComponent } from './components/chat/chat.component';
 import { PersonalInformationComponent } from './components/personal-information/personal-information.component';
 import {SocketIoConfig, SocketIoModule} from 'ngx-socket-io';
+import { MedicalFilesComponent } from './components/medical-files/medical-files.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin
@@ -51,7 +52,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {origin:
     LoginComponent,
     FooterComponent,
     ChatComponent,
-    PersonalInformationComponent
+    PersonalInformationComponent,
+    MedicalFilesComponent
   ],
 
   imports: [
