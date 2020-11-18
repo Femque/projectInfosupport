@@ -33,6 +33,8 @@ import { ChatComponent } from './components/chat/chat.component';
 import { PersonalInformationComponent } from './components/personal-information/personal-information.component';
 import {SocketIoConfig, SocketIoModule} from 'ngx-socket-io';
 import { MedicalFilesComponent } from './components/medical-files/medical-files.component';
+import { PatientViewComponent } from './components/patient-view/patient-view.component';
+import {Ng2SearchPipeModule} from "ng2-search-filter";
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin
@@ -53,7 +55,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {origin:
     FooterComponent,
     ChatComponent,
     PersonalInformationComponent,
-    MedicalFilesComponent
+    MedicalFilesComponent,
+    PatientViewComponent
   ],
 
   imports: [
@@ -75,7 +78,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {origin:
     MatGridListModule,
     MatSelectModule, RouterModule,
     AppRoutingModule, ReactiveFormsModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config), Ng2SearchPipeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

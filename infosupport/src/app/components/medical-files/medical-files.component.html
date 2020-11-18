@@ -5,7 +5,7 @@
 
 
       <div class="card mb-3">
-        <h2> Afgelopen afspraken : </h2>
+        <h2> Afgelopen afspraken  </h2>
         <ng-container *ngIf="loadedAppointments != null; else elseText">
           <div class="card-body" *ngFor="let appointment of loadedAppointments">
             <div class="row">
@@ -29,15 +29,27 @@
         <div class="card-body">
           <div class="row">
             <div class="col-sm-3">
-              
             </div>
+            <div class="col-sm">
             <div class="col-sm-9 text-secondary">
-              <ul>
-                <li>
                   {{loadedPatient.allergies}}
-                </li>
-              </ul>
             </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <h2>Voorgeschreven medicijnen</h2>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm">
+            <div class="col-sm-9 text-secondary">
+              <h3> Cervisiam</h3>
+            </div>
+          </div>
           </div>
         </div>
       </div>

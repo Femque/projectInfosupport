@@ -34,6 +34,7 @@
     "@syncfusion/ej2-angular-schedule": "^18.3.35",
     "@syncfusion/ej2-material-theme": "~18.2.47",
     "express": "latest",
+    "ng2-search-filter": "^0.5.1",
     "ngb-modal": "^2.0.3",
     "ngx-socket-io": "^3.2.0",
     "nodeman": "^1.1.2",
