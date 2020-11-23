@@ -24,6 +24,10 @@ public class UserService {
   public int user_id(String email) {
     return repo.user_id(email);
   }
+
+  public List<String> getFullNameByUserId(int userId) {
+    return repo.getFullNameByUserId(userId);
+  }
 }
 
 

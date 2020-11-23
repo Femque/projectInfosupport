@@ -12,6 +12,7 @@ export class AppointmentService {
   createAppointmentUrl = 'http://localhost:8080/appointments/create' //Url to create appointment
   getAppointmentUrl = 'http://localhost:8080/appointments'
   getAppointmentsByIdUrl = 'http://localhost:8080/appointments/{id}'
+  getUserFullNameUrl = 'http://localhost:8080/user/fullname'
 
 
   constructor(private http: HttpClient) {
@@ -52,6 +53,11 @@ export class AppointmentService {
   getGPUSerId(user_id: number){
     const url = `${this.getAppointmentUrl + "/patient/gp"}/${user_id}`
     return this.http.get<number>(url)
+  }
+
+  getFullName() {
+    const url = `${this.getUserFullNameUrl}/${sessionStorage.getItem('user_id')}`;
+    return this.http.get<string>(url);
   }
 
   getBigCode(user_id: number){
