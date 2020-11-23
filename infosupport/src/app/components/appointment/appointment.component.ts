@@ -3,7 +3,6 @@ import {AppointmentService} from './appointment.service';
 import {Appointment} from '../../models/appointment';
 import DateTimeFormat = Intl.DateTimeFormat;
 import {FormBuilder} from '@angular/forms';
-import {GP} from '../../models/gp';
 import {error} from '@angular/compiler/src/util';
 
 
@@ -16,7 +15,6 @@ export class AppointmentComponent implements OnInit {
 
   appointmentForm;
   GpuserId: number;
-  bigCode: number;
 
   public errorMessage: string;
   public successMessage: string;
@@ -31,6 +29,7 @@ export class AppointmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getGpUser_id(sessionStorage.getItem('user_id'));
   }
 
   createAppointment(appointmentData) {
@@ -39,25 +38,13 @@ export class AppointmentComponent implements OnInit {
 
     //Endtime calculation by adding 15 minutes to the starttime.
     var startTime = new Date(Date.parse(appointmentData.start));
-    console.log(startTime);
     var endTime = new Date(startTime.getTime() + 15 * 60000);
 
     //Gets user id
     let userId = parseInt(sessionStorage.getItem('user_id'));
 
-
-    // this.appointmentService.getGPUSerId(userId).subscribe(data => {
-    //   this.GpuserId = data;
-    //   console.log(this.GpuserId);
-    // });
-    //
-    // this.appointmentService.getBigCode(this.GpuserId).subscribe(data => {
-    //   console.log(this.GpuserId);
-    //   this.bigCode = data;
-    // });
-
-    let appointment = new Appointment(appointmentData.start, endTime, appointmentData.is_digital,
-      appointmentData.description, 'Zonnevelt Huisartsenpost', false, 12, userId);
+    let appointment = new Appointment(startTime, endTime, appointmentData.is_digital,
+      appointmentData.description, 'Zonnevelt Huisartsenpost', false, this.GpuserId, userId);
     console.log(appointment);
     this.appointmentService.createAppointment(appointment)
       .subscribe((createdAppointment: Appointment) => {
@@ -66,15 +53,9 @@ export class AppointmentComponent implements OnInit {
         })
   }
 
-  getGpUser_id(): number {
-    let userId = parseInt(sessionStorage.getItem('user_id'));
-    let gp_user_id : number = 0
-
-    this.appointmentService.getGPUSerId(userId).subscribe(data => {
-     gp_user_id = data
-      console.log(data);
+  getGpUser_id(user_id) {
+    this.appointmentService.getGPUSerId(user_id).subscribe(data => {
+      this.GpuserId = data
     });
-    return gp_user_id
   }
-
 }

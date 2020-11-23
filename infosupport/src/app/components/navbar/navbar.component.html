@@ -6,6 +6,10 @@
   </a>
 
   <ul class="nav justify-content-end">
+
+    <li class="nav-item">
+      <a *ngIf="loginService.isUserLoggedIn()" class="nav-link" href="/#appointmentView" style="color: white;">MIJN AFSPRAKEN</a>
+    </li>
     <li class="nav-item">
       <a *ngIf="loginService.isUserLoggedIn()" class="nav-link" href="/#personalView" style="color: white;">MIJN GEGEVENS</a>
     </li>
