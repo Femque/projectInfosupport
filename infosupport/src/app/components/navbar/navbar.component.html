@@ -8,6 +8,9 @@
   <ul class="nav justify-content-end">
 
     <li class="nav-item">
+      <a *ngIf="loginService.isUserLoggedIn()" class="nav-link" role="button" (click)="loginService.logOut()" href="/#chat" style="color: white;">Chat</a>
+    </li>
+    <li class="nav-item">
       <a *ngIf="loginService.isUserLoggedIn()" class="nav-link" href="/#appointmentView" style="color: white;">MIJN AFSPRAKEN</a>
     </li>
     <li class="nav-item">
@@ -16,6 +19,7 @@
     <li class="nav-item">
       <a *ngIf="loginService.isUserLoggedIn()" class="nav-link" role="button" (click)="loginService.logOut()" href="#" style="color: white;">LOG UIT</a>
     </li>
+
   </ul>
 </nav>
 
