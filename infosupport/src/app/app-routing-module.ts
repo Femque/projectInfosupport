@@ -10,6 +10,8 @@ import {CalenderComponent} from "./components/calender/calender.component";
 import {FullCalendarModule} from "@fullcalendar/angular";
 import {ChatComponent} from './components/chat/chat.component';
 import {PersonalInformationComponent} from './components/personal-information/personal-information.component';
+import {MedicalFilesComponent} from "./components/medical-files/medical-files.component";
+import {PatientViewComponent} from "./components/patient-view/patient-view.component";
 
 
 const routes: Routes = [
@@ -40,6 +42,14 @@ const routes: Routes = [
   {
     path: 'chat',
     component: ChatComponent
+  },
+  {
+    path: 'medical-file',
+    component: MedicalFilesComponent
+  },
+  {
+    path: 'patientView',
+    component: PatientViewComponent
   },
   {
     path: '',

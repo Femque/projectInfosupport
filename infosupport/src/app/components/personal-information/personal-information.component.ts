@@ -20,10 +20,7 @@ export class PersonalInformationComponent implements OnInit {
     this.getUserInfo();
 
   }
-
-
-
-
+  
   //show appointments
   getUserInfo(): any {
     this.loginService.getPatientInfoById().subscribe(patient => {

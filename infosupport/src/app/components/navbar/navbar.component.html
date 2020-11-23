@@ -6,7 +6,9 @@
   </a>
 
   <ul class="nav justify-content-end">
-
+    <li class="nav-item">
+      <a *ngIf="loginService.isUserLoggedIn()" class="nav-link" href="/#patientView" style="color: white;">MIJN PATIENTEN</a>
+    </li>
     <li class="nav-item">
       <a *ngIf="loginService.isUserLoggedIn()" class="nav-link" role="button" (click)="loginService.logOut()" href="/#chat" style="color: white;">Chat</a>
     </li>
