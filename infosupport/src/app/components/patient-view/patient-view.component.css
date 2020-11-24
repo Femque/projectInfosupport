@@ -3,4 +3,10 @@
   padding: 10px;
   max-height: 700px;
   background-color: rgba(87, 186,148, 0.4);
+  width: max-content;
+
+}
+
+table {
+  width: 100%;
 }
