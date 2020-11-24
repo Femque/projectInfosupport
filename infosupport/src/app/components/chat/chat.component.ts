@@ -22,50 +22,43 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     console.log(sessionStorage);
     this.getMessages(this.RoomName)
+    this.setupSocketConnection()
   }
 
   setupSocketConnection() {
     this.socket = io(SOCKET_ENDPOINT);
     this.socket.on('message-broadcast', (data: string) => {
       if (data) {
-        const element = document.createElement('li');
+        const element = document.createElement('outgoing_msg');
         element.innerHTML = data;
-        element.style.background = 'white';
-        element.style.padding = '15px 30px';
-        element.style.margin = '10px';
-        document.getElementById('message-list').appendChild(element);
+        element.style.background = '#05728f none repeat scroll 0 0';
+        element.style.borderRadius = '3px'
+        element.style.color = '#fff';
+        element.style.padding =  '5px 10px 5px 12px';
+        element.style.margin = '0';
+        element.style.width = '46%';
+        element.style.float = 'right';
+        document.getElementById('msg_history').appendChild(element);
       }
     });
   }
 
   SendMessage() {
-    this.socket.emit('RoomName', this.RoomName)
-    console.log(this.RoomName);
     this.socket.emit('message', this.message);
-    const element = document.createElement('li');
+    const element = document.createElement('outgoing_msg');
     element.innerHTML = this.message;
-    element.style.background = 'white';
-    element.style.padding =  '15px 30px';
-    element.style.margin = '10px';
-    element.style.textAlign = 'right';
-    document.getElementById('message-list').appendChild(element);
+    element.style.background = '#05728f none repeat scroll 0 0';
+    element.style.borderRadius = '3px'
+    element.style.color = '#fff';
+    element.style.padding =  '5px 10px 5px 12px';
+    element.style.margin = '0';
+    element.style.width = '46%';
+    element.style.float = 'right';
+    document.getElementById('msg_history').appendChild(element);
     this.message = '';
   }
 
-  room1(){
-    this.RoomName = 1
-    console.log(this.RoomName);
-    this.setupSocketConnection()
-  }
-
-  room2(){
-    this.RoomName = 2
-    console.log(this.RoomName);
-    this.setupSocketConnection()
-  }
-
   getMessages(conversation_id) {
-
     let observable = new Observable(observer => {
 
       this.socket.on('message:send:response', (chat) => {

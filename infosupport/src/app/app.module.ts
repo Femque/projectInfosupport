@@ -4,8 +4,6 @@ import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CalenderComponent } from './components/calender/calender.component';
-import { ScheduleModule, RecurrenceEditorModule, DayService, WorkWeekService,
-  MonthService, MonthAgendaService } from '@syncfusion/ej2-angular-schedule';
 import { HttpClientModule } from '@angular/common/http';
 import { AppointmentComponent } from './components/appointment/appointment.component';
 import { AppointmentViewComponent } from './components/appointmentView/appointmentView.component';
@@ -61,7 +59,6 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {origin:
 
   imports: [
     BrowserModule,
-    ScheduleModule, RecurrenceEditorModule,
     BrowserModule,
     FullCalendarModule,
     HttpClientModule,

@@ -19,10 +19,9 @@ const io = require('socket.io')(http, options);
 app.get('/', (req, res) => res.send('hello!'));
 
 io.on('connection', (socket) => {
-  socket.join()
   console.log(socket.id, "is connected");
     socket.on('message', (msg) => {
-      io.in('RoomName').emit('message-broadcast', msg);
+      io.emit('message-broadcast', msg);
     })
 
 });
