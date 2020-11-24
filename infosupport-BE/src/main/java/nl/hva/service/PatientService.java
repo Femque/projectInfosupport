@@ -1,8 +1,7 @@
-package app.service;
+package nl.hva.service;
 
-import app.models.Appointment;
-import app.models.Patient;
-import app.repositories.PatientRepository;
+import nl.hva.models.Patient;
+import nl.hva.repositories.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

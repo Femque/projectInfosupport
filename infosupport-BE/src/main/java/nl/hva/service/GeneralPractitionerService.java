@@ -1,7 +1,7 @@
-package app.service;
+package nl.hva.service;
 
-import app.models.General_practitioner;
-import app.repositories.GeneralPractitionerRepository;
+import nl.hva.models.General_practitioner;
+import nl.hva.repositories.GeneralPractitionerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

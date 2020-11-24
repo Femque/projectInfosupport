@@ -1,4 +1,4 @@
-package app.models;
+package nl.hva.models;
 
 import javax.persistence.*;
 import java.io.Serializable;

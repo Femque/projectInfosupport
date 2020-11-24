@@ -1,7 +1,7 @@
-package app.rest;
+package nl.hva.rest;
 
-import app.models.General_practitioner;
-import app.service.GeneralPractitionerService;
+import nl.hva.models.General_practitioner;
+import nl.hva.service.GeneralPractitionerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

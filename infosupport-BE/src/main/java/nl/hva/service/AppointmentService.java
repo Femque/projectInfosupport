@@ -1,16 +1,13 @@
-package app.service;
+package nl.hva.service;
 
 
-import app.models.Appointment;
-import app.repositories.AppointmentRepository;
+import nl.hva.models.Appointment;
+import nl.hva.repositories.AppointmentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

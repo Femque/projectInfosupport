@@ -1,9 +1,7 @@
-package app.rest;
+package nl.hva.rest;
 
-import app.models.Appointment;
-import app.models.Patient;
-import app.models.User;
-import app.service.PatientService;
+import nl.hva.models.Patient;
+import nl.hva.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

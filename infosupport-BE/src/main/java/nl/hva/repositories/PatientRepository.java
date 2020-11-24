@@ -1,7 +1,6 @@
-package app.repositories;
+package nl.hva.repositories;
 
-import app.models.Appointment;
-import app.models.Patient;
+import nl.hva.models.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

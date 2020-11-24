@@ -1,11 +1,11 @@
-package app.rest;
+package nl.hva.rest;
 
-import app.models.General_practitioner;
-import app.models.Patient;
-import app.models.User;
-import app.service.GeneralPractitionerService;
-import app.service.PatientService;
-import app.service.UserService;
+import nl.hva.models.General_practitioner;
+import nl.hva.models.Patient;
+import nl.hva.models.User;
+import nl.hva.service.GeneralPractitionerService;
+import nl.hva.service.PatientService;
+import nl.hva.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

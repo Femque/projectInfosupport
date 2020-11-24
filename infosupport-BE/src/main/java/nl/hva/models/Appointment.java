@@ -1,4 +1,4 @@
-package app.models;
+package nl.hva.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

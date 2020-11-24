@@ -1,7 +1,7 @@
-package app.service;
+package nl.hva.service;
 
-import app.models.User;
-import app.repositories.UserRepository;
+import nl.hva.models.User;
+import nl.hva.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
