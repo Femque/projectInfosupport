@@ -3,7 +3,7 @@
     <h2 class="mb-3">Inloggen</h2>
 
     <!-- Login form -->
-    <form [formGroup]="loginForm" (ngSubmit)="handleLogin()">
+    <form [formGroup]="loginForm">
       <div class="form-group">
         <label for="email">Gebruikersnaam</label>
         <input type="text" name="email" class="form-control" id="email" formControlName="email"

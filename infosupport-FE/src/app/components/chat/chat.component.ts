@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {ChatService} from './chat.service';
+import {HttpClient} from '@angular/common/http';
 
 
 @Component({
@@ -11,9 +13,12 @@ export class ChatComponent implements OnInit {
   public messages: string[] = [];
   private ws: WebSocket;
 
-  
+  constructor(service: ChatService) {
+  }
 
   public ngOnInit() {
+    console.log(sessionStorage);
+
     this.ws = new WebSocket("ws://localhost:8080/infosupport-messaging");
     this.ws.addEventListener("open", (e) => {
       this.messages.push("We are open!");
@@ -22,13 +27,12 @@ export class ChatComponent implements OnInit {
       this.messages.push(e.data)
     })
     console.log(sessionStorage.getItem('user_id'));
-    console.log(sessionStorage);
-    
-    
+
   }
 
   public sendMessage(value: string) {
     this.ws.send(value);
+
   }
 
 

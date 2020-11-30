@@ -81,7 +81,7 @@ public class UserController {
   // "user/login"
   @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
   @CrossOrigin(origins = "http://localhost:4200")
-  public User loginUser(@RequestBody User user) throws Exception {
+  public ResponseEntity<User> loginUser(@RequestBody User user) throws Exception {
     String tempEmail = user.getEmail();
     String tempPassword = user.getPassword();
 
@@ -90,13 +90,12 @@ public class UserController {
     if (tempEmail != null && tempPassword != null) {
       userObj = service.findUserByEmailAndPassword(tempEmail, tempPassword);
     }
-
     //If user doesn't exist
     if (userObj == null) {
       throw new Exception("Bad credentials");
     }
 
-    return userObj;
+    return ResponseEntity.ok(userObj);
   }
 
   @CrossOrigin
