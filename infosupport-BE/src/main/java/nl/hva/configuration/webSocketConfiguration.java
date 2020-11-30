@@ -24,9 +24,9 @@ public class webSocketConfiguration implements WebSocketConfigurer {
        registry.addHandler(messageHandler, "/infosupport-messaging").setAllowedOrigins("*");
     }
 
-    @Bean
-    public WebSocketHandler myHandler(){
-        return new InfosupportMessageHandler();
-    }
+//    @Bean
+//    public WebSocketHandler myHandler(){
+//        return new InfosupportMessageHandler();
+//    }
 
 }

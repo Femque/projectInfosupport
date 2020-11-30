@@ -64,6 +64,8 @@ export class CalenderComponent implements OnInit {
      setTimeout(() => {
        this.getAppointments()
      }, 1)
+     console.log(sessionStorage);
+     
   }
 
   selected(e) {
