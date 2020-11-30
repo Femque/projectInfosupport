@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ChatService} from './chat.service';
 import {HttpClient} from '@angular/common/http';
 
@@ -9,6 +9,8 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
+
+  @ViewChild('message') inputMessage;
 
   public messages: string[] = [];
   private ws: WebSocket;
@@ -32,7 +34,7 @@ export class ChatComponent implements OnInit {
 
   public sendMessage(value: string) {
     this.ws.send(value);
-
+    this.inputMessage.nativeElement.value = '';
   }
 
 
