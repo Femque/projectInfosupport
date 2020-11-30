@@ -98,4 +98,11 @@ public class UserController {
 
     return userObj;
   }
+
+  @CrossOrigin
+  @GetMapping("/fullname/{user_id}")
+  public ResponseEntity<List<String>> getFullNameByUserId(@PathVariable int user_id){
+    List<String> fullName = service.getFullNameByUserId(user_id);
+    return ResponseEntity.ok(fullName);
+  }
 }

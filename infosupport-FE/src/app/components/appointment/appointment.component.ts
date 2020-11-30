@@ -15,6 +15,7 @@ export class AppointmentComponent implements OnInit {
 
   appointmentForm;
   GpuserId: number;
+  fullName: string;
 
   public errorMessage: string;
   public successMessage: string;
@@ -30,6 +31,7 @@ export class AppointmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.getGpUser_id(sessionStorage.getItem('user_id'));
+    this.getFullNameById();
   }
 
   createAppointment(appointmentData) {
@@ -43,8 +45,15 @@ export class AppointmentComponent implements OnInit {
     //Gets user id
     let userId = parseInt(sessionStorage.getItem('user_id'));
 
+    //
+    var fullNameArray = this.fullName[0].split(",");
+    var firstName = fullNameArray[0];
+    var lastName = fullNameArray[1];
+
     let appointment = new Appointment(startTime, endTime, appointmentData.is_digital,
-      appointmentData.description, 'Zonnevelt Huisartsenpost', false, this.GpuserId, userId);
+      appointmentData.description, 'Zonnevelt Huisartsenpost',
+      false, this.GpuserId, userId, firstName + " " + lastName
+    );
     console.log(appointment);
     this.appointmentService.createAppointment(appointment)
       .subscribe((createdAppointment: Appointment) => {
@@ -56,6 +65,12 @@ export class AppointmentComponent implements OnInit {
   getGpUser_id(user_id) {
     this.appointmentService.getGPUSerId(user_id).subscribe(data => {
       this.GpuserId = data
+    });
+  }
+
+  getFullNameById() {
+    this.appointmentService.getFullName().subscribe(data => {
+      this.fullName = data
     });
   }
 }
