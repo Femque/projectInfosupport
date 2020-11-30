@@ -43,12 +43,24 @@
     </div>
   </div></div> -->
 
-  <div>
-    <ul *ngIf="messages">
-      <li *ngFor="let message of messages">
-        {{ message }}
-      </li>
-    </ul>
-    <input #message type="text">
-    <button  (click)="sendMessage(message.value)">Click me</button>
+<div class="container">
+  <div class="row">
+    <div class="col-4 chat_people">
+      chat people
+    </div>
+    <div class="col-8 message-container">
+      <div class="messages">
+        <ul *ngIf="messages">
+          <li *ngFor="let message of messages">
+            {{ message }}
+          </li>
+        </ul>
+      </div>
+      <div class="input-message">
+        <input #message type="text" class="write_msg" placeholder="Type a message" />
+        <button (click)="sendMessage(message.value)" class="msg_send_btn" type="button">stuur</button>
+      </div>
+    </div>
   </div>
+</div>
+

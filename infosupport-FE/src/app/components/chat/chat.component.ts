@@ -13,6 +13,8 @@ export class ChatComponent implements OnInit {
   public messages: string[] = [];
   private ws: WebSocket;
 
+  message: string = "";
+
   constructor(service: ChatService) {
   }
 

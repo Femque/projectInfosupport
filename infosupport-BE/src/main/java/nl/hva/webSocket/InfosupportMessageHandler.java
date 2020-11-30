@@ -24,7 +24,6 @@ public class InfosupportMessageHandler  extends TextWebSocketHandler {
 
     private static int number= 1;
 
-    User user = new User();
 
     @PostConstruct
     public void postConstruct(){
