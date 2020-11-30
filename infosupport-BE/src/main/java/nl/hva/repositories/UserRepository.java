@@ -1,7 +1,7 @@
 package nl.hva.repositories;
 
-import app.models.Appointment;
-import app.models.User;
+import nl.hva.models.Appointment;
+import nl.hva.models.User;
 import nl.hva.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
