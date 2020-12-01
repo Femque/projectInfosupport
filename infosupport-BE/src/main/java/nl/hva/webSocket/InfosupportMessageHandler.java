@@ -23,6 +23,8 @@ public class InfosupportMessageHandler  extends TextWebSocketHandler {
     private Map<Integer, WebSocketSession> sessions = new HashMap<>();
 
     private static int number= 1;
+    private int userId;
+    private String test;
 
 
     @PostConstruct
@@ -32,9 +34,14 @@ public class InfosupportMessageHandler  extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        session.getAttributes().get("user_id"); // == 66;
+        System.out.println(session.getAttributes().get("user_id"));
+        test = session.getAttributes().get("user_id").toString(); // == 66;
+        userId = Integer.parseInt(test);
+        System.out.println("test - " + test);
+        sessions.put(number++, session);
         rooms.get("room").getUserSessions().put(number++, session);
-//        sessions.put(number++, session);
+        rooms.get("room").setUserId(userId);
+        System.out.println("room  user_id =  " + rooms.get("room").getUserId());
     }
 
 
