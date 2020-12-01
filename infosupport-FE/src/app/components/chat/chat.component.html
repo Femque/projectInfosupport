@@ -46,7 +46,11 @@
 <div class="container">
   <div class="row">
     <div class="col-4 chat_people">
-      chat people
+      <div class="row">
+        <select  [(ngModel)]="selectedPatientId" class="dropdown" id="title" (ngModelChange)="selected($event.user_id)">
+          <option *ngFor="let patient of patients; let i = index" [ngValue]="patient" [value]="patient.user_id" >{{patient.firstname + " " + patient.lastname}}</option>
+        </select>
+      </div>
     </div>
     <div class="col-8 message-container">
       <div class="messages">

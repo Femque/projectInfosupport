@@ -45,5 +45,12 @@ public class PatientContoller {
     return ResponseEntity.ok(patientData);
   }
 
+  @CrossOrigin
+  @GetMapping("/gp/{gp_user_id}")
+  public ResponseEntity<List<Patient>> getPatientsForGp(@PathVariable int gp_user_id){
+    List<Patient> patients = service.getPatientsForGp(gp_user_id);
+    return ResponseEntity.ok(patients);
+  }
+
 
 }

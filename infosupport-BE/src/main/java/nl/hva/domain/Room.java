@@ -35,4 +35,8 @@ public class Room {
     public void setMessages(List<String> messages) {
         this.messages = messages;
     }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 }
