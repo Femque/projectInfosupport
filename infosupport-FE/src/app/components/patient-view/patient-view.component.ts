@@ -37,4 +37,12 @@ export class PatientViewComponent implements OnInit {
 
     return this.patients;
   }
+
+  loadPatientInfo() {
+
+  }
+
+  clickedPatient() {
+
+  }
 }

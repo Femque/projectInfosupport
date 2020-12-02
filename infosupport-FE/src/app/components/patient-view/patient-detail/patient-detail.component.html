@@ -1,0 +1,8 @@
+<p>patient-detail works!</p>
+<ng-container *ngIf="selectedPatient != null; else elseText">
+
+</ng-container>
+
+<ng-template #elseText>
+  <h5>Selecteer een patient uit de lijst om te bekijken</h5>
+</ng-template>

@@ -34,6 +34,7 @@ import { MedicalFilesComponent } from './components/medical-files/medical-files.
 import { PatientViewComponent } from './components/patient-view/patient-view.component';
 import {Ng2SearchPipeModule} from "ng2-search-filter";
 import {CalendarService} from "./components/calender/calendar.service";
+import { PatientDetailComponent } from './components/patient-view/patient-detail/patient-detail.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin
@@ -55,7 +56,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {origin:
     ChatComponent,
     PersonalInformationComponent,
     MedicalFilesComponent,
-    PatientViewComponent
+    PatientViewComponent,
+    PatientDetailComponent
   ],
 
   imports: [

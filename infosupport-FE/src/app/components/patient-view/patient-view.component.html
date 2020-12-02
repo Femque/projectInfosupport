@@ -3,9 +3,11 @@
   <tr>
     <th>Patienten</th>
   </tr>
-  <tr *ngFor="let patient of patients">
+  <tr *ngFor="let patient of patients"
+  (click)="clickedPatient()">
     <td class="text-left"> {{patient}}</td>
   </tr>
 </table>
 </body>
 
+<router-outlet></router-outlet>
