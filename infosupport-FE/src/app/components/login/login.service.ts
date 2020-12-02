@@ -19,6 +19,8 @@ export class LoginService {
   usersUrl = "http://localhost:8080/user";
   patientUrl = "http://localhost:8080/patient";
 
+  private patients: Patient[];
+
   constructor(
     private http: HttpClient,
     private router: Router
@@ -62,6 +64,19 @@ export class LoginService {
     sessionStorage.removeItem('user_id');
     window.sessionStorage.clear()
     this.userSubject.next(null);
+  }
+
+  getPatientsForGp(gp_user_id: number): Observable<Patient[]>{
+    console.log("Getting patients");
+    return this.http.get<Patient[]>(this.patientUrl + "/gp/" + gp_user_id);
+  }
+
+  findById(id: number): Patient {
+    if (this.patients.find(x => x.user_id == id)) {
+      return this.patients.find(x => x.user_id == id);
+    } else {
+      return null;
+    }
   }
 
   private handleError(error: HttpErrorResponse) {

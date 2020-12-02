@@ -1,13 +1,21 @@
-<body id="body">
-<table class="table">
-  <tr>
-    <th>Patienten</th>
-  </tr>
-  <tr *ngFor="let patient of patients"
-  (click)="clickedPatient()">
-    <td class="text-left"> {{patient}}</td>
-  </tr>
-</table>
-</body>
+<div class="row">
+  <div class="col-md-4">
+    <div class="container">
 
-<router-outlet></router-outlet>
+      <ul class="list-group">
+        <li class="list-group-item"
+            [ngClass]="{'active': selectedPatientId === id}"
+            *ngFor="let patient of loadedPatients; let id = id"
+            (click)="clickedPatient(patient.user_id)"
+            style="cursor: pointer;"
+            id="{{'patient' + id}}">
+          {{patient.firstname + " " + patient.lastname}}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!--Detail-->
+  <router-outlet></router-outlet>
+
+</div>

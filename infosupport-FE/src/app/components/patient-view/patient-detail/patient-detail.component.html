@@ -1,5 +1,40 @@
-<p>patient-detail works!</p>
-<ng-container *ngIf="selectedPatient != null; else elseText">
+<ng-container *ngIf="selectedPatient != null && selectedPatientId != -1;  else elseText">
+
+  <!--Patient detail-->
+  <div class="card">
+    <div class="card-body">
+      <p class="card-title mb-3 mt-0">Geselecteerde patient: {{selectedPatient.firstname + " " + selectedPatient.lastname}}</p>
+      <hr>
+      <p>Geboortedatum: {{selectedPatient.dateOfBirth}}</p>
+
+      <form class="patientDetailForm">
+        <span class="row">
+          <label class="col-md-3">Geslacht</label>
+          <input type="text" class="form-control col-md-8" name="gender" [(ngModel)]="selectedPatient.gender">
+        </span>
+        <span class="row">
+          <label class="col-md-3">Email</label>
+          <input type="text" class="form-control col-md-8" name="email" [(ngModel)]="selectedPatient.email">
+        </span>
+        <span class="row">
+          <label class="col-md-3">Telefoon nummer</label>
+          <input type="text" class="form-control col-md-8" name="phonenumber" [(ngModel)]="selectedPatient.phonenumber">
+        </span>
+      </form>
+
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <p class="card-title mb-3 mt-0">Medisch dossier</p>
+      <hr>
+      <p>Allergien</p>
+      <ul>
+        <li>{{selectedPatient.allergies}}</li>
+      </ul>
+    </div>
+  </div>
 
 </ng-container>
 

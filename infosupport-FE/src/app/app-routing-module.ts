@@ -51,7 +51,7 @@ const routes: Routes = [
   {
     path: 'patientView',
     component: PatientViewComponent,
-    children: [{path: 'id', component: PatientDetailComponent}]
+    children: [{path: ':id', component: PatientDetailComponent}]
   },
   {
     path: '',
