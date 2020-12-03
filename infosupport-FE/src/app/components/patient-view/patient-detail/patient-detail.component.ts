@@ -14,7 +14,7 @@ import {AppointmentService} from "../../appointment/appointment.service";
 export class PatientDetailComponent implements OnInit {
   selectedPatientId: number;
   private _selectedPatient: Patient;
-  patient: Patient;
+  patientCopy: Patient;
   loadedAppointments : Appointment[] = [];
 
   set selectedPatient(patient: Patient) {
@@ -34,8 +34,9 @@ export class PatientDetailComponent implements OnInit {
   ngOnInit(): void {
     this.childParamsSubscription = this.activatedRoute.params
       .subscribe((params: Params) => {
+        // console.log("detail setup id =" + params['id']);
         this.setPatientId(params['id'] || -1);
-        this.patient = Object.assign(new Patient(), this.selectedPatient);
+        this.selectedPatient = this.patientCopy;
       })
   }
   ngOnDestroy() {
@@ -43,8 +44,27 @@ export class PatientDetailComponent implements OnInit {
   }
 
   private setPatientId(id: number) {
-    this._selectedPatient = this.service.findById(id);
-    this.patient = this._selectedPatient;
-    this.patient = Object.assign(new Patient(), this.selectedPatient);
-  }
+    // console.log(id)
+
+     this.service.findById(id).subscribe(
+      patient => {
+        for (let i = 0; i < patient.length; i++) {
+          let user_id = id;
+          if (patient[i].user_id == user_id) {
+            this.patientCopy = new Patient(
+              patient[i].user_id,
+              patient[i].dateOfBirth,
+              patient[i].gender,
+              patient[i].allergies,
+              patient[i].email,
+              patient[i].firstname,
+              patient[i].lastname,
+              patient[i].phonenumber
+            );
+
+            return this.patientCopy;
+          }
+        }
+      }, error => console.log(error)
+    )}
 }

@@ -40,8 +40,7 @@ export class PatientViewComponent implements OnInit {
 
     this.childParamsSubscription = this.activatedRoute.params
       .subscribe((params: Params) => {
-        this.selectedPatientId = +params['id'];
-
+        this.selectedPatientId = +params.id;
       });
   }
 
@@ -66,7 +65,7 @@ export class PatientViewComponent implements OnInit {
   }
 
   clickedPatient(id) {
-    console.log("Patient id = " + id)
+    // console.log("Patient id = " + id)
     if (id != null) {
       this.selectPatient(id);
     } else {
@@ -74,7 +73,8 @@ export class PatientViewComponent implements OnInit {
     }
   }
 
-  private selectPatient(id: number) {
+  selectPatient(id: number) {
+    // console.log("selected id = " + id);
     this.router.navigate([id], {
       relativeTo: this.activatedRoute
     })

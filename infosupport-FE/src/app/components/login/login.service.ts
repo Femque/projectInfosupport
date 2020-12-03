@@ -71,12 +71,9 @@ export class LoginService {
     return this.http.get<Patient[]>(this.patientUrl + "/gp/" + gp_user_id);
   }
 
-  findById(id: number): Patient {
-    if (this.patients.find(x => x.user_id == id)) {
-      return this.patients.find(x => x.user_id == id);
-    } else {
-      return null;
-    }
+  findById(id: number): Observable<Patient[]> {
+    const url = `${this.patientUrl}/${id}`;
+    return this.http.get<Patient[]>(url);
   }
 
   private handleError(error: HttpErrorResponse) {
