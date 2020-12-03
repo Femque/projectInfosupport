@@ -15,4 +15,7 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     nativeQuery = true)
   List<Patient> getPatientByUser_id(@Param("user_id") int user_id);
 
+  @Query(value = "SELECT p.gp_user_id FROM Patient p WHERE p.user_id = ?1", nativeQuery = true)
+  Integer getGPByPatientUserId(@Param("user_id") Integer user_id);
+
 }

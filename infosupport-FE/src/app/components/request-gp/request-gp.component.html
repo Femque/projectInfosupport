@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="jumbotron">
+    <h1>Andere huisarts aanvragen</h1>
+    <div *ngFor="let gp of gpList">
+      <div class="card">
+        <div class="card-header">
+          {{gp.firstname + " " + gp.lastname}}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Specialiteit: {{gp.specialty}}</h5>
+          <p class="card-text">Hier komt een kort stukje tekst over de huisarts.</p>
+          <a href="#" class="btn btn-primary">Vraag aan als huisarts</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -45,5 +45,12 @@ public class PatientContoller {
     return ResponseEntity.ok(patientData);
   }
 
+  //getting the data of patient by id
+  @CrossOrigin
+  @GetMapping("gp/{id}")
+  public ResponseEntity<Integer> getGPByUserId(@PathVariable int id) {
+    Integer gpId = service.getGPByPatientUserId(id);
+    return ResponseEntity.ok(gpId);
+  }
 
 }
