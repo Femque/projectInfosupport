@@ -29,6 +29,7 @@ export class CalenderComponent implements OnInit {
   patients: Array<string> = [];
 
   selectedAppointment: any;
+  selectedUserId: number;
 
   patient_user_id: number;
   location: string;
@@ -65,11 +66,13 @@ export class CalenderComponent implements OnInit {
        this.getAppointments()
      }, 1)
      console.log(sessionStorage);
-     
+
   }
 
   selected(e) {
+    
     this.title = e;
+
   }
 
   open() {
@@ -161,8 +164,9 @@ export class CalenderComponent implements OnInit {
   }
 
   createAppointment(appointmentdata) {
+    console.log(this.patient_user_id);
     let appointment = new Appointment(appointmentdata.start, appointmentdata.end, appointmentdata.is_digital,
-      appointmentdata.description, appointmentdata.location, appointmentdata.is_followup, parseInt(sessionStorage.getItem("big_code")), 123, appointmentdata.title);
+      appointmentdata.description, appointmentdata.location, appointmentdata.is_followup, parseInt(sessionStorage.getItem("big_code")), this.selectedUserId, appointmentdata.title);
     this.calendarService.createAppointment(appointment)
       .subscribe(data => {
         this.appointments = [];

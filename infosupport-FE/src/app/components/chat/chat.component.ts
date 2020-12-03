@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ChatService} from './chat.service';
 import {HttpClient} from '@angular/common/http';
-
+import {Patient} from '../../models/patient';
+import {Message} from '../../models/message';
+import {BrowserModule} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-chat',
@@ -10,93 +12,127 @@ import {HttpClient} from '@angular/common/http';
 })
 export class ChatComponent implements OnInit {
 
-  public messages: string[] = [];
+  @ViewChild('message') inputMessage;
+
+  selectedPatientId: any = -1;
+
+  dateString: string;
+
+  userId: number;
+
+  public RecentPatients: Array<Message[]> = [];
+  recentChats: Map<number, Message> = new Map<number, Message>();
+  CurrentChats: Patient[] = [];
+  patients: Array<Patient> = [];
+  tempMessages: Message[] = [];
+  recentMessages: Map<Patient, Message>;
+  test: number;
+  public messagesForCurrentPatient: Message[] = [];
   private ws: WebSocket;
 
-  constructor(service: ChatService) {
+  message: string = '';
+
+  constructor(private service: ChatService) {
   }
 
   public ngOnInit() {
-    console.log(sessionStorage);
+    this.userId = parseInt(sessionStorage.getItem('user_id'));
+    this.ws = new WebSocket('ws://localhost:8080/infosupport-messaging/' + sessionStorage.getItem('user_id'));
+    this.ws.addEventListener('open', (e) => {
 
-    this.ws = new WebSocket("ws://localhost:8080/infosupport-messaging");
-    this.ws.addEventListener("open", (e) => {
-      this.messages.push("We are open!");
     });
-    this.ws.addEventListener("message", (e: MessageEvent) => {
-      this.messages.push(e.data)
-    })
-    console.log(sessionStorage.getItem('user_id'));
+    this.ws.addEventListener('message', (e: MessageEvent) => {
+      this.messagesForCurrentPatient.push(new Message(e.data, '', new Date(), '', parseInt(sessionStorage.getItem('user_id')), this.selectedPatientId,
+        parseInt(sessionStorage.getItem('user_id'))));
+    });
 
+    this.getPatients(sessionStorage.getItem('user_id'));
   }
 
   public sendMessage(value: string) {
     this.ws.send(value);
+    this.inputMessage.nativeElement.value = '';
+    this.insertMessage(value);
+  }
+
+  insertMessage(value: string) {
+    let message = new Message(value, '', new Date(), '', parseInt(sessionStorage.getItem('user_id')), this.selectedPatientId,
+      parseInt(sessionStorage.getItem('user_id')));
+
+    this.service.insertMessage(message).subscribe(data => {
+    });
 
   }
 
+  getPatients(gp_user_id) {
+    this.service.getPatientsForGp(gp_user_id).subscribe(data => {
+      console.log(data);
+
+      for (let i = 0; i < data.length; i++) {
 
 
+        this.patients.push(new Patient(
+          data[i].user_id,
+          data[i].dateOfBirth,
+          data[i].gender,
+          data[i].allergies,
+          data[i].email,
+          data[i].firstname,
+          data[i].lastname,
+          data[i].phonenumber,
+          data[i].password
+        ));
+      }
+    });
 
-  // socket;
-  // message: string;
-  // RoomName: number;
+    return this.patients;
+  }
 
-  // constructor() {
-  // }
+  getMessagesForChat(gp_user_id: number, patient_user_id: number) {
+    this.messagesForCurrentPatient = [];
+    this.service.getMessagesForChat(gp_user_id, patient_user_id).subscribe(data => {
+        this.messagesForCurrentPatient = data;
 
-  // ngOnInit(): void {
-  //   console.log(sessionStorage);
-  //   this.getMessages(this.RoomName)
-  //   this.setupSocketConnection()
-  // }
+        this.RecentPatients.push(this.messagesForCurrentPatient);
 
-  // setupSocketConnection() {
-  //   this.socket = io(SOCKET_ENDPOINT);
-  //   this.socket.on('message-broadcast', (data: string) => {
-  //     if (data) {
-  //       const element = document.createElement('outgoing_msg');
-  //       element.innerHTML = data;
-  //       element.style.background = '#05728f none repeat scroll 0 0';
-  //       element.style.borderRadius = '3px'
-  //       element.style.color = '#fff';
-  //       element.style.padding =  '5px 10px 5px 12px';
-  //       element.style.margin = '0';
-  //       element.style.width = '46%';
-  //       element.style.float = 'right';
-  //       document.getElementById('msg_history').appendChild(element);
-  //     }
-  //   });
-  // }
+        if (this.recentChats.get(patient_user_id) != data[data.length - 1]) {
+          this.recentChats.set(patient_user_id, data[data.length - 1]);
+        }
 
-  // SendMessage() {
-  //   this.socket.emit('message', this.message);
-  //   const element = document.createElement('outgoing_msg');
-  //   element.innerHTML = this.message;
-  //   element.style.background = '#05728f none repeat scroll 0 0';
-  //   element.style.borderRadius = '3px'
-  //   element.style.color = '#fff';
-  //   element.style.padding =  '5px 10px 5px 12px';
-  //   element.style.margin = '0';
-  //   element.style.width = '46%';
-  //   element.style.float = 'right';
-  //   document.getElementById('msg_history').appendChild(element);
-  //   this.message = '';
-  // }
+        console.log(this.RecentPatients);
+        console.log(this.messagesForCurrentPatient);
+        this.getPatientFromDropdown(patient_user_id);
+      }
+    );
+  }
 
-  // getMessages(conversation_id) {
-  //   let observable = new Observable(observer => {
+  getPatientFromDropdown(user_id: number) {
+    for (let i = 0; i < this.patients.length; i++) {
+      if (this.patients[i].user_id == user_id) {
 
-  //     this.socket.on('message:send:response', (chat) => {
-  //       if (chat.conversation_id === conversation_id) {
-  //         observer.next(chat.msg);
-  //       }
-  //     })
+        if (!this.CurrentChats.includes(this.patients[i])) {
+          this.test = user_id;
+          this.CurrentChats.push(this.patients[i]);
+        }
+      }
+    }
+  }
 
-  //   });
+  selected(e) {
+    this.messagesForCurrentPatient = [];
+    // this.CurrentChats = [];
+    this.selectedPatientId = e;
+    console.log(e);
+    this.getMessagesForChat(parseInt(sessionStorage.getItem('user_id')), e);
+  }
 
-  //   return observable;
+  getMostRecentChat(id: number): Message {
+      return this.recentChats.get(id);
+  }
 
-  // }
+  formatDate(date: Date) {
+
+    return date.toString().split('T', 2);
+  }
 }
 
