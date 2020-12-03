@@ -26,4 +26,8 @@ public class MessageService {
          repo.save(message);
     }
 
+    public List<Message> getMessagesForChat(int gp_user_id, int patient_user_id){
+        return repo.getAllByGp_user_idAndPatient_user_id(gp_user_id, patient_user_id);
+    }
+
 }

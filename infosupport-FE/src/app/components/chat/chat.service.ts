@@ -28,6 +28,10 @@ export class ChatService {
       pipe(catchError(this.handleError))
   }
 
+  getMessagesForChat(gp_user_id: number, patient_user_id: number): Observable<Message[]>{
+    return this.http.get<Message[]>(this.chatUrl + "/messagesForChat/" + gp_user_id + "/" + patient_user_id)
+}
+
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
