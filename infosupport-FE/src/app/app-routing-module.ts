@@ -12,6 +12,7 @@ import {ChatComponent} from './components/chat/chat.component';
 import {PersonalInformationComponent} from './components/personal-information/personal-information.component';
 import {MedicalFilesComponent} from "./components/medical-files/medical-files.component";
 import {PatientViewComponent} from "./components/patient-view/patient-view.component";
+import {RequestGpComponent} from "./components/request-gp/request-gp.component";
 
 
 const routes: Routes = [
@@ -50,6 +51,10 @@ const routes: Routes = [
   {
     path: 'patientView',
     component: PatientViewComponent
+  },
+  {
+    path: 'requestGp',
+    component: RequestGpComponent
   },
   {
     path: '',

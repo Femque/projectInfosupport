@@ -8,6 +8,8 @@ import nl.hva.service.MessageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -23,6 +25,14 @@ public class MessageController {
         System.out.println(message);
         service.insertMessage(message);
 
+    }
+
+    @CrossOrigin
+    @GetMapping("/messagesForChat/{gp_user_id}/{patient_user_id}")
+    public ResponseEntity<List<Message>> getMessagesForChat(@PathVariable int gp_user_id, @PathVariable int patient_user_id){
+        List<Message> messages = service.getMessagesForChat(gp_user_id, patient_user_id);
+
+       return  ResponseEntity.ok(messages);
     }
 
 }

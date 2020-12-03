@@ -23,4 +23,10 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
                   @Param("send_by") int send_by);
 
 
+    @Modifying
+    @Query(value = "SELECT * FROM Message m WHERE m.gp_user_id =?1 AND m.patient_user_id = ?2", nativeQuery = true)
+    List<Message> getAllByGp_user_idAndPatient_user_id(@Param("Gp_user_id") int gp_user_id,
+                                                       @Param("Patient_user_id") int patient_user_id);
+
+
 }
