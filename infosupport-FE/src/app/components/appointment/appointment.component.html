@@ -1,0 +1,35 @@
+<div class="row justify-content-center m-0 pt-5">
+  <div class="jumbotron w-25 text-center ">
+    <h1>Afspraak maken</h1>
+    <mat-toolbar *ngIf="successMessage" color="accent">{{ successMessage }}</mat-toolbar>
+<!--    <mat-toolbar *ngIf="errorMessage" color="warn">{{ errorMessage }}</mat-toolbar>-->
+    <div class="form-container">
+      <form [formGroup]="appointmentForm" (ngSubmit)="createAppointment(appointmentForm.value)">
+          <div class="form-group">
+            <label for="description">
+              Waar heeft u last van?
+            </label>
+            <textarea id="description" type="text" formControlName="description"></textarea>
+<!--            <small class="form-text text-muted">Probeer uw klachten zo duidelijk mogelijk te beschrijven.</small>-->
+
+          </div>
+
+          <div class="form-group">
+            <label for="start">
+              Datum en tijd
+            </label>
+            <input id="start" type="datetime-local" formControlName="start">
+          </div>
+
+          <div class="form-group">
+            <label for="is_digital">
+              Digitale afspraak?
+            </label>
+            <br>
+            <input id="is_digital" type="checkbox" formControlName="is_digital">
+          </div>
+         <button mat-raised-button color="primary">Afspraak inplannen</button>
+      </form>
+    </div>
+  </div>
+</div>

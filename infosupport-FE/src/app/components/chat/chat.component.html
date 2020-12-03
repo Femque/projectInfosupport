@@ -1,0 +1,68 @@
+<div class="container">
+  <h3 class=" text-center">Messaging</h3>
+  <div class="messaging">
+    <div class="inbox_msg">
+      <div class="inbox_people">
+        <div class="headind_srch">
+          <div class="recent_heading">
+            <h4>Recent</h4>
+          </div>
+          <div class="srch_bar">
+            <div class="stylish-input-group">
+              <select [(ngModel)]="selectedPatientId" class="dropdown" id="title"
+                      (ngModelChange)="selected($event.user_id)">
+                <option [defaultSelected]="true">Kies hier</option>
+                <option *ngFor="let patient of patients; let i = index" [ngValue]="patient"
+                        [value]="patient.user_id">{{patient.firstname + " " + patient.lastname}}</option>
+              </select>
+              <span class="input-group-addon">
+                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                </span></div>
+          </div>
+        </div>
+        <div class="inbox_chat">
+          <div class="chat_people" (click)="selected(chat.user_id)" *ngFor="let chat of CurrentChats; let i = index">
+            <div class="chat_ib">
+              <h5 >{{chat.firstname + " " + chat.lastname}}
+                <span class="chat_date">{{ formatDate(this.getMostRecentChat(chat.user_id).message_time)}}</span></h5>
+              <p> {{this.getMostRecentChat(chat.user_id).message}} </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="mesgs">
+        <div class="msg_history">
+          <div *ngFor="let message of messagesForCurrentPatient">
+            <div class="outgoing_msg" *ngIf="message.send_by == userId else elseblock">
+              <div class="sent_msg">
+                <p>{{message.message}}</p>
+                <div class="received_withd_msg">
+                  <span class="time_date">{{formatDate(message.message_time)}}</span></div>
+              </div>
+            </div>
+            <ng-template #elseblock>
+              <div class="received_msg">
+                <div class="received_withd_msg">
+                  <p>{{message.message}}</p>
+                  <div class="received_withd_msg">
+                    <span class="time_date">{{formatDate(message.message_time)}}</span></div>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+        <div class="type_msg">
+          <div class="input_msg_write">
+            <input #message type="text" class="write_msg" placeholder="Type a message"/>
+            <button class="msg_send_btn" (click)="sendMessage(message.value)" type="button"><i
+              class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
