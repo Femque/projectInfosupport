@@ -39,6 +39,7 @@ export class ChatComponent implements OnInit {
   }
 
   public ngOnInit() {
+    console.log(sessionStorage);
     this.getUsedChats(parseInt(sessionStorage.getItem("user_id")))
     this.userId = parseInt(sessionStorage.getItem('user_id'));
     this.ws = new WebSocket('ws://localhost:8080/infosupport-messaging/' + sessionStorage.getItem('user_id'));
@@ -146,7 +147,7 @@ export class ChatComponent implements OnInit {
           if (dataMessages.length > 0 ){
             this.getMessagesForChat(gp_user_id, data[i].user_id)
 
-           
+
 
           }
         })
