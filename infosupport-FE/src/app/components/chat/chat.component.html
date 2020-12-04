@@ -23,9 +23,9 @@
         <div class="inbox_chat">
           <div class="chat_people" (click)="selected(chat.user_id)" *ngFor="let chat of CurrentChats; let i = index">
             <div class="chat_ib">
-              <h5 >{{chat.firstname + " " + chat.lastname}}
-                <span class="chat_date">{{ formatDate(this.getMostRecentChat(chat.user_id).message_time)}}</span></h5>
-              <p> {{this.getMostRecentChat(chat.user_id).message}} </p>
+              <h5>{{chat.firstname + " " + chat.lastname}}
+                <span *ngIf="this.getMostRecentChat(chat.user_id)" class="chat_date">{{ formatDate(this.getMostRecentChat(chat.user_id).message_time)}}</span></h5>
+              <p *ngIf="this.getMostRecentChat(chat.user_id)"> {{this.getMostRecentChat(chat.user_id).message}} </p>
             </div>
           </div>
 
@@ -35,7 +35,7 @@
         <div class="msg_history">
           <div *ngFor="let message of messagesForCurrentPatient">
             <div class="outgoing_msg" *ngIf="message.send_by == userId else elseblock">
-              <div class="sent_msg">
+              <div class="sent_msg" *ngIf="message.message != null">
                 <p>{{message.message}}</p>
                 <div class="received_withd_msg">
                   <span class="time_date">{{formatDate(message.message_time)}}</span></div>

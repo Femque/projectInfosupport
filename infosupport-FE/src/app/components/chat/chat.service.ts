@@ -19,7 +19,7 @@ export class ChatService {
 
   getPatientsForGp(gp_user_id: number): Observable<Patient[]>{
     console.log("getting patients");
-    return this.http.get<Patient[]>("http://localhost:8080/patient/gp/" + gp_user_id)
+    return this.http.get<Patient[]>("http://localhost:8080/patient/gpChat/" + gp_user_id)
   }
 
   insertMessage(message: Message): Observable<Message>{

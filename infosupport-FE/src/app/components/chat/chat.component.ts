@@ -32,10 +32,14 @@ export class ChatComponent implements OnInit {
 
   message: string = '';
 
+  previewMessage;
+  previewMessageTime;
+
   constructor(private service: ChatService) {
   }
 
   public ngOnInit() {
+    this.getUsedChats(parseInt(sessionStorage.getItem("user_id")))
     this.userId = parseInt(sessionStorage.getItem('user_id'));
     this.ws = new WebSocket('ws://localhost:8080/infosupport-messaging/' + sessionStorage.getItem('user_id'));
     this.ws.addEventListener('open', (e) => {
@@ -47,6 +51,12 @@ export class ChatComponent implements OnInit {
     });
 
     this.getPatients(sessionStorage.getItem('user_id'));
+
+    setTimeout(() => {
+      this.messagesForCurrentPatient = []
+    }, 500)
+
+
   }
 
   public sendMessage(value: string) {
@@ -66,11 +76,8 @@ export class ChatComponent implements OnInit {
 
   getPatients(gp_user_id) {
     this.service.getPatientsForGp(gp_user_id).subscribe(data => {
-      console.log(data);
 
       for (let i = 0; i < data.length; i++) {
-
-
         this.patients.push(new Patient(
           data[i].user_id,
           data[i].dateOfBirth,
@@ -93,14 +100,12 @@ export class ChatComponent implements OnInit {
     this.service.getMessagesForChat(gp_user_id, patient_user_id).subscribe(data => {
         this.messagesForCurrentPatient = data;
 
+
         this.RecentPatients.push(this.messagesForCurrentPatient);
 
         if (this.recentChats.get(patient_user_id) != data[data.length - 1]) {
           this.recentChats.set(patient_user_id, data[data.length - 1]);
         }
-
-        console.log(this.RecentPatients);
-        console.log(this.messagesForCurrentPatient);
         this.getPatientFromDropdown(patient_user_id);
       }
     );
@@ -109,7 +114,6 @@ export class ChatComponent implements OnInit {
   getPatientFromDropdown(user_id: number) {
     for (let i = 0; i < this.patients.length; i++) {
       if (this.patients[i].user_id == user_id) {
-
         if (!this.CurrentChats.includes(this.patients[i])) {
           this.test = user_id;
           this.CurrentChats.push(this.patients[i]);
@@ -122,7 +126,7 @@ export class ChatComponent implements OnInit {
     this.messagesForCurrentPatient = [];
     // this.CurrentChats = [];
     this.selectedPatientId = e;
-    console.log(e);
+
     this.getMessagesForChat(parseInt(sessionStorage.getItem('user_id')), e);
   }
 
@@ -134,5 +138,23 @@ export class ChatComponent implements OnInit {
 
     return date.toString().split('T', 2);
   }
+
+  getUsedChats(gp_user_id: number){
+    this.service.getPatientsForGp(gp_user_id).subscribe(data => {
+      for (let i = 0; i < data.length; i++) {
+        this.service.getMessagesForChat(gp_user_id, data[i].user_id).subscribe(dataMessages =>{
+          if (dataMessages.length > 0 ){
+            this.getMessagesForChat(gp_user_id, data[i].user_id)
+
+           
+
+          }
+        })
+
+      }
+    })
+    }
+
+
 }
 
