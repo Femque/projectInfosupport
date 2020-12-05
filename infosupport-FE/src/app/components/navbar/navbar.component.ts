@@ -10,6 +10,7 @@ import {AppointmentService} from "../appointment/appointment.service";
 export class NavbarComponent implements OnInit {
 
   fullName: string;
+  userRole: string;
 
   //Check if user is loggen in or not, decide if all nav-links are available
   isUserLoggedIn : boolean = false;
@@ -22,6 +23,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.isUserLoggedIn = this.loginService.isUserLoggedIn();
     this.getFullNameById();
+    this.userRole = sessionStorage.getItem('user_role');
   }
 
   getFullNameById() {
