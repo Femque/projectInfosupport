@@ -53,7 +53,7 @@ const routes: Routes = [
     component: PatientViewComponent
   },
   {
-    path: 'requestGp',
+    path: 'requestGP',
     component: RequestGpComponent
   },
   {
