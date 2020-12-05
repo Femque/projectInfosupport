@@ -71,10 +71,13 @@ export class LoginComponent implements OnInit {
         this.role = (data);
         if (data == true) {
           console.log("Logging in as patient")
+          sessionStorage.setItem('user_role', 'patient')
           this.router.navigate(['./appointment'])
         } else if (data == false) {
           console.log("Logging in as general practitioner")
           this.router.navigate(['./calender'])
+          sessionStorage.setItem('user_role', 'general_practitioner')
+
         } else {
           console.log("It's not working yet")
         }

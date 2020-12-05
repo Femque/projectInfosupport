@@ -17,6 +17,13 @@ public class PatientContoller {
 
   private final PatientService service;
 
+  @CrossOrigin
+  @GetMapping("/gpChat/{gp_user_id}")
+  public ResponseEntity<List<Patient>> getPatientsForGp(@PathVariable int gp_user_id){
+    List<Patient> patients = service.getPatientsForGp(gp_user_id);
+    return ResponseEntity.ok(patients);
+  }
+
   @GetMapping
   @CrossOrigin(origins = "http://localhost:4200")
   public ResponseEntity<List<Patient>> index() {

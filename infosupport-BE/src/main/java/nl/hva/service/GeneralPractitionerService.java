@@ -18,4 +18,8 @@ public class GeneralPractitionerService {
   }
 
   public Integer findBigCodeByUserId(Integer user_id) { return repo.findBigCodeByUserId(user_id); }
+
+  public General_practitioner findGp(int user_id){
+    return repo.getGeneral_practitionerByuser_id(user_id);
+  }
 }

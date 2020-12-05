@@ -12,4 +12,6 @@ public interface GeneralPractitionerRepository extends JpaRepository<General_pra
   @Query("SELECT g.big_code FROM General_practitioner g WHERE g.user_id = ?1")
   Integer findBigCodeByUserId(@Param("user_id") Integer user_id);
 
+  @Query(value = "SELECT * FROM General_practitioner g WHERE g.user_id = ?1", nativeQuery = true)
+  General_practitioner getGeneral_practitionerByuser_id(@Param("user_id") int User_id);
 }
