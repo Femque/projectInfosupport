@@ -6,11 +6,14 @@ import {Observable, throwError} from 'rxjs';
 import {Patient} from '../../models/patient';
 import {Message} from '../../models/message';
 import {catchError} from 'rxjs/operators';
+import {GP} from '../../models/gp';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
+  getDoctorByUserId = 'http://localhost:8080/patient/gp'
+
   chatUrl = 'http://localhost:8080/chat' //Url to get all appointments
 
 
@@ -31,6 +34,16 @@ export class ChatService {
   getMessagesForChat(gp_user_id: number, patient_user_id: number): Observable<Message[]>{
     return this.http.get<Message[]>(this.chatUrl + "/messagesForChat/" + gp_user_id + "/" + patient_user_id)
 }
+
+  getGPByPatientUserId(user_id: number) {
+    const url = `${this.getDoctorByUserId}/${user_id}`;
+    return this.http.get<number>(url)
+  }
+
+  getGp(user_id: number) {
+    const url = "http://localhost:8080/doctor/user_id/" + user_id;
+    return this.http.get<GP>(url)
+  }
 
 
   private handleError(error: HttpErrorResponse) {

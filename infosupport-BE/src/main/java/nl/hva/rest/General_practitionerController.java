@@ -29,4 +29,10 @@ public class General_practitionerController {
     service.findBigCodeByUserId(user_id);
     return ResponseEntity.ok(service.findBigCodeByUserId(user_id));
   }
+
+  @GetMapping("/user_id/{user_id}")
+  @CrossOrigin
+  public ResponseEntity<General_practitioner> findByUserid(@PathVariable int user_id){
+    return ResponseEntity.ok(service.findGp(user_id));
+  }
 }

@@ -9,11 +9,14 @@
           </div>
           <div class="srch_bar">
             <div class="stylish-input-group">
-              <select [(ngModel)]="selectedPatientId" class="dropdown" id="title"
+              <select *ngIf="!role" [(ngModel)]="selectedPatientId" class="dropdown" id="title"
                       (ngModelChange)="selected($event.user_id)">
+
                 <option [defaultSelected]="true">Kies hier</option>
+
                 <option *ngFor="let patient of patients; let i = index" [ngValue]="patient"
                         [value]="patient.user_id">{{patient.firstname + " " + patient.lastname}}</option>
+
               </select>
               <span class="input-group-addon">
                 <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
@@ -22,11 +25,20 @@
         </div>
         <div class="inbox_chat">
           <div class="chat_people" (click)="selected(chat.user_id)" *ngFor="let chat of CurrentChats; let i = index">
-            <div class="chat_ib">
+            <div *ngIf="!role else elsePatient" class="chat_ib">
               <h5>{{chat.firstname + " " + chat.lastname}}
-                <span *ngIf="this.getMostRecentChat(chat.user_id)" class="chat_date">{{ formatDate(this.getMostRecentChat(chat.user_id).message_time)}}</span></h5>
+                <span *ngIf="this.getMostRecentChat(chat.user_id)"
+                      class="chat_date">{{ formatDate(this.getMostRecentChat(chat.user_id).message_time)}}</span></h5>
               <p *ngIf="this.getMostRecentChat(chat.user_id)"> {{this.getMostRecentChat(chat.user_id).message}} </p>
             </div>
+            <ng-template #elsePatient>
+            <div class="chat_ib">
+              <h5>{{chat.firstname + " " + chat.lastname}}
+                <span *ngIf="lastDate" class="chat_date">{{ formatDate(this.lastDate)}}</span></h5>
+              <p *ngIf="lastMessage"> {{this.lastMessage}} </p>
+            </div>
+          </ng-template>
+
           </div>
 
         </div>
