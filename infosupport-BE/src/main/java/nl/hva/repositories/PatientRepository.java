@@ -22,4 +22,10 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
   @Modifying
   @Query(value = "SELECT * FROM Patient p WHERE p.gp_user_id = ?1", nativeQuery = true)
   List<Patient> getPatients(@Param("gp_user_id") int gp_user_id);
+
+  @Modifying
+  @Query(value = "UPDATE Patient p SET p.gp_user_id = ?1 WHERE p.user_id = ?2", nativeQuery = true)
+  void updatePatientGP(@Param("gp_user_id") int gpUserId,
+                       @Param("user_id")int userId
+  );
 }

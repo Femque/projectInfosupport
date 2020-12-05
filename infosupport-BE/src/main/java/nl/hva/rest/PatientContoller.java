@@ -1,11 +1,13 @@
 package nl.hva.rest;
 
+import nl.hva.models.Appointment;
 import nl.hva.models.Patient;
 import nl.hva.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -53,4 +55,11 @@ public class PatientContoller {
     return ResponseEntity.ok(gpId);
   }
 
+  @CrossOrigin
+  @PutMapping(value = "/update/{userId}/{gpUserId}")
+  @Transactional
+  public ResponseEntity<Integer> update(@PathVariable int gpUserId, @PathVariable int userId) {
+    service.updatePatientGP(gpUserId, userId);
+    return ResponseEntity.ok(gpUserId);
+  }
 }

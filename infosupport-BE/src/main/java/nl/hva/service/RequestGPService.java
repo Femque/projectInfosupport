@@ -20,4 +20,13 @@ public class RequestGPService {
     public void createRequest(RequestGP request) {
         repository.save(request);
     }
+
+    public List<RequestGP> getRequestsByGpUserId(int gpUserId){
+        return repository.getRequestsByGpUserId(gpUserId);
+    }
+
+    public void deleteRequest(int id) {
+        repository.deleteById(id);
+    }
+
 }

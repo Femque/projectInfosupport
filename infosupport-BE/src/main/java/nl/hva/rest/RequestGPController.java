@@ -25,6 +25,13 @@ public class RequestGPController {
         return ResponseEntity.ok(requests);
     }
 
+    @CrossOrigin
+    @GetMapping("/requests/gp/{gp_user_id}")
+    public ResponseEntity<List<RequestGP>> getRequestsByGpUserId(@PathVariable int gp_user_id){
+        List<RequestGP> requests = service.getRequestsByGpUserId(gp_user_id);
+        return ResponseEntity.ok(requests);
+    }
+
     @PostMapping("/requests/create")
     @CrossOrigin
     @Transactional
@@ -32,5 +39,12 @@ public class RequestGPController {
         System.out.println(request);
         service.createRequest(request);
         return ResponseEntity.ok(request);
+    }
+
+    @CrossOrigin
+    @DeleteMapping("/requests/delete/{id}")
+    public ResponseEntity<Integer> delete(@PathVariable int id) {
+        service.deleteRequest(id);
+        return ResponseEntity.ok(id);
     }
 }
