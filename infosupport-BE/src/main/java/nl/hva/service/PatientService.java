@@ -25,4 +25,8 @@ public class PatientService {
   public Integer getGPByPatientUserId(int user_id) {
     return repo.getGPByPatientUserId(user_id);
   }
+
+  public List<Patient> getPatientsForGp(int gp_user_id){
+    return repo.getPatients(gp_user_id);
+  }
 }

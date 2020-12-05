@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Patient} from '../../models/patient';
 import {Message} from '../../models/message';
 import {BrowserModule} from '@angular/platform-browser';
+import {GP} from '../../models/gp';
 
 @Component({
   selector: 'app-chat',
@@ -19,6 +20,7 @@ export class ChatComponent implements OnInit {
   dateString: string;
 
   userId: number;
+  role;
 
   public RecentPatients: Array<Message[]> = [];
   recentChats: Map<number, Message> = new Map<number, Message>();
@@ -29,13 +31,31 @@ export class ChatComponent implements OnInit {
   test: number;
   public messagesForCurrentPatient: Message[] = [];
   private ws: WebSocket;
+  lastMessage: string;
+  lastDate: Date;
 
   message: string = '';
+  generalPractionerId;
+  generalPractitioner;
+
+  previewMessage;
+  previewMessageTime;
 
   constructor(private service: ChatService) {
   }
 
   public ngOnInit() {
+    this.getrole();
+    if (this.role == false) {
+      this.getPatients(sessionStorage.getItem('user_id'));
+    } else {
+      this.getGp();
+    }
+
+    this.getrole();
+    console.log(this.role);
+    console.log(sessionStorage);
+    this.getUsedChats(parseInt(sessionStorage.getItem('user_id')));
     this.userId = parseInt(sessionStorage.getItem('user_id'));
     this.ws = new WebSocket('ws://localhost:8080/infosupport-messaging/' + sessionStorage.getItem('user_id'));
     this.ws.addEventListener('open', (e) => {
@@ -46,7 +66,12 @@ export class ChatComponent implements OnInit {
         parseInt(sessionStorage.getItem('user_id'))));
     });
 
-    this.getPatients(sessionStorage.getItem('user_id'));
+    setTimeout(() => {
+      this.messagesForCurrentPatient = [];
+    }, 500);
+
+
+
   }
 
   public sendMessage(value: string) {
@@ -56,21 +81,27 @@ export class ChatComponent implements OnInit {
   }
 
   insertMessage(value: string) {
-    let message = new Message(value, '', new Date(), '', parseInt(sessionStorage.getItem('user_id')), this.selectedPatientId,
-      parseInt(sessionStorage.getItem('user_id')));
+    if (this.role == false) {
+      let message = new Message(value, '', new Date(), '', parseInt(sessionStorage.getItem('user_id')), this.selectedPatientId,
+        parseInt(sessionStorage.getItem('user_id')));
 
-    this.service.insertMessage(message).subscribe(data => {
-    });
+      this.service.insertMessage(message).subscribe(data => {
+      });
+    }else {
+      let message = new Message(value, '', new Date(), '', this.generalPractionerId, this.userId,
+        this.userId);
+
+      this.service.insertMessage(message).subscribe(data => {
+      });
+
+    }
+
 
   }
 
   getPatients(gp_user_id) {
     this.service.getPatientsForGp(gp_user_id).subscribe(data => {
-      console.log(data);
-
       for (let i = 0; i < data.length; i++) {
-
-
         this.patients.push(new Patient(
           data[i].user_id,
           data[i].dateOfBirth,
@@ -88,20 +119,51 @@ export class ChatComponent implements OnInit {
     return this.patients;
   }
 
+  getGp() {
+    this.service.getGPByPatientUserId(parseInt(sessionStorage.getItem('user_id'))).subscribe(data => {
+      console.log(data);
+      this.generalPractionerId = data;
+      this.service.getGp(this.generalPractionerId).subscribe(data => {
+        this.generalPractitioner = new GP(
+          data.big_code,
+          data.specialty,
+          data.user_id,
+          data.email,
+          data.firstname,
+          data.lastname,
+          data.password,
+          data.phonenumber
+        );
+        this.CurrentChats.push(this.generalPractitioner);
+        this.RecentPatients.push(this.messagesForCurrentPatient);
+        this.getMessagesForChat(this.generalPractionerId , this.userId)
+
+      });
+    });
+  }
+
+
   getMessagesForChat(gp_user_id: number, patient_user_id: number) {
     this.messagesForCurrentPatient = [];
     this.service.getMessagesForChat(gp_user_id, patient_user_id).subscribe(data => {
         this.messagesForCurrentPatient = data;
-
+      console.log(data);
         this.RecentPatients.push(this.messagesForCurrentPatient);
 
-        if (this.recentChats.get(patient_user_id) != data[data.length - 1]) {
-          this.recentChats.set(patient_user_id, data[data.length - 1]);
+        if (!this.role) {
+          if (this.recentChats.get(patient_user_id) != data[data.length - 1]) {
+            this.recentChats.set(patient_user_id, data[data.length - 1]);
+
+            this.getPatientFromDropdown(patient_user_id);
+          }
+        }else {
+          if (this.lastDate != data[data.length -1].message_time && this.lastMessage != data[data.length -1].message)
+          this.lastMessage = data[data.length -1].message;
+          this.lastDate = data[data.length -1].message_time;
         }
 
-        console.log(this.RecentPatients);
-        console.log(this.messagesForCurrentPatient);
-        this.getPatientFromDropdown(patient_user_id);
+
+
       }
     );
   }
@@ -109,7 +171,6 @@ export class ChatComponent implements OnInit {
   getPatientFromDropdown(user_id: number) {
     for (let i = 0; i < this.patients.length; i++) {
       if (this.patients[i].user_id == user_id) {
-
         if (!this.CurrentChats.includes(this.patients[i])) {
           this.test = user_id;
           this.CurrentChats.push(this.patients[i]);
@@ -122,17 +183,42 @@ export class ChatComponent implements OnInit {
     this.messagesForCurrentPatient = [];
     // this.CurrentChats = [];
     this.selectedPatientId = e;
-    console.log(e);
-    this.getMessagesForChat(parseInt(sessionStorage.getItem('user_id')), e);
+
+    if (this.role == false) {
+      this.getMessagesForChat(parseInt(sessionStorage.getItem('user_id')), e);
+    } else {
+      this.getMessagesForChat(this.generalPractionerId, parseInt(sessionStorage.getItem('user_id')));
+      // console.log(this.messagesForCurrentPatient);
+
+    }
   }
 
   getMostRecentChat(id: number): Message {
-      return this.recentChats.get(id);
+    return this.recentChats.get(id);
   }
 
   formatDate(date: Date) {
 
-    return date.toString().split('T', 2);
+    return date.toString().replace('T', " ");
   }
+
+  getUsedChats(gp_user_id: number) {
+    this.service.getPatientsForGp(gp_user_id).subscribe(data => {
+      for (let i = 0; i < data.length; i++) {
+        this.service.getMessagesForChat(gp_user_id, data[i].user_id).subscribe(dataMessages => {
+          if (dataMessages.length > 0) {
+            this.getMessagesForChat(gp_user_id, data[i].user_id);
+          }
+        });
+
+      }
+    });
+  }
+
+  getrole() {
+    this.role = sessionStorage.getItem('user_role') == 'patient';
+    console.log(sessionStorage.getItem('user_role'));
+  }
+
 }
 
