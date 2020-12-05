@@ -1,10 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ChatService} from './chat.service';
 import {HttpClient} from '@angular/common/http';
 import {Patient} from '../../models/patient';
 import {Message} from '../../models/message';
 import {BrowserModule} from '@angular/platform-browser';
 import {GP} from '../../models/gp';
+import {element} from 'protractor';
 
 @Component({
   selector: 'app-chat',
@@ -14,6 +15,8 @@ import {GP} from '../../models/gp';
 export class ChatComponent implements OnInit {
 
   @ViewChild('message') inputMessage;
+
+  @ViewChild('scrollMe') private messageContainer: ElementRef;
 
   selectedPatientId: any = -1;
 
@@ -71,7 +74,6 @@ export class ChatComponent implements OnInit {
     }, 500);
 
 
-
   }
 
   public sendMessage(value: string) {
@@ -87,7 +89,7 @@ export class ChatComponent implements OnInit {
 
       this.service.insertMessage(message).subscribe(data => {
       });
-    }else {
+    } else {
       let message = new Message(value, '', new Date(), '', this.generalPractionerId, this.userId,
         this.userId);
 
@@ -121,7 +123,6 @@ export class ChatComponent implements OnInit {
 
   getGp() {
     this.service.getGPByPatientUserId(parseInt(sessionStorage.getItem('user_id'))).subscribe(data => {
-      console.log(data);
       this.generalPractionerId = data;
       this.service.getGp(this.generalPractionerId).subscribe(data => {
         this.generalPractitioner = new GP(
@@ -136,7 +137,7 @@ export class ChatComponent implements OnInit {
         );
         this.CurrentChats.push(this.generalPractitioner);
         this.RecentPatients.push(this.messagesForCurrentPatient);
-        this.getMessagesForChat(this.generalPractionerId , this.userId)
+        this.getMessagesForChat(this.generalPractionerId, this.userId);
 
       });
     });
@@ -147,23 +148,19 @@ export class ChatComponent implements OnInit {
     this.messagesForCurrentPatient = [];
     this.service.getMessagesForChat(gp_user_id, patient_user_id).subscribe(data => {
         this.messagesForCurrentPatient = data;
-      console.log(data);
         this.RecentPatients.push(this.messagesForCurrentPatient);
-
         if (!this.role) {
           if (this.recentChats.get(patient_user_id) != data[data.length - 1]) {
             this.recentChats.set(patient_user_id, data[data.length - 1]);
 
             this.getPatientFromDropdown(patient_user_id);
           }
-        }else {
-          if (this.lastDate != data[data.length -1].message_time && this.lastMessage != data[data.length -1].message)
-          this.lastMessage = data[data.length -1].message;
-          this.lastDate = data[data.length -1].message_time;
+        } else {
+          if (this.lastDate != data[data.length - 1].message_time && this.lastMessage != data[data.length - 1].message) {
+            this.lastMessage = data[data.length - 1].message;
+          }
+          this.lastDate = data[data.length - 1].message_time;
         }
-
-
-
       }
     );
   }
@@ -186,10 +183,14 @@ export class ChatComponent implements OnInit {
 
     if (this.role == false) {
       this.getMessagesForChat(parseInt(sessionStorage.getItem('user_id')), e);
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 50);
     } else {
       this.getMessagesForChat(this.generalPractionerId, parseInt(sessionStorage.getItem('user_id')));
-      // console.log(this.messagesForCurrentPatient);
-
+      setTimeout(() => {
+        this.scrollToBottom()
+      }, 50);
     }
   }
 
@@ -198,8 +199,7 @@ export class ChatComponent implements OnInit {
   }
 
   formatDate(date: Date) {
-
-    return date.toString().replace('T', " ");
+    return date.toString().replace('T', ' ');
   }
 
   getUsedChats(gp_user_id: number) {
@@ -217,7 +217,15 @@ export class ChatComponent implements OnInit {
 
   getrole() {
     this.role = sessionStorage.getItem('user_role') == 'patient';
-    console.log(sessionStorage.getItem('user_role'));
+  }
+
+  scrollToBottom(): void {
+    try {
+      console.log(this.messageContainer.nativeElement.scrollTop);
+      console.log(this.messageContainer.nativeElement.scrollHeight);
+      this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
+    } catch (err) {
+    }
   }
 
 }
