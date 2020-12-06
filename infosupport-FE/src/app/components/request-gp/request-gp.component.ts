@@ -28,11 +28,12 @@ export class RequestGpComponent implements OnInit {
   }
 
   requestGP(gpUserId) {
+    if (confirm("Weet je zeker dat je een nieuwe huisarts wilt aanvragen?")) {
     //Get user id
     let userId = parseInt(sessionStorage.getItem('user_id'));
-    console.log(this.fullName);
     let newRequest = new RequestGP(userId, gpUserId, this.fullName)
     this.requestGpService.createRequest(newRequest).subscribe();
+    }
   }
 
   getCurrentGP() {
