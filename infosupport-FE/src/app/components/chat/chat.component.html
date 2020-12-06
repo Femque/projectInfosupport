@@ -27,9 +27,9 @@
           <div class="chat_people" (click)="selected(chat.user_id)" *ngFor="let chat of CurrentChats; let i = index">
             <div *ngIf="!role else elsePatient" class="chat_ib">
               <h5>{{chat.firstname + " " + chat.lastname}}
-                <span *ngIf="this.getMostRecentChat(chat.user_id)"
-                      class="chat_date">{{ formatDate(this.getMostRecentChat(chat.user_id).message_time)}}</span></h5>
-              <p *ngIf="this.getMostRecentChat(chat.user_id)"> {{this.getMostRecentChat(chat.user_id).message}} </p>
+                <span *ngIf="this.getMostRecentChat(chat)"
+                      class="chat_date">{{ formatDate(this.getMostRecentChat(chat).message_time)}}</span></h5>
+              <p *ngIf="this.getMostRecentChat(chat)"> {{this.getMostRecentChat(chat).message}} </p>
             </div>
             <ng-template #elsePatient>
             <div class="chat_ib">

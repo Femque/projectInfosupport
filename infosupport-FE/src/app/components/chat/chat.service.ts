@@ -45,6 +45,10 @@ export class ChatService {
     return this.http.get<GP>(url)
   }
 
+  getPatientById(id: number) {
+    const url = `http://localhost:8080/patient/${id}`;
+    return this.http.get<Patient>(url);
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

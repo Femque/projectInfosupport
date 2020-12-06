@@ -6,6 +6,7 @@ import {Message} from '../../models/message';
 import {BrowserModule} from '@angular/platform-browser';
 import {GP} from '../../models/gp';
 import {element} from 'protractor';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-chat',
@@ -26,16 +27,16 @@ export class ChatComponent implements OnInit {
   role;
 
   public RecentPatients: Array<Message[]> = [];
-  recentChats: Map<number, Message> = new Map<number, Message>();
+  recentChats: Map<Patient, Message> = new Map<Patient, Message>();
   CurrentChats: Patient[] = [];
   patients: Array<Patient> = [];
   tempMessages: Message[] = [];
   recentMessages: Map<Patient, Message>;
-  test: number;
   public messagesForCurrentPatient: Message[] = [];
   private ws: WebSocket;
   lastMessage: string;
   lastDate: Date;
+  tempPatient: Patient;
 
   message: string = '';
   generalPractionerId;
@@ -143,6 +144,13 @@ export class ChatComponent implements OnInit {
     });
   }
 
+  getPatientById(patient_user_id: number): Patient {
+    this.service.getPatientById(patient_user_id).subscribe(data => {
+      this.tempPatient = data[0];
+    });
+
+    return this.tempPatient;
+  }
 
   getMessagesForChat(gp_user_id: number, patient_user_id: number) {
     this.messagesForCurrentPatient = [];
@@ -150,9 +158,9 @@ export class ChatComponent implements OnInit {
         this.messagesForCurrentPatient = data;
         this.RecentPatients.push(this.messagesForCurrentPatient);
         if (!this.role) {
-          if (this.recentChats.get(patient_user_id) != data[data.length - 1]) {
-            this.recentChats.set(patient_user_id, data[data.length - 1]);
-
+          if (this.recentChats.get(this.getPatientById(patient_user_id)) != data[data.length - 1]) {
+            console.log(this.getPatientById(patient_user_id) + "   " + data[data.length - 1]);
+            this.recentChats.set(this.getPatientById(patient_user_id), data[data.length - 1]);
             this.getPatientFromDropdown(patient_user_id);
           }
         } else {
@@ -169,7 +177,6 @@ export class ChatComponent implements OnInit {
     for (let i = 0; i < this.patients.length; i++) {
       if (this.patients[i].user_id == user_id) {
         if (!this.CurrentChats.includes(this.patients[i])) {
-          this.test = user_id;
           this.CurrentChats.push(this.patients[i]);
         }
       }
@@ -178,24 +185,19 @@ export class ChatComponent implements OnInit {
 
   selected(e) {
     this.messagesForCurrentPatient = [];
-    // this.CurrentChats = [];
     this.selectedPatientId = e;
 
     if (this.role == false) {
       this.getMessagesForChat(parseInt(sessionStorage.getItem('user_id')), e);
-      setTimeout(() => {
-        this.scrollToBottom();
-      }, 50);
+
     } else {
       this.getMessagesForChat(this.generalPractionerId, parseInt(sessionStorage.getItem('user_id')));
-      setTimeout(() => {
-        this.scrollToBottom()
-      }, 50);
     }
+    this.scrollToBottom();
   }
 
-  getMostRecentChat(id: number): Message {
-    return this.recentChats.get(id);
+  getMostRecentChat(patient: Patient): Message {
+    return this.recentChats.get(patient);
   }
 
   formatDate(date: Date) {
@@ -210,7 +212,6 @@ export class ChatComponent implements OnInit {
             this.getMessagesForChat(gp_user_id, data[i].user_id);
           }
         });
-
       }
     });
   }
