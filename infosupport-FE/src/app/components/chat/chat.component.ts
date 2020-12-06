@@ -74,6 +74,14 @@ export class ChatComponent implements OnInit {
       this.messagesForCurrentPatient = [];
     }, 500);
 
+    console.log(this.CurrentChats);
+
+    this.CurrentChats.sort((a, b) => {
+      return this.getLastMessage(a.user_id).message_time - this.getLastMessage(b.user_id).message_time
+    })
+
+    console.log(this.CurrentChats);
+
 
   }
 
@@ -173,6 +181,7 @@ export class ChatComponent implements OnInit {
         }
       }
     }
+
   }
 
   selected(e) {
@@ -221,6 +230,15 @@ export class ChatComponent implements OnInit {
       this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
     } catch (err) {
     }
+  }
+
+  getLastMessage(userId){
+    let message;
+    this.service.getMessagesForChat(this.userId, userId).subscribe(data => {
+      message = data[data.length -1]
+      console.log(message);
+    })
+    return message;
   }
 
 }
