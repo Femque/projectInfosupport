@@ -27,7 +27,7 @@ export class ChatComponent implements OnInit {
   role;
 
   public RecentPatients: Array<Message[]> = [];
-  recentChats: Map<Patient, Message> = new Map<Patient, Message>();
+  recentChats: Map<number, Message> = new Map<number, Message>();
   CurrentChats: Patient[] = [];
   patients: Array<Patient> = [];
   tempMessages: Message[] = [];
@@ -144,23 +144,15 @@ export class ChatComponent implements OnInit {
     });
   }
 
-  getPatientById(patient_user_id: number): Patient {
-    this.service.getPatientById(patient_user_id).subscribe(data => {
-      this.tempPatient = data[0];
-    });
-
-    return this.tempPatient;
-  }
-
   getMessagesForChat(gp_user_id: number, patient_user_id: number) {
     this.messagesForCurrentPatient = [];
     this.service.getMessagesForChat(gp_user_id, patient_user_id).subscribe(data => {
         this.messagesForCurrentPatient = data;
         this.RecentPatients.push(this.messagesForCurrentPatient);
         if (!this.role) {
-          if (this.recentChats.get(this.getPatientById(patient_user_id)) != data[data.length - 1]) {
-            console.log(this.getPatientById(patient_user_id) + "   " + data[data.length - 1]);
-            this.recentChats.set(this.getPatientById(patient_user_id), data[data.length - 1]);
+          if (this.recentChats.get(patient_user_id) != data[data.length - 1]) {
+            this.recentChats.set(patient_user_id, data[data.length - 1]);
+
             this.getPatientFromDropdown(patient_user_id);
           }
         } else {
@@ -193,11 +185,12 @@ export class ChatComponent implements OnInit {
     } else {
       this.getMessagesForChat(this.generalPractionerId, parseInt(sessionStorage.getItem('user_id')));
     }
+
     this.scrollToBottom();
   }
 
-  getMostRecentChat(patient: Patient): Message {
-    return this.recentChats.get(patient);
+  getMostRecentChat(id: number): Message {
+    return this.recentChats.get(id);
   }
 
   formatDate(date: Date) {
@@ -212,6 +205,7 @@ export class ChatComponent implements OnInit {
             this.getMessagesForChat(gp_user_id, data[i].user_id);
           }
         });
+
       }
     });
   }
