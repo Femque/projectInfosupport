@@ -7,6 +7,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {GP} from '../../models/gp';
 import {element} from 'protractor';
 import {Observable} from 'rxjs';
+import {log} from 'util';
 
 @Component({
   selector: 'app-chat',
@@ -74,15 +75,10 @@ export class ChatComponent implements OnInit {
       this.messagesForCurrentPatient = [];
     }, 500);
 
-    console.log(this.CurrentChats);
+  }
 
-    this.CurrentChats.sort((a, b) => {
-      return this.getLastMessage(a.user_id).message_time - this.getLastMessage(b.user_id).message_time
-    })
-
-    console.log(this.CurrentChats);
-
-
+  sortCurrentChats(){
+    this.CurrentChats.sort((a, b) => (this.getLastMessage(a.user_id) < this.getLastMessage(b.user_id) ? -1 : 1))
   }
 
   public sendMessage(value: string) {
@@ -178,6 +174,7 @@ export class ChatComponent implements OnInit {
       if (this.patients[i].user_id == user_id) {
         if (!this.CurrentChats.includes(this.patients[i])) {
           this.CurrentChats.push(this.patients[i]);
+          this.sortCurrentChats()
         }
       }
     }
@@ -233,11 +230,12 @@ export class ChatComponent implements OnInit {
   }
 
   getLastMessage(userId){
-    let message;
+    let message: Date = new Date()
     this.service.getMessagesForChat(this.userId, userId).subscribe(data => {
-      message = data[data.length -1]
+      message = data[data.length -1].message_time
       console.log(message);
     })
+    console.log(message);
     return message;
   }
 
