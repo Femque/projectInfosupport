@@ -5,6 +5,8 @@ import nl.hva.repositories.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,15 +24,18 @@ public class PatientService {
     return repo.getPatientByUser_id(patient_user_id);
   }
 
+  public void updatePatient(int user_id, String email, String firstname, String lastname,
+                            String password, String phoneNumber, LocalDate dateOfBirth, String allergies){
+    repo.savePatientBy(user_id,email, firstname, lastname, password,
+      phoneNumber, dateOfBirth, allergies);
+  }
+
+  public List<Patient> getPatientsForGp(int gp_user_id) {
+    return repo.getPatients(gp_user_id);
+  }
+
   public Integer getGPByPatientUserId(int user_id) {
     return repo.getGPByPatientUserId(user_id);
   }
 
-  public void updatePatientGP(int gpUserId, int userId) {
-    repo.updatePatientGP(gpUserId, userId);
-  }
-
-  public List<Patient> getPatientsForGp(int gp_user_id){
-    return repo.getPatients(gp_user_id);
-  }
 }

@@ -1,6 +1,7 @@
 package nl.hva.rest;
 
 import nl.hva.models.General_practitioner;
+import nl.hva.models.Patient;
 import nl.hva.service.GeneralPractitionerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

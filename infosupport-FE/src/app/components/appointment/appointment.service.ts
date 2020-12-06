@@ -3,40 +3,32 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {Appointment} from "../../models/appointment";
 import {catchError} from "rxjs/operators";
+import {environment} from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppointmentService {
 
-  createAppointmentUrl = 'http://localhost:8080/appointments/create' //Url to create appointment
-  getAppointmentUrl = 'http://localhost:8080/appointments'
-  getAppointmentsByIdUrl = 'http://localhost:8080/appointments/{id}'
-  getUserFullNameUrl = 'http://localhost:8080/user/fullname'
-
-
   constructor(private http: HttpClient) {
   }
 
   createAppointment(appointment: Appointment): Observable<Appointment> {
     console.log("Creating appointment...");
-    return this.http.post<Appointment>(this.createAppointmentUrl, appointment)
+    return this.http.post<Appointment>(environment.apiUrl + "/appointments/create", appointment)
       .pipe(
         catchError(this.handleError)
       );  }
 
   //getting appointments
   getAppointments(): Observable<Appointment[]> {
-    return this.http.get<Appointment[]>(this.getAppointmentUrl)
+    return this.http.get<Appointment[]>(environment.apiUrl + "/appointments")
   }
 
   //getting appointment
   getAppointmentsById(): Observable<Appointment[]> {
-    // return this.http.get<Appointment[]>${this.getAppointmentsByIdUrl}/${sessionStorage.getItem('user_id')}
-    const url = `${this.getAppointmentUrl}/${sessionStorage.getItem('user_id')}`; // DELETE api/heroes/42
+    const url = `${environment.apiUrl}/appointments/${sessionStorage.getItem('user_id')}`; // DELETE api/heroes/42
     return this.http.get<Appointment[]>(url)
-    console.log(sessionStorage.getItem('user_id')+ 'efkwefpowekfpokop');
-
   }
 
   // //deleting appointment
@@ -46,22 +38,27 @@ export class AppointmentService {
   // }
 
   deleteAppointment(id: number): Observable<{}> {
-    const url = `${this.getAppointmentUrl + "/delete"}/${id}`; // DELETE api/heroes/42
+    const url = `${environment.apiUrl + "/appointments" + "/delete"}/${id}`; // DELETE api/heroes/42
     return this.http.delete(url)
   }
 
   getGPUSerId(user_id: number){
-    const url = `${this.getAppointmentUrl + "/patient/gp"}/${user_id}`
+    const url = `${environment.apiUrl + "/appointments" + "/patient/gp"}/${user_id}`
     return this.http.get<number>(url)
   }
 
   getFullName() {
-    const url = `${this.getUserFullNameUrl}/${sessionStorage.getItem('user_id')}`;
+    const url = `${environment.apiUrl}/user/fullname/${sessionStorage.getItem('user_id')}`;
+    return this.http.get<string>(url);
+  }
+
+  getFullNameBig(bigCode: number) {
+    const url = `${this.getUserFullNameUrl}/${bigCode}`;
     return this.http.get<string>(url);
   }
 
   getBigCode(user_id: number){
-    const url = `${this.getAppointmentUrl + "/big_code"}/${user_id}`
+    const url = `${environment.apiUrl + "/appointments" + "/big_code"}/${user_id}`
     return this.http.get<number>(url)
   }
 

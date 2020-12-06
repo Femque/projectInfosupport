@@ -10,9 +10,11 @@ export class GP {
   private _lastname: string;
   private _password: string;
   private _phonenumber: number;
+  private _dateOfBirth: Date;
 
 
-  constructor(big_code?: number, specialty?: string, user_id?: number, email?: string, firstname?: string, lastname?: string, password?: string, phonenumber?: number) {
+  constructor(big_code?: number, specialty?: string, user_id?: number, email?: string,
+              firstname?: string, lastname?: string, password?: string, phonenumber?: number, dateOfBirth? : Date) {
     this._big_code = big_code;
     this._specialty = specialty;
     this._user_id = user_id;
@@ -21,6 +23,7 @@ export class GP {
     this._lastname = lastname;
     this._password = password;
     this._phonenumber = phonenumber;
+    this._dateOfBirth = dateOfBirth;
   }
 
   get big_code(): number {
@@ -85,5 +88,13 @@ export class GP {
 
   set phonenumber(value: number) {
     this._phonenumber = value;
+  }
+
+  get dateOfBirth(): Date {
+    return this._dateOfBirth;
+  }
+
+  set dateOfBirth(value: Date) {
+    this._dateOfBirth = value;
   }
 }

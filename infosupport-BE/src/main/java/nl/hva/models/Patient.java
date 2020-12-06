@@ -9,7 +9,7 @@ public class Patient implements Serializable {
 
   @Id
   @Column(name = "user_id")
-  private Integer user_id;
+  private int user_id;
 
   @Column(name = "dateOfBirth")
   private LocalDate dateOfBirth;
@@ -40,11 +40,11 @@ public class Patient implements Serializable {
 
   public Patient(){ }
 
-  public Integer getUser_id() {
+  public int getUser_id() {
     return user_id;
   }
 
-  public void setUser_id(Integer user_id) {
+  public void setUser_id(int user_id) {
     this.user_id = user_id;
   }
 
