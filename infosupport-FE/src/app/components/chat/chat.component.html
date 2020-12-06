@@ -43,9 +43,9 @@
 
         </div>
       </div>
-      <div class="mesgs">
-        <div class="msg_history">
-          <div *ngFor="let message of messagesForCurrentPatient">
+      <div  class="mesgs">
+        <div #scrollMe class="msg_history">
+          <div  *ngFor="let message of messagesForCurrentPatient">
             <div class="outgoing_msg" *ngIf="message.send_by == userId else elseblock">
               <div class="sent_msg" *ngIf="message.message != null">
                 <p>{{message.message}}</p>

@@ -34,14 +34,11 @@ public class InfosupportMessageHandler  extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        System.out.println(session.getAttributes().get("user_id"));
         test = session.getAttributes().get("user_id").toString(); // == 66;
         userId = Integer.parseInt(test);
-        System.out.println("test - " + test);
         sessions.put(number++, session);
         rooms.get("room").getUserSessions().put(number++, session);
         rooms.get("room").setUserId(userId);
-        System.out.println("room  user_id =  " + rooms.get("room").getUserId());
     }
 
 
@@ -51,8 +48,11 @@ public class InfosupportMessageHandler  extends TextWebSocketHandler {
 //            value.sendMessage(message);
 //        }
         rooms.get("room").getUserSessions().forEach((s, websocketSession) -> {
+            System.out.println(rooms.get("room"));
             try {
-                websocketSession.sendMessage(message);
+                if (rooms.get("room").getUserId() == Integer.parseInt(test)) {
+                    websocketSession.sendMessage(message);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

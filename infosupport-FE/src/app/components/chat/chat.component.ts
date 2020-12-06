@@ -1,10 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ChatService} from './chat.service';
 import {HttpClient} from '@angular/common/http';
 import {Patient} from '../../models/patient';
 import {Message} from '../../models/message';
 import {BrowserModule} from '@angular/platform-browser';
 import {GP} from '../../models/gp';
+import {element} from 'protractor';
+import {Observable} from 'rxjs';
+import {log} from 'util';
 
 @Component({
   selector: 'app-chat',
@@ -14,6 +17,8 @@ import {GP} from '../../models/gp';
 export class ChatComponent implements OnInit {
 
   @ViewChild('message') inputMessage;
+
+  @ViewChild('scrollMe') private messageContainer: ElementRef;
 
   selectedPatientId: any = -1;
 
@@ -28,11 +33,11 @@ export class ChatComponent implements OnInit {
   patients: Array<Patient> = [];
   tempMessages: Message[] = [];
   recentMessages: Map<Patient, Message>;
-  test: number;
   public messagesForCurrentPatient: Message[] = [];
   private ws: WebSocket;
   lastMessage: string;
   lastDate: Date;
+  tempPatient: Patient;
 
   message: string = '';
   generalPractionerId;
@@ -70,8 +75,10 @@ export class ChatComponent implements OnInit {
       this.messagesForCurrentPatient = [];
     }, 500);
 
+  }
 
-
+  sortCurrentChats(){
+    this.CurrentChats.sort((a, b) => (this.getLastMessage(a.user_id) < this.getLastMessage(b.user_id) ? -1 : 1))
   }
 
   public sendMessage(value: string) {
@@ -87,7 +94,7 @@ export class ChatComponent implements OnInit {
 
       this.service.insertMessage(message).subscribe(data => {
       });
-    }else {
+    } else {
       let message = new Message(value, '', new Date(), '', this.generalPractionerId, this.userId,
         this.userId);
 
@@ -121,7 +128,6 @@ export class ChatComponent implements OnInit {
 
   getGp() {
     this.service.getGPByPatientUserId(parseInt(sessionStorage.getItem('user_id'))).subscribe(data => {
-      console.log(data);
       this.generalPractionerId = data;
       this.service.getGp(this.generalPractionerId).subscribe(data => {
         this.generalPractitioner = new GP(
@@ -136,34 +142,29 @@ export class ChatComponent implements OnInit {
         );
         this.CurrentChats.push(this.generalPractitioner);
         this.RecentPatients.push(this.messagesForCurrentPatient);
-        this.getMessagesForChat(this.generalPractionerId , this.userId)
+        this.getMessagesForChat(this.generalPractionerId, this.userId);
 
       });
     });
   }
 
-
   getMessagesForChat(gp_user_id: number, patient_user_id: number) {
     this.messagesForCurrentPatient = [];
     this.service.getMessagesForChat(gp_user_id, patient_user_id).subscribe(data => {
         this.messagesForCurrentPatient = data;
-      console.log(data);
         this.RecentPatients.push(this.messagesForCurrentPatient);
-
         if (!this.role) {
           if (this.recentChats.get(patient_user_id) != data[data.length - 1]) {
             this.recentChats.set(patient_user_id, data[data.length - 1]);
 
             this.getPatientFromDropdown(patient_user_id);
           }
-        }else {
-          if (this.lastDate != data[data.length -1].message_time && this.lastMessage != data[data.length -1].message)
-          this.lastMessage = data[data.length -1].message;
-          this.lastDate = data[data.length -1].message_time;
+        } else {
+          if (this.lastDate != data[data.length - 1].message_time && this.lastMessage != data[data.length - 1].message) {
+            this.lastMessage = data[data.length - 1].message;
+          }
+          this.lastDate = data[data.length - 1].message_time;
         }
-
-
-
       }
     );
   }
@@ -172,25 +173,26 @@ export class ChatComponent implements OnInit {
     for (let i = 0; i < this.patients.length; i++) {
       if (this.patients[i].user_id == user_id) {
         if (!this.CurrentChats.includes(this.patients[i])) {
-          this.test = user_id;
           this.CurrentChats.push(this.patients[i]);
+          this.sortCurrentChats()
         }
       }
     }
+
   }
 
   selected(e) {
     this.messagesForCurrentPatient = [];
-    // this.CurrentChats = [];
     this.selectedPatientId = e;
 
     if (this.role == false) {
       this.getMessagesForChat(parseInt(sessionStorage.getItem('user_id')), e);
+
     } else {
       this.getMessagesForChat(this.generalPractionerId, parseInt(sessionStorage.getItem('user_id')));
-      // console.log(this.messagesForCurrentPatient);
-
     }
+
+    this.scrollToBottom();
   }
 
   getMostRecentChat(id: number): Message {
@@ -198,8 +200,7 @@ export class ChatComponent implements OnInit {
   }
 
   formatDate(date: Date) {
-
-    return date.toString().replace('T', " ");
+    return date.toString().replace('T', ' ');
   }
 
   getUsedChats(gp_user_id: number) {
@@ -217,7 +218,25 @@ export class ChatComponent implements OnInit {
 
   getrole() {
     this.role = sessionStorage.getItem('user_role') == 'patient';
-    console.log(sessionStorage.getItem('user_role'));
+  }
+
+  scrollToBottom(): void {
+    try {
+      console.log(this.messageContainer.nativeElement.scrollTop);
+      console.log(this.messageContainer.nativeElement.scrollHeight);
+      this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
+    } catch (err) {
+    }
+  }
+
+  getLastMessage(userId){
+    let message: Date = new Date()
+    this.service.getMessagesForChat(this.userId, userId).subscribe(data => {
+      message = data[data.length -1].message_time
+      console.log(message);
+    })
+    console.log(message);
+    return message;
   }
 
 }
