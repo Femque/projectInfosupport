@@ -53,7 +53,7 @@ export class AppointmentService {
   }
 
   getFullNameBig(bigCode: number) {
-    const url = `${this.getUserFullNameUrl}/${bigCode}`;
+    const url = `${environment.apiUrl}/user/fullname/${bigCode}`;
     return this.http.get<string>(url);
   }
 
