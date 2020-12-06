@@ -22,6 +22,7 @@ export class AppointmentViewComponent implements OnInit {
   public appointmentTime: string;
   public appointmentMessage: string;
   public message: string;
+  public fullName: string;
 
   //list of appointments
   loadedAppointments: Appointment[] = [];
@@ -31,6 +32,7 @@ export class AppointmentViewComponent implements OnInit {
 
   ngOnInit() {
     this.getAppointments();
+
 
     console.log(sessionStorage.getItem('user_id'));
   }
@@ -47,7 +49,12 @@ export class AppointmentViewComponent implements OnInit {
         var yyyy = today.getFullYear();
         var hours = today.toLocaleTimeString();
 
+        // @ts-ignore
         today = yyyy + '-' + mm + '-' + dd + 'T' + hours;
+        console.log(today);
+        console.log("startTime" + appointment[i].start_time);
+
+        this.getFullNameById(appointment[i].big_code);
 
         if (appointment[i].start_time >= today) {
           console.log('yes datum is groter');
@@ -60,6 +67,19 @@ export class AppointmentViewComponent implements OnInit {
         }
       }
     }, error => console.log(error));
+  }
+
+
+  getFullNameById(bigCode: number) {
+    this.appointmentService.getFullNameBig(bigCode).subscribe(data => {
+      // var res = data.replace(",", " ");
+      // data.replace(/,/g, '');
+
+      data = data.replace(/,/g, ""); // remove commas
+
+      this.fullName = data;
+
+    });
   }
 
   //delete appointment when cancelling appointment in overview
