@@ -53,10 +53,10 @@ public class webSocketConfiguration implements WebSocketConfigurer {
         };
     }
 
-    @Bean
-    public WebSocketHandler handler() {
-        return new InfosupportMessageHandler();
-    }
+//    @Bean
+//    public WebSocketHandler handler() {
+//        return new InfosupportMessageHandler();
+//    }
 
 //    @Bean
 //    public WebSocketHandler myHandler(){
