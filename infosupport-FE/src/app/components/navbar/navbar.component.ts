@@ -21,9 +21,10 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.userRole = sessionStorage.getItem('user_role');
     this.isUserLoggedIn = this.loginService.isUserLoggedIn();
     this.getFullNameById();
-    this.userRole = sessionStorage.getItem('user_role');
+
   }
 
   getFullNameById() {
