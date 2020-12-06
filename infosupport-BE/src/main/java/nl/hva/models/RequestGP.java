@@ -12,6 +12,7 @@ public class RequestGP {
 
     private Integer patient_user_id;
     private Integer gp_user_id;
+    private String full_name;
 
     public Integer getRequest_gp_id() {
         return request_gp_id;
@@ -35,5 +36,13 @@ public class RequestGP {
 
     public void setGp_user_id(Integer gp_user_id) {
         this.gp_user_id = gp_user_id;
+    }
+
+    public String getFull_name() {
+        return full_name;
+    }
+
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
     }
 }

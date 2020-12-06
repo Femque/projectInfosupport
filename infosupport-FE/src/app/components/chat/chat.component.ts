@@ -1,13 +1,10 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ChatService} from './chat.service';
-import {HttpClient} from '@angular/common/http';
 import {Patient} from '../../models/patient';
 import {Message} from '../../models/message';
-import {BrowserModule} from '@angular/platform-browser';
 import {GP} from '../../models/gp';
-import {element} from 'protractor';
-import {Observable} from 'rxjs';
-import {log} from 'util';
+import {map} from 'rxjs/operators';
+import set = Reflect.set;
 
 @Component({
   selector: 'app-chat',
@@ -39,6 +36,8 @@ export class ChatComponent implements OnInit {
   lastDate: Date;
   tempPatient: Patient;
 
+  messageDate = new Date()
+
   message: string = '';
   generalPractionerId;
   generalPractitioner;
@@ -49,42 +48,68 @@ export class ChatComponent implements OnInit {
   constructor(private service: ChatService) {
   }
 
-  public ngOnInit() {
+  ngOnInit() {
     this.getrole();
     if (this.role == false) {
       this.getPatients(sessionStorage.getItem('user_id'));
     } else {
       this.getGp();
     }
-
-    this.getrole();
-    console.log(this.role);
-    console.log(sessionStorage);
     this.getUsedChats(parseInt(sessionStorage.getItem('user_id')));
     this.userId = parseInt(sessionStorage.getItem('user_id'));
+
     this.ws = new WebSocket('ws://localhost:8080/infosupport-messaging/' + sessionStorage.getItem('user_id'));
     this.ws.addEventListener('open', (e) => {
-
+      console.log('open');
     });
+
     this.ws.addEventListener('message', (e: MessageEvent) => {
       this.messagesForCurrentPatient.push(new Message(e.data, '', new Date(), '', parseInt(sessionStorage.getItem('user_id')), this.selectedPatientId,
         parseInt(sessionStorage.getItem('user_id'))));
+      if (this.role == false) {
+        setTimeout(() => {
+          this.getMessagesForChat(this.userId, this.selectedPatientId)
+        }, 50)
+      }else if (this.role == true){
+        setTimeout(() => {
+          this.getMessagesForChat(this.generalPractionerId, this.userId)
+        }, 50)
+      }
+      return false;
     });
 
-    setTimeout(() => {
-      this.messagesForCurrentPatient = [];
-    }, 500);
+    this.ws.addEventListener('close', () => {
+      console.log("closing?");
+      setTimeout(() => {
+        this.ws = new WebSocket('ws://localhost:8080/infosupport-messaging/' + sessionStorage.getItem('user_id'));
+
+      }, 1000)
+    });
+
 
   }
 
-  sortCurrentChats(){
-    this.CurrentChats.sort((a, b) => (this.getLastMessage(a.user_id) < this.getLastMessage(b.user_id) ? -1 : 1))
-  }
+
+  // sortCurrentChats(){
+  //   return this.CurrentChats.sort((a, b) => (this.getLastMessage(a.user_id) < this.getLastMessage(b.user_id) ? -1 : 1))
+  // }
 
   public sendMessage(value: string) {
     this.ws.send(value);
     this.inputMessage.nativeElement.value = '';
     this.insertMessage(value);
+
+    if (this.role == false) {
+      setTimeout(() => {
+        this.getMessagesForChat(this.userId, this.selectedPatientId)
+      }, 100)
+    }else{
+      setTimeout(() => {
+        this.getMessagesForChat(this.generalPractionerId, this.userId)
+      }, 100)
+    }
+
+
   }
 
   insertMessage(value: string) {
@@ -120,6 +145,7 @@ export class ChatComponent implements OnInit {
           data[i].phonenumber,
           data[i].password
         ));
+        this.getlastMessage(gp_user_id, data[i].user_id)
       }
     });
 
@@ -167,6 +193,9 @@ export class ChatComponent implements OnInit {
         }
       }
     );
+    setTimeout(() => {
+      this.scrollToBottom()
+    }, 100)
   }
 
   getPatientFromDropdown(user_id: number) {
@@ -174,12 +203,19 @@ export class ChatComponent implements OnInit {
       if (this.patients[i].user_id == user_id) {
         if (!this.CurrentChats.includes(this.patients[i])) {
           this.CurrentChats.push(this.patients[i]);
-          this.sortCurrentChats()
         }
       }
     }
 
   }
+
+  getlastMessage(gp_user_id: number, patient_user_id: number){
+    this.service.getMessagesForChat(gp_user_id,  patient_user_id).subscribe(data => {
+      if (!this.role) {
+        if (this.recentChats.get(patient_user_id) != data[data.length - 1]) {
+          this.recentChats.set(patient_user_id, data[data.length - 1]);
+        }}
+  })}
 
   selected(e) {
     this.messagesForCurrentPatient = [];
@@ -187,12 +223,19 @@ export class ChatComponent implements OnInit {
 
     if (this.role == false) {
       this.getMessagesForChat(parseInt(sessionStorage.getItem('user_id')), e);
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 100)
 
     } else {
       this.getMessagesForChat(this.generalPractionerId, parseInt(sessionStorage.getItem('user_id')));
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 100)
     }
 
-    this.scrollToBottom();
+
+
   }
 
   getMostRecentChat(id: number): Message {
@@ -208,10 +251,13 @@ export class ChatComponent implements OnInit {
       for (let i = 0; i < data.length; i++) {
         this.service.getMessagesForChat(gp_user_id, data[i].user_id).subscribe(dataMessages => {
           if (dataMessages.length > 0) {
-            this.getMessagesForChat(gp_user_id, data[i].user_id);
+            for (let j = 0; j < this.patients.length; j++) {
+              if (!this.CurrentChats.includes(this.patients[i])){
+                this.CurrentChats.push(this.patients[i])
+              }
+            }
           }
         });
-
       }
     });
   }
@@ -228,16 +274,15 @@ export class ChatComponent implements OnInit {
     } catch (err) {
     }
   }
-
-  getLastMessage(userId){
-    let message: Date = new Date()
-    this.service.getMessagesForChat(this.userId, userId).subscribe(data => {
-      message = data[data.length -1].message_time
-      console.log(message);
-    })
-    console.log(message);
-    return message;
-  }
+  //
+  // getLastMessage(userId){
+  //
+  //   let message = this.service.getMessagesForChat(this.userId, userId).pipe(map((data) => data))
+  //   console.log(message);
+  //   return message.subscribe(data => {
+  //     console.log(data[data.length - 1].message_time);
+  //   })
+  // }
 
 }
 
