@@ -3,6 +3,7 @@ import {RequestGpService} from "./request-gp.service";
 import {GP} from "../../models/gp";
 import {Patient} from "../../models/patient";
 import {RequestGP} from "../../models/requestgp";
+import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-request-gp',
@@ -14,6 +15,7 @@ export class RequestGpComponent implements OnInit {
   doctorId: number;
   gpList: GP[] = [];
   currentGP: GP;
+  fullName: string;
   isCurrentGP: boolean;
 
   constructor(private requestGpService: RequestGpService) { }
@@ -22,13 +24,14 @@ export class RequestGpComponent implements OnInit {
     this.getGpUser_id(sessionStorage.getItem('user_id'));
     this.getGPs();
     this.getCurrentGP();
+    this.getFullNameById(parseInt(sessionStorage.getItem('user_id')))
   }
 
   requestGP(gpUserId) {
     //Get user id
     let userId = parseInt(sessionStorage.getItem('user_id'));
-
-    let newRequest = new RequestGP(userId, gpUserId)
+    console.log(this.fullName);
+    let newRequest = new RequestGP(userId, gpUserId, this.fullName)
     this.requestGpService.createRequest(newRequest).subscribe();
   }
 
@@ -58,5 +61,15 @@ export class RequestGpComponent implements OnInit {
         this.gpList.push(dataGp);
       }
     })
+  }
+
+  getFullNameById(id: number) {
+    this.requestGpService.getFullName(id).subscribe(data => {
+      this.fullName = data;
+      var fullNameArray = this.fullName[0].split(",");
+      var firstName = fullNameArray[0];
+      var lastName = fullNameArray[1];
+      this.fullName = firstName + " " + lastName;
+    });
   }
 }
