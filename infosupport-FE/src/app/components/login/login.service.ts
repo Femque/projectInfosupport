@@ -6,6 +6,7 @@ import {User} from "../../models/user";
 import {catchError} from "rxjs/operators";
 import {Appointment} from '../../models/appointment';
 import {Patient} from '../../models/patient';
+import {environment} from 'src/environments/environment';
 
 export interface booleanReturn {
   retData: boolean;
@@ -16,8 +17,8 @@ export class LoginService {
   public user: Observable<User>;
   private userSubject: BehaviorSubject<User>;
 
-  usersUrl = "http://localhost:8080/user";
-  patientUrl = "http://localhost:8080/patient";
+  usersUrl =  environment.apiUrl + "user";
+  patientUrl = environment.apiUrl + "patient";
 
   constructor(
     private http: HttpClient,
