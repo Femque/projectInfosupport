@@ -48,9 +48,7 @@ export class LoginService {
 
   //getting patient Info
   getPatientInfoById(): Observable<Patient[]> {
-    // return this.http.get<Appointment[]>${this.getAppointmentsByIdUrl}/${sessionStorage.getItem('user_id')}
     const url = `${this.patientUrl}/${sessionStorage.getItem('user_id')}`; // DELETE api/heroes/42
-    console.log(url);
     return this.http.get<Patient[]>(url)
     console.log(sessionStorage.getItem('user_id')+ 'efkwefpowekfpokop');
 
@@ -58,11 +56,7 @@ export class LoginService {
 
   //getting Doctor Info
   getGPInfoById(): Observable<GP[]> {
-    // return this.http.get<Appointment[]>${this.getAppointmentsByIdUrl}/${sessionStorage.getItem('user_id')}
-    console.log("in get gp method");
-    console.log(sessionStorage.getItem('user_id'));
     const url = `${this.gpUrl}/${sessionStorage.getItem('user_id')}`; // DELETE api/heroes/42
-    console.log(url);
     return this.http.get<GP[]>(url)
     console.log(sessionStorage.getItem('user_id')+ 'efkwefpowekfpokop');
 

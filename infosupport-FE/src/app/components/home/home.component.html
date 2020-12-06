@@ -3,7 +3,7 @@
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center">
     <div class="container">
-      <h1>Welkom op Zonnevelt <h2 class="landingText">{{fullName}}</h2></h1>
+      <h1>Welkom op Zonnevelt <h2 class="landingText" *ngIf="loginService.isUserLoggedIn() === true">{{fullName}}</h2></h1>
       <h2>Wij als team van getalenteerde dokters willen u graag helpen en assisteren bij uw probleem</h2>
       <button routerLink="/login" type="button" class="btn-get-started scrollto btn btn-primary btn-lg"
               *ngIf="loginService.isUserLoggedIn() === false">Klik hier om aan

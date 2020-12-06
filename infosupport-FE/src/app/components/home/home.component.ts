@@ -23,7 +23,6 @@ export class HomeComponent implements OnInit {
   loadedAppointments: Appointment[] = [];
   //list of appointments
   loadedPatient: Patient;
-  loadedGP: GP;
   userRole: string;
 
 
@@ -67,13 +66,8 @@ export class HomeComponent implements OnInit {
 
         // @ts-ignore
         today = yyyy + '-' + mm + '-' + dd + 'T' + hours;
-        console.log(today);
-        console.log("startTime" + appointment[i].start_time);
-
-        // this.getFullNameById(appointment[i].big_code);
 
         if (appointment[i].start_time >= today) {
-          console.log('yes datum is groter');
 
           let newAppointment = new Appointment(appointment[i].start_time,
             appointment[i].end_time, appointment[i].is_digital, appointment[i].description, appointment[i].location,
@@ -87,7 +81,6 @@ export class HomeComponent implements OnInit {
 
 
   checkUserRole(): any {
-    console.log(this.userRole + "in checking userRole method")
     if (this.userRole === "general_practitioner") {
       this.getUserInfo(true);
     } else {
@@ -97,39 +90,24 @@ export class HomeComponent implements OnInit {
 
   //show appointments
   getUserInfo(checkGp: boolean): any {
-    //TODO checken a.d.v. role en ophalen
-    console.log(checkGp + "hello in getuserInfo ");
     if (checkGp) {
-      this.loginService.getGPInfoById().subscribe(gpValue => {
-        console.log(gpValue["fir"] + "firstname of gp ");
-        for (var gpKey in gpValue) {
-          let userId = parseInt(sessionStorage.getItem('user_id'));
+      this.loginService.getGPInfoById().subscribe(gp => {
+        let userId = parseInt(sessionStorage.getItem('user_id'));
 
-
-          // alert(gpKey); //alerts key
-          // alert(gpValue[gpKey]); //alerts key value
-
-          console.log(userId + "userid gp van session");
-          console.log(gpKey + "van gekregen array gp");
-
-          if (gpValue["user_id"] == userId) {
-            this.user_id = gpValue["user_id"],
-              this.firstname = gpValue["firstname"]
-              this.dateOfBirth = gpValue["dateOfBirth"];
-          }
+        if (gp["user_id"] == userId) {
+          this.user_id = gp["user_id"],
+            this.firstname = gp["firstname"]
+          this.dateOfBirth = gp["dateOfBirth"];
         }
       }, error => console.log(error));
     } else {
       this.loginService.getPatientInfoById().subscribe(patient => {
-        console.log(patient.length);
         for (let i = 0; i < patient.length; i++) {
           let userId = parseInt(sessionStorage.getItem('user_id'));
           if (patient[i].user_id == userId) {
             this.user_id = patient[i].user_id,
               this.firstname = patient[i].firstname,
               this.dateOfBirth = patient[i].dateOfBirth
-            console.log(this.loadedPatient);
-            console.log(patient[i].user_id);
           }
         }
       }, error => console.log(error));
