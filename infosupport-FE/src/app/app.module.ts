@@ -59,7 +59,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {origin:
     PersonalInformationComponent,
     MedicalFilesComponent,
     PatientViewComponent,
-    PatientDetailComponent
+    PatientDetailComponent,
     RequestGpComponent,
     RequestsComponent
   ],
