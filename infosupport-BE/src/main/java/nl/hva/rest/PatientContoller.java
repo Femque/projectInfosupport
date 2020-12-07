@@ -73,13 +73,13 @@ public class PatientContoller {
     return ResponseEntity.ok(gpId);
   }
 
-//  @CrossOrigin
-//  @PutMapping(value = "/update/{userId}/{gpUserId}")
-//  @Transactional
-//  public ResponseEntity<Integer> update(@PathVariable int gpUserId, @PathVariable int userId) {
-//    service.updatePatientGP(gpUserId, userId);
-//    return ResponseEntity.ok(gpUserId);
-//  }
+  @CrossOrigin
+  @PutMapping(value = "/update/{userId}/{gpUserId}")
+  @Transactional
+  public ResponseEntity<Integer> update(@PathVariable int gpUserId, @PathVariable int userId) {
+    service.updatePatientGP(gpUserId, userId);
+    return ResponseEntity.ok(gpUserId);
+  }
 }
 
 
