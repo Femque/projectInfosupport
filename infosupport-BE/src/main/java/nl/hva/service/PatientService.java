@@ -38,4 +38,7 @@ public class PatientService {
     return repo.getGPByPatientUserId(user_id);
   }
 
+  public void updatePatientGP(int gpUserId, int userId) {
+    repo.updatePatientGP(gpUserId, userId);
+  }
 }
