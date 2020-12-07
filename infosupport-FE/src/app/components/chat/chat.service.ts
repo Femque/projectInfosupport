@@ -13,7 +13,9 @@ import {environment} from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ChatService {
-  getDoctorByUserId = environment.apiUrl + '/patient/gp';
+  url = "http://localhost:8080"
+
+  getDoctorByUserId = this.url + '/patient/gp';
   chatUrl = environment.apiUrl + '/chat';
 
 
@@ -22,17 +24,17 @@ export class ChatService {
 
   getPatientsForGp(gp_user_id: number): Observable<Patient[]>{
     console.log("getting patients");
-    return this.http.get<Patient[]>(environment.apiUrl + "/patient/gpChat/" + gp_user_id)
+    return this.http.get<Patient[]>(this.url + "/patient/gpChat/" + gp_user_id)
   }
 
   insertMessage(message: Message): Observable<Message>{
     console.log(message);
-    return this.http.post<Message>(this.chatUrl + "/message", message).
+    return this.http.post<Message>(this.url + "/chat/message", message).
       pipe(catchError(ChatService.handleError))
   }
 
   getMessagesForChat(gp_user_id: number, patient_user_id: number): Observable<Message[]>{
-    return this.http.get<Message[]>(this.chatUrl + "/messagesForChat/" + gp_user_id + "/" + patient_user_id)
+    return this.http.get<Message[]>(this.url + "/chat/messagesForChat/" + gp_user_id + "/" + patient_user_id)
 }
 
   getGPByPatientUserId(user_id: number) {
@@ -41,12 +43,12 @@ export class ChatService {
   }
 
   getGp(user_id: number) {
-    const url = environment.apiUrl + "/doctor/user_id/" + user_id;
+    const url = this.url + "/doctor/user_id/" + user_id;
     return this.http.get<GP>(url)
   }
 
   getPatientById(id: number) {
-    const url = environment.apiUrl + `/patient/${id}`;
+    const url = this.url + `/patient/${id}`;
     return this.http.get<Patient>(url);
   }
 
