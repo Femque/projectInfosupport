@@ -7,6 +7,9 @@
 
   <ul class="nav justify-content-end">
     <li class="nav-item">
+      <a *ngIf="(loginService.isUserLoggedIn() && userRole == 'general_practitioner')" class="nav-link" href="/#calender" style="color: white;">KALENDER</a>
+    </li>
+    <li class="nav-item">
       <a *ngIf="(loginService.isUserLoggedIn() && userRole == 'general_practitioner')" class="nav-link" href="/#patientView" style="color: white;">MIJN PATIENTEN</a>
     </li>
     <li class="nav-item">
