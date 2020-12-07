@@ -39,9 +39,10 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.isUserLoggedIn = this.loginService.isUserLoggedIn();
     this.userRole = sessionStorage.getItem('user_role');
+    if (this.isUserLoggedIn){
     this.getFullNameById();
     this.getAppointments();
-    this.checkUserRole();
+    this.checkUserRole();}
   }
 
   getFullNameById() {
@@ -125,8 +126,8 @@ export class HomeComponent implements OnInit {
         for (let i = 0; i < patient.length; i++) {
           let userId = parseInt(sessionStorage.getItem('user_id'));
           if (patient[i].user_id == userId) {
-            this.user_id = patient[i].user_id,
-              this.firstname = patient[i].firstname,
+            this.user_id = patient[i].user_id;
+              this.firstname = patient[i].firstname;
               this.dateOfBirth = patient[i].dateOfBirth
             console.log(this.loadedPatient);
             console.log(patient[i].user_id);

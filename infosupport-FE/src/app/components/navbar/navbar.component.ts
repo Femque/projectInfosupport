@@ -23,7 +23,10 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.userRole = sessionStorage.getItem('user_role');
     this.isUserLoggedIn = this.loginService.isUserLoggedIn();
-    this.getFullNameById();
+
+    if (this.isUserLoggedIn){
+      this.getFullNameById();
+    }
 
   }
 
