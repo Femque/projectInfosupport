@@ -10,6 +10,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder} from '@angular/forms';
 import {Patient} from '../../models/patient';
 import {ChatService} from '../chat/chat.service';
+import {log} from 'util';
 
 @Component({
   selector: 'app-calender',
@@ -25,8 +26,8 @@ export class CalenderComponent implements OnInit {
   patients: Patient[] = [];
 
   selectedAppointment: any;
-  selectedPatient: Patient = null;
-  selectedUserId: number =-1
+  selectedPatient: Patient;
+  selectedUserId: number = -1;
 
   patient_user_id: number;
   location: string;
@@ -44,7 +45,7 @@ export class CalenderComponent implements OnInit {
   @ViewChild('content')
   content;
 
-  constructor(private service: ChatService,private calendarService: CalendarService, private modalService: NgbModal, private formBuilder: FormBuilder) {
+  constructor(private service: ChatService, private calendarService: CalendarService, private modalService: NgbModal, private formBuilder: FormBuilder) {
     this.appointmentForm = this.formBuilder.group({
       title: [''],
       description: [''],
@@ -56,20 +57,18 @@ export class CalenderComponent implements OnInit {
     });
   }
 
-   ngOnInit() {
+  ngOnInit() {
     this.getBigCode(sessionStorage.getItem('user_id'));
     this.getPatients(sessionStorage.getItem('user_id'));
-     setTimeout(() => {
-       this.getAppointments()
-     }, 1)
-     console.log(sessionStorage);
+    setTimeout(() => {
+      this.getAppointments();
+    }, 1);
+    console.log(sessionStorage);
 
   }
 
   selected(e) {
-
     this.title = e;
-
   }
 
   open() {
@@ -135,7 +134,7 @@ export class CalenderComponent implements OnInit {
         dayMaxEvents: true, // allow "more" link when too many events,
         eventDisplay: 'block',
         contentHeight: 'auto',
-        eventBackgroundColor: "#57BA94"
+        eventBackgroundColor: '#57BA94'
       });
 
     for (let i = 0; i < appointments.length; i++) {
@@ -163,7 +162,7 @@ export class CalenderComponent implements OnInit {
   createAppointment(appointmentdata) {
     console.log(this.selectedUserId);
     let appointment = new Appointment(appointmentdata.start, appointmentdata.end, appointmentdata.is_digital,
-      appointmentdata.description, appointmentdata.location, appointmentdata.is_followup, parseInt(sessionStorage.getItem("big_code")), this.selectedUserId, appointmentdata.title);
+      appointmentdata.description, appointmentdata.location, appointmentdata.is_followup, parseInt(sessionStorage.getItem('big_code')), this.selectedUserId, this.selectedPatient.firstname + " " + this.selectedPatient.lastname);
     this.calendarService.createAppointment(appointment)
       .subscribe(data => {
         this.appointments = [];
@@ -176,8 +175,8 @@ export class CalenderComponent implements OnInit {
 
 
   getAppointments() {
-    this.getBigCode(sessionStorage.getItem('user_id'))
-    this.calendarService.getAppointmentsGp(parseInt(sessionStorage.getItem("big_code")))
+    this.getBigCode(sessionStorage.getItem('user_id'));
+    this.calendarService.getAppointmentsGp(parseInt(sessionStorage.getItem('big_code')))
       .subscribe(data => {
         for (let i = 0; i < data.length; i++) {
 
@@ -204,8 +203,8 @@ export class CalenderComponent implements OnInit {
     );
     this.calendarService.updateAppointment(updatedAppointment).subscribe(
       (data) => {
-      this.appointments = [];
-      this.getAppointments()
+        this.appointments = [];
+        this.getAppointments();
       }
     );
 
@@ -219,7 +218,7 @@ export class CalenderComponent implements OnInit {
       (data) => {
 
         this.appointments = [];
-        this.getAppointments()
+        this.getAppointments();
       }
     );
     this.modalService.dismissAll();
@@ -230,9 +229,9 @@ export class CalenderComponent implements OnInit {
   }
 
   getBigCode(user_id) {
-    this.calendarService.getBigCode(user_id).subscribe( data => {
-      sessionStorage.setItem("big_code", JSON.stringify(data))
-      console.log("big code = " + sessionStorage.getItem("big_code"));
+    this.calendarService.getBigCode(user_id).subscribe(data => {
+      sessionStorage.setItem('big_code', JSON.stringify(data));
+      console.log('big code = ' + sessionStorage.getItem('big_code'));
     });
   }
 
@@ -253,8 +252,33 @@ export class CalenderComponent implements OnInit {
     this.title = title;
   }
 
-  selectDropdown(e){
-    this.selectedUserId = e
+  selectDropdown(e) {
+    this.selectedUserId = e;
+
+    this.service.getPatientById(e).subscribe(data => {
+      console.log(data);
+
+      if (this.selectedUserId != -1) {
+        this.selectedPatient = new Patient(
+          data[0].user_id,
+          data[0].dateOfBirth,
+          data[0].gender,
+          data[0].allergies,
+          data[0].email,
+          data[0].firstname,
+          data[0].lastname,
+          data[0].phonenumber,
+          data[0].password)
+      }
+
+
+    }, error => {}, () => {
+      console.log(this.selectedPatient);
+
+    });
+
+
+
     // this.selectedPatient = p;
     console.log(this.selectedUserId);
   }
