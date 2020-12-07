@@ -19,18 +19,19 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     List<Patient> getPatientByUser_id(@Param("user_id") int user_id);
 
     @Modifying
-    @Query("Update Patient p Set p.user_id =?1,p.email = ?2 ,p.firstname = ?3,  " +
-            "p.lastname = ?4, p.password = ?5 , " +
-            "p.phonenumber = ?6, p.dateOfBirth = ?7, p.allergies = ?8 where p.user_id = ?1")
-    void savePatientBy(@Param("user_id") int user_id,
-                       @Param("email") String email,
-                       @Param("firstname") String firstname,
-                       @Param("lastname") String lastname,
-                       @Param("password") String password,
-                       @Param("phonenumber") String phonenumber,
-                       @Param("dateOfBirth") LocalDate dateOfBirth,
-                       @Param("allergies") String allergies
-                       );
+    @Query("Update Patient p Set p.email = ?1 ,p.firstname = ?2,  " +
+            "p.lastname = ?3, p.password = ?4 , " +
+            "p.phonenumber = ?5, p.dateOfBirth = ?6, p.allergies = ?7 where p.user_id = ?8")
+    void savePatientBy(
+            @Param("email") String email,
+            @Param("firstname") String firstname,
+            @Param("lastname") String lastname,
+            @Param("password") String password,
+            @Param("phonenumber") String phonenumber,
+            @Param("dateOfBirth") LocalDate dateOfBirth,
+            @Param("allergies") String allergies,
+            @Param("user_id") int user_id
+            );
 
     @Query(value = "SELECT p.gp_user_id FROM Patient p WHERE p.user_id = ?1", nativeQuery = true)
     Integer getGPByPatientUserId(@Param("user_id") Integer user_id);

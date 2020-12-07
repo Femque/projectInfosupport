@@ -3,17 +3,14 @@ import {Appointment} from '../../models/appointment';
 import {CalendarService} from './calendar.service';
 import {Calendar} from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import {Observable} from 'rxjs';
-import {CalendarOptions} from '@fullcalendar/angular'; // useful for typechecking
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import {Calendar_appointment} from '../../models/calendar_appointment';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {log} from 'util';
 import {FormBuilder} from '@angular/forms';
-import set = Reflect.set;
-import {timeout} from 'rxjs/operators';
+import {Patient} from '../../models/patient';
+import {ChatService} from '../chat/chat.service';
+import {log} from 'util';
 
 @Component({
   selector: 'app-calender',
@@ -26,10 +23,11 @@ export class CalenderComponent implements OnInit {
   appointments: Appointment[] = [];
   closeResult = '';
   appointmentForm;
-  patients: Array<string> = [];
+  patients: Patient[] = [];
 
   selectedAppointment: any;
-  selectedUserId: number;
+  selectedPatient: Patient;
+  selectedUserId: number = -1;
 
   patient_user_id: number;
   location: string;
@@ -47,7 +45,7 @@ export class CalenderComponent implements OnInit {
   @ViewChild('content')
   content;
 
-  constructor(private calendarService: CalendarService, private modalService: NgbModal, private formBuilder: FormBuilder) {
+  constructor(private service: ChatService, private calendarService: CalendarService, private modalService: NgbModal, private formBuilder: FormBuilder) {
     this.appointmentForm = this.formBuilder.group({
       title: [''],
       description: [''],
@@ -59,20 +57,18 @@ export class CalenderComponent implements OnInit {
     });
   }
 
-   ngOnInit() {
+  ngOnInit() {
     this.getBigCode(sessionStorage.getItem('user_id'));
     this.getPatients(sessionStorage.getItem('user_id'));
-     setTimeout(() => {
-       this.getAppointments()
-     }, 1)
-     console.log(sessionStorage);
+    setTimeout(() => {
+      this.getAppointments();
+    }, 1);
+    console.log(sessionStorage);
 
   }
 
   selected(e) {
-    
     this.title = e;
-
   }
 
   open() {
@@ -138,7 +134,7 @@ export class CalenderComponent implements OnInit {
         dayMaxEvents: true, // allow "more" link when too many events,
         eventDisplay: 'block',
         contentHeight: 'auto',
-        eventBackgroundColor: "#57BA94"
+        eventBackgroundColor: '#57BA94'
       });
 
     for (let i = 0; i < appointments.length; i++) {
@@ -164,9 +160,9 @@ export class CalenderComponent implements OnInit {
   }
 
   createAppointment(appointmentdata) {
-    console.log(this.patient_user_id);
+    console.log(this.selectedUserId);
     let appointment = new Appointment(appointmentdata.start, appointmentdata.end, appointmentdata.is_digital,
-      appointmentdata.description, appointmentdata.location, appointmentdata.is_followup, parseInt(sessionStorage.getItem("big_code")), this.selectedUserId, appointmentdata.title);
+      appointmentdata.description, appointmentdata.location, appointmentdata.is_followup, parseInt(sessionStorage.getItem('big_code')), this.selectedUserId, this.selectedPatient.firstname + " " + this.selectedPatient.lastname);
     this.calendarService.createAppointment(appointment)
       .subscribe(data => {
         this.appointments = [];
@@ -179,8 +175,8 @@ export class CalenderComponent implements OnInit {
 
 
   getAppointments() {
-    this.getBigCode(sessionStorage.getItem('user_id'))
-    this.calendarService.getAppointmentsGp(parseInt(sessionStorage.getItem("big_code")))
+    this.getBigCode(sessionStorage.getItem('user_id'));
+    this.calendarService.getAppointmentsGp(parseInt(sessionStorage.getItem('big_code')))
       .subscribe(data => {
         for (let i = 0; i < data.length; i++) {
 
@@ -207,8 +203,8 @@ export class CalenderComponent implements OnInit {
     );
     this.calendarService.updateAppointment(updatedAppointment).subscribe(
       (data) => {
-      this.appointments = [];
-      this.getAppointments()
+        this.appointments = [];
+        this.getAppointments();
       }
     );
 
@@ -222,7 +218,7 @@ export class CalenderComponent implements OnInit {
       (data) => {
 
         this.appointments = [];
-        this.getAppointments()
+        this.getAppointments();
       }
     );
     this.modalService.dismissAll();
@@ -233,26 +229,77 @@ export class CalenderComponent implements OnInit {
   }
 
   getBigCode(user_id) {
-    this.calendarService.getBigCode(user_id).subscribe( data => {
-      sessionStorage.setItem("big_code", JSON.stringify(data))
-      console.log("big code = " + sessionStorage.getItem("big_code"));
+    this.calendarService.getBigCode(user_id).subscribe(data => {
+      sessionStorage.setItem('big_code', JSON.stringify(data));
+      console.log('big code = ' + sessionStorage.getItem('big_code'));
     });
   }
 
-  getPatients(gp_user_id) {
-    this.calendarService.getPatientsForGp(gp_user_id).subscribe(data => {
+  // getPatients(gp_user_id) {
+  //   this.calendarService.getPatientsForGp(gp_user_id).subscribe(data => {
+  //     console.log(data);
+  //     for (let i = 0; i < data.length; i++) {
+  //       let test = data[i].split(',');
+  //       let test2 = test[0] + ' ' + test[1];
+  //       this.patients.push(test2);
+  //     }
+  //   });
+  //
+  //   return this.patients;
+  // }
+
+  setTitle(title: string) {
+    this.title = title;
+  }
+
+  selectDropdown(e) {
+    this.selectedUserId = e;
+
+    this.service.getPatientById(e).subscribe(data => {
       console.log(data);
+
+      if (this.selectedUserId != -1) {
+        this.selectedPatient = new Patient(
+          data[0].user_id,
+          data[0].dateOfBirth,
+          data[0].gender,
+          data[0].allergies,
+          data[0].email,
+          data[0].firstname,
+          data[0].lastname,
+          data[0].phonenumber,
+          data[0].password)
+      }
+
+
+    }, error => {}, () => {
+      console.log(this.selectedPatient);
+
+    });
+
+
+
+    // this.selectedPatient = p;
+    console.log(this.selectedUserId);
+  }
+
+  getPatients(gp_user_id) {
+    this.service.getPatientsForGp(gp_user_id).subscribe(data => {
       for (let i = 0; i < data.length; i++) {
-        let test = data[i].split(',');
-        let test2 = test[0] + ' ' + test[1];
-        this.patients.push(test2);
+        this.patients.push(new Patient(
+          data[i].user_id,
+          data[i].dateOfBirth,
+          data[i].gender,
+          data[i].allergies,
+          data[i].email,
+          data[i].firstname,
+          data[i].lastname,
+          data[i].phonenumber,
+          data[i].password
+        ));
       }
     });
 
     return this.patients;
-  }
-
-  setTitle(title: string) {
-    this.title = title;
   }
 }

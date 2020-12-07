@@ -7,6 +7,7 @@ import {catchError} from "rxjs/operators";
 import {Appointment} from '../../models/appointment';
 import {Patient} from '../../models/patient';
 import {GP} from "../../models/gp";
+import {environment} from 'src/environments/environment';
 
 export interface booleanReturn {
   retData: boolean;
@@ -17,7 +18,7 @@ export class LoginService {
   public user: Observable<User>;
   private userSubject: BehaviorSubject<User>;
 
-  usersUrl = "http://localhost:8080/user";
+  usersUrl =  "http://localhost:8080/user";
   patientUrl = "http://localhost:8080/patient";
   gpUrl = "http://localhost:8080/doctor/user_id";
 
@@ -48,22 +49,18 @@ export class LoginService {
 
   //getting patient Info
   getPatientInfoById(): Observable<Patient[]> {
-    const url = `${this.patientUrl}/${sessionStorage.getItem('user_id')}`; // DELETE api/heroes/42
+    const url = `${this.patientUrl}/${sessionStorage.getItem('user_id')}`;
     return this.http.get<Patient[]>(url)
-    console.log(sessionStorage.getItem('user_id')+ 'efkwefpowekfpokop');
-
   }
 
   //getting Doctor Info
   getGPInfoById(): Observable<GP[]> {
-    const url = `${this.gpUrl}/${sessionStorage.getItem('user_id')}`; // DELETE api/heroes/42
+    const url = `${this.gpUrl}/${sessionStorage.getItem('user_id')}`;
     return this.http.get<GP[]>(url)
-    console.log(sessionStorage.getItem('user_id')+ 'efkwefpowekfpokop');
 
   }
 
   updatePatient(patient: Patient): Observable<Patient>{
-    console.log(patient);
     return this.http.put<Patient>( this.patientUrl + '/update', patient)
       .pipe(
         catchError(this.handleError)
@@ -71,13 +68,13 @@ export class LoginService {
   }
 
   isUserLoggedIn() {
-    let user = sessionStorage.getItem('user_id')
+    let user = sessionStorage.getItem('user_id');
     return !(user === null)
   }
 
   logOut() {
     sessionStorage.removeItem('user_id');
-    window.sessionStorage.clear()
+    window.sessionStorage.clear();
     this.userSubject.next(null);
   }
 

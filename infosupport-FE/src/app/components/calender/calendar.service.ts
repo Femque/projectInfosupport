@@ -17,16 +17,17 @@ const httpOptions = {
 
 @Injectable()
 export class CalendarService {
-  appointmentsUrl = 'http://localhost:8080/appointments' //Url to get all appointments
 
   constructor(
     private http: HttpClient
   ) {
   }
 
+  url  = "http://localhost:8080"
+
   getAppointments(): Observable<Appointment[]> {
     console.log("getting appointments ")
-    return this.http.get<Appointment[]>(environment.apiUrl + "/appointments")
+    return this.http.get<Appointment[]>(this.url + "/appointments")
       .pipe(
         catchError(this.handleError)
       );
@@ -34,7 +35,7 @@ export class CalendarService {
 
   getAppointmentsGp(big_code : number): Observable<Appointment[]> {
     console.log("getting appointments ")
-    return this.http.get<Appointment[]>(environment.apiUrl + "/appointments" + "/gp/" + big_code)
+    return this.http.get<Appointment[]>(this.url + "/appointments" + "/gp/" + big_code)
       .pipe(
         catchError(this.handleError)
       );
@@ -42,7 +43,7 @@ export class CalendarService {
 
   getBigCode(user_id: number) {
     console.log(user_id);
-    const url = `${environment.apiUrl}/doctor/big_code/${user_id}`;
+    const url = `${this.url}/doctor/big_code/${user_id}`;
     return this.http.get<number>(url)
       .pipe(
         catchError(this.handleError)
@@ -50,7 +51,7 @@ export class CalendarService {
   }
 
   createAppointment(appointment: Appointment): Observable<Appointment> {
-    const url = `${environment.apiUrl + "/appointments" + "/create"}`
+    const url = `${this.url + "/appointments" + "/create"}`
     return this.http.post<Appointment>(url, appointment)
       .pipe(
         catchError(this.handleError)
@@ -58,19 +59,19 @@ export class CalendarService {
   }
 
   deleteAppointment(id: number): Observable<{}> {
-    const url = `${environment.apiUrl + "/appointments" + "/delete"}/${id}`;
+    const url = `${this.url + "/appointments" + "/delete"}/${id}`;
     return this.http.delete(url)
   }
 
   updateAppointment(appointment: Appointment): Observable<Appointment>{
-    return this.http.put<Appointment>( environment.apiUrl + "/appointments" + '/update', appointment)
+    return this.http.put<Appointment>( this.url + "/appointments" + '/update', appointment)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   getPatientsForGp(gp_user_id: number): Observable<string[]>{
-    return this.http.get<string[]>(environment.apiUrl + "/appointments" + "/getPatients/" + gp_user_id)
+    return this.http.get<string[]>(this.url + "/appointments" + "/getPatients/" + gp_user_id)
   }
 
   private handleError(error: HttpErrorResponse) {
