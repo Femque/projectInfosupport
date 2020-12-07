@@ -13,21 +13,23 @@ export class AppointmentService {
   constructor(private http: HttpClient) {
   }
 
+  url = "http://localhost:8080"
+
   createAppointment(appointment: Appointment): Observable<Appointment> {
     console.log("Creating appointment...");
-    return this.http.post<Appointment>(environment.apiUrl + "/appointments/create", appointment)
+    return this.http.post<Appointment>(this.url + "/appointments/create", appointment)
       .pipe(
         catchError(this.handleError)
       );  }
 
   //getting appointments
   getAppointments(): Observable<Appointment[]> {
-    return this.http.get<Appointment[]>(environment.apiUrl + "/appointments")
+    return this.http.get<Appointment[]>(this.url+ "/appointments")
   }
 
   //getting appointment
   getAppointmentsById(): Observable<Appointment[]> {
-    const url = `${environment.apiUrl}/appointments/${sessionStorage.getItem('user_id')}`; // DELETE api/heroes/42
+    const url = `${this.url}/appointments/${sessionStorage.getItem('user_id')}`; // DELETE api/heroes/42
     return this.http.get<Appointment[]>(url)
   }
 
@@ -38,27 +40,27 @@ export class AppointmentService {
   // }
 
   deleteAppointment(id: number): Observable<{}> {
-    const url = `${environment.apiUrl + "/appointments" + "/delete"}/${id}`; // DELETE api/heroes/42
+    const url = `${this.url + "/appointments" + "/delete"}/${id}`; // DELETE api/heroes/42
     return this.http.delete(url)
   }
 
   getGPUSerId(user_id: number){
-    const url = `${environment.apiUrl + "/appointments" + "/patient/gp"}/${user_id}`
+    const url = `${this.url + "/appointments" + "/patient/gp"}/${user_id}`
     return this.http.get<number>(url)
   }
 
   getFullName() {
-    const url = `${environment.apiUrl}/user/fullname/${sessionStorage.getItem('user_id')}`;
+    const url = `${this.url}/user/fullname/${sessionStorage.getItem('user_id')}`;
     return this.http.get<string>(url);
   }
 
   getFullNameBig(bigCode: number) {
-    const url = `${environment.apiUrl}/user/fullname/${bigCode}`;
+    const url = `${this.url}/user/fullname/${bigCode}`;
     return this.http.get<string>(url);
   }
 
   getBigCode(user_id: number){
-    const url = `${environment.apiUrl + "/appointments" + "/big_code"}/${user_id}`
+    const url = `${this.url + "/appointments" + "/big_code"}/${user_id}`
     return this.http.get<number>(url)
   }
 

@@ -18,9 +18,9 @@ export class LoginService {
   public user: Observable<User>;
   private userSubject: BehaviorSubject<User>;
 
-  usersUrl = environment.apiUrl + "/user";
-  patientUrl = environment.apiUrl + "/patient";
-  gpUrl = environment.apiUrl + "/doctor/user_id";
+  usersUrl =  "http://localhost:8080/user";
+  patientUrl = "http://localhost:8080/patient";
+  gpUrl = "http://localhost:8080/doctor/user_id";
 
   private patients: Patient[];
 
@@ -70,13 +70,13 @@ export class LoginService {
   }
 
   isUserLoggedIn() {
-    let user = sessionStorage.getItem('user_id')
+    let user = sessionStorage.getItem('user_id');
     return !(user === null)
   }
 
   logOut() {
     sessionStorage.removeItem('user_id');
-    window.sessionStorage.clear()
+    window.sessionStorage.clear();
     this.userSubject.next(null);
   }
 

@@ -13,17 +13,17 @@ import {httpFactory} from "@angular/http/src/http_module";
 export class RequestGpService {
 
   //URL to get all doctors
-  getDoctorsUrl = 'http://localhost:8080/doctor'
+  getDoctorsUrl = 'http://localhost:8080/doctor';
   //URL to get all requests
-  getRequestsURL = 'http://localhost:8080/requests'
+  getRequestsURL = 'http://localhost:8080/requests';
   //URL to get a patient by gp_user_id
-  getDoctorByUserId = 'http://localhost:8080/patient/gp'
+  getDoctorByUserId = 'http://localhost:8080/patient/gp';
   //URL to create a request (POST)
-  createRequestUrl = 'http://localhost:8080/requests/create'
+  createRequestUrl = 'http://localhost:8080/requests/create';
   //URL to get full name of user
-  getUserFullNameUrl = 'http://localhost:8080/user/fullname'
+  getUserFullNameUrl = 'http://localhost:8080/user/fullname';
   //URL to update gp_user_id for patient
-  updatePatientGPUrl = 'http://localhost:8080/patient/update'
+  updatePatientGPUrl = 'http://localhost:8080/patient/update';
 
 
   constructor(private http: HttpClient) { }
@@ -44,7 +44,7 @@ export class RequestGpService {
   }
 
   createRequest(requestGP: RequestGP): Observable<RequestGP> {
-    console.log("Creating request...")
+    console.log("Creating request...");
     return this.http.post<RequestGP>(this.createRequestUrl, requestGP)
       .pipe(
         catchError(this.handleError)
