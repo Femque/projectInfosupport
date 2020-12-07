@@ -22,6 +22,8 @@ export class LoginService {
   patientUrl = "http://localhost:8080/patient";
   gpUrl = "http://localhost:8080/doctor/user_id";
 
+  private patients: Patient[];
+
   constructor(
     private http: HttpClient,
     private router: Router
@@ -76,6 +78,16 @@ export class LoginService {
     sessionStorage.removeItem('user_id');
     window.sessionStorage.clear();
     this.userSubject.next(null);
+  }
+
+  getPatientsForGp(gp_user_id: number): Observable<Patient[]>{
+    console.log("Getting patients");
+    return this.http.get<Patient[]>(this.patientUrl + "/gp/" + gp_user_id);
+  }
+
+  findById(id: number): Observable<Patient[]> {
+    const url = `${this.patientUrl}/${id}`;
+    return this.http.get<Patient[]>(url);
   }
 
   private handleError(error: HttpErrorResponse) {

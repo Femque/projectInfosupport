@@ -1,26 +1,21 @@
-<body id="body">
-<form [formGroup]="formGroup">
-  <div class="input-group">
-    <div class="input-group-addon">
-      <span class="material-icons">search</span>
+<div class="row">
+  <div class="col-md-4">
+    <div class="container">
+
+      <ul class="list-group">
+        <li class="list-group-item"
+            [ngClass]="{'active': selectedPatientId === id}"
+            *ngFor="let patient of loadedPatients; let id = id"
+            (click)="clickedPatient(patient.user_id)"
+            style="cursor: pointer;"
+            id="{{'patient' + id}}">
+          {{patient.firstname + " " + patient.lastname}}
+        </li>
+      </ul>
     </div>
-    <input type="text" class="form-control" name="searchString" placeholder="Typ naam van patient om te zoeken..."
-           formControlName="filter" [(ngModel)]="term">
   </div>
-</form>
 
-<table class="table">
-  <tr>
-    <th>Naam</th>
-    <th>Geboortedatum</th>
-    <th>Acties</th>
-  </tr>
-  <tr *ngFor="let patient of allPatients | filter:term">
-    <td class="text-left"> {{patient.firstName}}</td>
-    <td class="text-left"> (geb. datum)</td>
-    <td class="text-left"> (buttons)</td>
-  </tr>
-</table>
+  <!--Detail-->
+  <router-outlet></router-outlet>
 
-</body>
-
+</div>
