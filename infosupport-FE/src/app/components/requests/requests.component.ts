@@ -30,19 +30,23 @@ export class RequestsComponent implements OnInit {
   }
 
   acceptRequest(gpUserId, userId, requestId) {
-    this.requestGpService.updateGP(gpUserId, userId).subscribe();
+    if (confirm("Weet u zeker dat u de huisarts van de patient wilt zijn?")) {
+      this.requestGpService.updateGP(gpUserId, userId).subscribe();
 
-    this.requestGpService.deleteRequest(requestId).subscribe(data => {
-      this.requestList = [];
-      this.getRequests()
-    });
+      this.requestGpService.deleteRequest(requestId).subscribe(data => {
+        this.requestList = [];
+        this.getRequests()
+      });
+    }
   }
 
   deleteRequest(requestId) {
-    this.requestGpService.deleteRequest(requestId).subscribe(data => {
-      this.requestList = [];
-      this.getRequests()
-    });
-  }
+    if (confirm("Weet u zeker dat u het verzoek van de patient wilt afwijzen?")) {
 
+      this.requestGpService.deleteRequest(requestId).subscribe(data => {
+        this.requestList = [];
+        this.getRequests()
+      });
+    }
+  }
 }

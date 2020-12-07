@@ -6,6 +6,7 @@ import {User} from "../../models/user";
 import {catchError} from "rxjs/operators";
 import {Appointment} from '../../models/appointment';
 import {Patient} from '../../models/patient';
+import {GP} from "../../models/gp";
 
 export interface booleanReturn {
   retData: boolean;
@@ -18,6 +19,7 @@ export class LoginService {
 
   usersUrl = "http://localhost:8080/user";
   patientUrl = "http://localhost:8080/patient";
+  gpUrl = "http://localhost:8080/doctor/user_id";
 
   constructor(
     private http: HttpClient,
@@ -48,9 +50,30 @@ export class LoginService {
   getPatientInfoById(): Observable<Patient[]> {
     // return this.http.get<Appointment[]>${this.getAppointmentsByIdUrl}/${sessionStorage.getItem('user_id')}
     const url = `${this.patientUrl}/${sessionStorage.getItem('user_id')}`; // DELETE api/heroes/42
+    console.log(url);
     return this.http.get<Patient[]>(url)
     console.log(sessionStorage.getItem('user_id')+ 'efkwefpowekfpokop');
 
+  }
+
+  //getting Doctor Info
+  getGPInfoById(): Observable<GP[]> {
+    // return this.http.get<Appointment[]>${this.getAppointmentsByIdUrl}/${sessionStorage.getItem('user_id')}
+    console.log("in get gp method");
+    console.log(sessionStorage.getItem('user_id'));
+    const url = `${this.gpUrl}/${sessionStorage.getItem('user_id')}`; // DELETE api/heroes/42
+    console.log(url);
+    return this.http.get<GP[]>(url)
+    console.log(sessionStorage.getItem('user_id')+ 'efkwefpowekfpokop');
+
+  }
+
+  updatePatient(patient: Patient): Observable<Patient>{
+    console.log(patient);
+    return this.http.put<Patient>( this.patientUrl + '/update', patient)
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
   isUserLoggedIn() {
