@@ -5,11 +5,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --configuration $ENVIROMENT",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "serve": "nodemon server.js"
+    "serve": "nodemon server.js",
   },
   "private": true,
   "dependencies": {
