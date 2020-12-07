@@ -3,17 +3,13 @@ import {Appointment} from '../../models/appointment';
 import {CalendarService} from './calendar.service';
 import {Calendar} from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import {Observable} from 'rxjs';
-import {CalendarOptions} from '@fullcalendar/angular'; // useful for typechecking
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import {Calendar_appointment} from '../../models/calendar_appointment';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {log} from 'util';
 import {FormBuilder} from '@angular/forms';
-import set = Reflect.set;
-import {timeout} from 'rxjs/operators';
+import {Patient} from '../../models/patient';
+import {ChatService} from '../chat/chat.service';
 
 @Component({
   selector: 'app-calender',
@@ -26,10 +22,11 @@ export class CalenderComponent implements OnInit {
   appointments: Appointment[] = [];
   closeResult = '';
   appointmentForm;
-  patients: Array<string> = [];
+  patients: Patient[] = [];
 
   selectedAppointment: any;
-  selectedUserId: number;
+  selectedPatient: Patient = null;
+  selectedUserId: number =-1
 
   patient_user_id: number;
   location: string;
@@ -47,7 +44,7 @@ export class CalenderComponent implements OnInit {
   @ViewChild('content')
   content;
 
-  constructor(private calendarService: CalendarService, private modalService: NgbModal, private formBuilder: FormBuilder) {
+  constructor(private service: ChatService,private calendarService: CalendarService, private modalService: NgbModal, private formBuilder: FormBuilder) {
     this.appointmentForm = this.formBuilder.group({
       title: [''],
       description: [''],
@@ -70,7 +67,7 @@ export class CalenderComponent implements OnInit {
   }
 
   selected(e) {
-    
+
     this.title = e;
 
   }
@@ -164,7 +161,7 @@ export class CalenderComponent implements OnInit {
   }
 
   createAppointment(appointmentdata) {
-    console.log(this.patient_user_id);
+    console.log(this.selectedUserId);
     let appointment = new Appointment(appointmentdata.start, appointmentdata.end, appointmentdata.is_digital,
       appointmentdata.description, appointmentdata.location, appointmentdata.is_followup, parseInt(sessionStorage.getItem("big_code")), this.selectedUserId, appointmentdata.title);
     this.calendarService.createAppointment(appointment)
@@ -239,20 +236,46 @@ export class CalenderComponent implements OnInit {
     });
   }
 
+  // getPatients(gp_user_id) {
+  //   this.calendarService.getPatientsForGp(gp_user_id).subscribe(data => {
+  //     console.log(data);
+  //     for (let i = 0; i < data.length; i++) {
+  //       let test = data[i].split(',');
+  //       let test2 = test[0] + ' ' + test[1];
+  //       this.patients.push(test2);
+  //     }
+  //   });
+  //
+  //   return this.patients;
+  // }
+
+  setTitle(title: string) {
+    this.title = title;
+  }
+
+  selectDropdown(e){
+    this.selectedUserId = e
+    // this.selectedPatient = p;
+    console.log(this.selectedUserId);
+  }
+
   getPatients(gp_user_id) {
-    this.calendarService.getPatientsForGp(gp_user_id).subscribe(data => {
-      console.log(data);
+    this.service.getPatientsForGp(gp_user_id).subscribe(data => {
       for (let i = 0; i < data.length; i++) {
-        let test = data[i].split(',');
-        let test2 = test[0] + ' ' + test[1];
-        this.patients.push(test2);
+        this.patients.push(new Patient(
+          data[i].user_id,
+          data[i].dateOfBirth,
+          data[i].gender,
+          data[i].allergies,
+          data[i].email,
+          data[i].firstname,
+          data[i].lastname,
+          data[i].phonenumber,
+          data[i].password
+        ));
       }
     });
 
     return this.patients;
-  }
-
-  setTitle(title: string) {
-    this.title = title;
   }
 }

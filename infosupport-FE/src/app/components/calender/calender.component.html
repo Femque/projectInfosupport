@@ -16,8 +16,8 @@
       <tr>
         <td class="e-textlabel">Patient</td>
         <td colspan="4">
-          <select [ngModel]="title" (ngModelChange)="selected($event)" class="dropdown" id="title" formControlName="title">
-            <option *ngFor="let patient of patients; let i = index" [ngValue]="patient" [value]="patient" >{{patient}}</option>
+          <select [ngModel]="selectedUserId" (ngModelChange)="selectDropdown($event)" class="dropdown" id="title" formControlName="title">
+            <option *ngFor="let patient of patients; let i = index" [ngValue]="patient" [value]="patient" >{{patient.firstname + " " + patient.lastname }}</option>
           </select>
         </td>
       </tr>
