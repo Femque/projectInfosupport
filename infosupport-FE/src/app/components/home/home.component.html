@@ -1,0 +1,152 @@
+<div class="fluid-container">
+  <!--  TODO maken overzicht voor patients-->
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center">
+    <div class="container">
+      <h1>Welkom op Zonnevelt <h2 class="landingText">{{fullName}}</h2></h1>
+      <h2>Wij als team van getalenteerde dokters willen u graag helpen en assisteren bij uw probleem</h2>
+      <button routerLink="/login" type="button" class="btn-get-started scrollto btn btn-primary btn-lg"
+              *ngIf="loginService.isUserLoggedIn() === false">Klik hier om aan
+        te melden
+      </button>
+
+    </div>
+  </section><!-- End Hero -->
+
+
+  <!--TODO check of user is ingelogd zo wel laat dit zien  -->
+  <!-- ======= Why Us Section ======= -->
+  <section id="why-us" class="why-us" *ngIf="loginService.isUserLoggedIn() === true">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-lg-4 d-flex align-items-stretch">
+          <div class="content">
+            <h3>Maak uw eerst volgende afspraak</h3>
+            <!--TODO check op afspraken-->
+            <div *ngIf="loadedAppointments != null; else elseText">
+              <p>Uw eerst volgende afspraak heeft op datum {{this.loadedAppointments[0].start_time}} gepland
+                staan
+              </p>
+            </div>
+            <ng-template #elseText>
+              <p>U heeft momenteel geen afspraak gepland staan klik op de knop om een nieuwe afspraak
+                te plannen
+              </p>
+            </ng-template>
+            <!--TODO check als geen afspraken if else-->
+            <div class="text-center">
+              <a href="/#appointment" class="more-btn nav-link" *ngIf="loginService.isUserLoggedIn()">klik hier voor een
+                nieuwe afspraak<i
+                  class="bx bx-chevron-right"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8 d-flex align-items-stretch">
+          <div class="icon-boxes d-flex flex-column justify-content-center">
+            <div class="row">
+              <div class="col-xl-4 d-flex align-items-stretch">
+                <div class="icon-box mt-4 mt-xl-0">
+                  <i class="bx bx-receipt"></i>
+                  <h4>Zie uw gegevens</h4>
+                  <!--TODO fix gegevens -->
+                  <p>naam: {{this.firstname}} </p>
+                  <p>geboorteDatum: {{this.dateOfBirth}} </p>
+                  <div class="text-center">
+                    <a href="/#personalView" class="more-btn nav-link" *ngIf="loginService.isUserLoggedIn()">klik hier<i
+                      class="bx bx-chevron-right"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4 d-flex align-items-stretch" *ngIf="this.userRole !== 'general_practitioner'">
+                <div class="icon-box mt-4 mt-xl-0">
+                  <i class="bx bx-cube-alt"></i>
+                  <h4>Bekijk uw afspraken</h4>
+                  <!-- TODO fix statement -->
+                  <div *ngIf="loadedAppointments != null; else elseText">
+                    <div *ngIf="loadedAppointments.length == 1; else moreAppointments">
+                      U heeft {{loadedAppointments.length}} afspraak gepland staan
+                    </div>
+                    <ng-template #moreAppointments>
+                      <p>U heeft {{loadedAppointments.length}} afspraken gepland staan</p>
+                    </ng-template>
+                    <a href="/#appointmentView" class="more-btn nav-link" *ngIf="loginService.isUserLoggedIn()">klik
+                      hier om te bekijken<i class="bx bx-chevron-right"></i>
+                    </a>
+                  </div>
+                  <ng-template #elseText>
+                    <p>U heeft momenteel geen afspraak gepland staan klik op de knop om een nieuwe afspraak
+                      te plannen
+                    </p>
+                    <a href="/#appointment" class="more-btn nav-link" *ngIf="loginService.isUserLoggedIn()">klik hier<i
+                      class="bx bx-chevron-right"></i></a>
+                  </ng-template>
+                </div>
+              </div>
+              <!-- TODO wanneer gp is ingelogd alleen dit showen  -->
+              <div class="col-xl-4 d-flex align-items-stretch" *ngIf="this.userRole === 'general_practitioner'">
+                <div class="icon-box mt-4 mt-xl-0">
+                  <i class="bx bx-images"></i>
+                  <h4>Toon overzicht van uw patienten die gepland staan</h4>
+                  <a href="/#calender" class="more-btn nav-link">klik hier<i
+                    class="bx bx-chevron-right"></i></a>
+                </div>
+              </div>
+            </div>
+          </div><!-- End .content-->
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End Why Us Section -->
+
+
+  <!--TODO maken user overview wanneer er niemand is ingelogd-->
+  <!-- ======= About Section ======= -->
+  <section id="about" class="about">
+    <div class="container-fluid">
+
+      <div class="row">
+        <div class="col-xl-5 col-lg-6 video-box d-flex justify-content-center align-items-stretch">
+          <a href="" class="venobox mb-4" data-vbtype="video"
+             data-autoplay="true">
+          </a>
+        </div>
+
+        <div
+          class="col-xl-7 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5">
+          <h3>Nieuws over Zonnevelt</h3>
+          <p>Wist u dat wij vanaf heden beter bereikbaar zijn door middel van onze nieuwe live chat. U kunt de artsen
+            nog
+            beter bereiken.
+          </p>
+
+          <div class="icon-box">
+            <div class="icon"><i class="bx bx-fingerprint"></i></div>
+            <h4 class="title"><a href="">Lorem Ipsum</a></h4>
+            <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint
+              occaecati cupiditate non provident</p>
+          </div>
+
+          <div class="icon-box">
+            <div class="icon"><i class="bx bx-gift"></i></div>
+            <h4 class="title"><a href="">Nemo Enim</a></h4>
+            <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
+              voluptatum deleniti atque</p>
+          </div>
+
+          <div class="icon-box">
+            <div class="icon"><i class="bx bx-atom"></i></div>
+            <h4 class="title"><a href="">Dine Pad</a></h4>
+            <p class="description">Explicabo est voluptatum asperiores consequatur magnam. Et veritatis odit. Sunt aut
+              deserunt minus aut eligendi omnis</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End About Section -->
+
+  <!--  TODO maken overzicht voor docters-->
+</div>

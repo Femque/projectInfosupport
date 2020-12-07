@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="jumbotron">
+    <h1>Andere huisarts aanvragen</h1>
+    <div *ngFor="let gp of gpList">
+      <div class="card">
+        <div class="card-header">
+          {{gp.firstname + " " + gp.lastname}}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Specialiteit: {{gp.specialty}}</h5>
+          <p class="card-text">Hier komt een kort stukje tekst over de huisarts.</p>
+          <a href="#" class="btn btn-primary" *ngIf="!(gp.user_id == doctorId) else currentdoctor" (click)="requestGP(gp.user_id)">Vraag aan als huisarts</a>
+          <ng-template #currentdoctor>
+            <a href="#" class="btn btn-primary disabled" aria-disabled="true">Dit is uw huidige huisarts.</a>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

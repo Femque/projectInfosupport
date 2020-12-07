@@ -1,0 +1,79 @@
+<div class="container">
+  <div class="main-body">
+
+      <div class="col-md-8">
+        <h1>Mijn gegevens</h1>
+
+        <div class="card mb-3" >
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Naam</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input [(ngModel)]="firstname" class="e-field e-input" type="text"  name="firstname"
+                       style="width: 100%"/>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Geboortedatum</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input [(ngModel)]="dateOfBirth" class="e-field e-input" type="text"  name="dateOfBirth"
+                       style="width: 100%"/>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Geslacht</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input [(ngModel)]="gender" class="e-field e-input" type="text"  name="gender"
+                       style="width: 100%"/>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Telefoon nummer</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input [(ngModel)]="phonenumber" class="e-field e-input" type="text"  name="phoneNumber"
+                       style="width: 100%"/>
+              </div>
+            </div>
+
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Email</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input [(ngModel)]="email" class="e-field e-input" type="text"  name="email"
+                       style="width: 100%"/>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Wachtwoord</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input [(ngModel)]="password" class="e-field e-input" type="text"  name="password"
+                       style="width: 100%"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" (click)="updatePatient()" class="btn btn-primary">Gegevens aanpassen</button>
+      <button mat-raised-button color="primary" class="mr-1">Medisch Dossier</button>
+      <button mat-raised-button color="primary" routerLink="/requestGP">Andere huisarts aanvragen</button>
+
+
+
+  </div>
+</div>

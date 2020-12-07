@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="jumbotron">
+    <h1>Huisartsverzoeken</h1>
+    <div *ngFor="let request of requestList">
+      <div class="card">
+        <div class="card-header">
+          {{request.full_name}}
+        </div>
+        <div class="card-body">
+          <a style="margin-right: 2%" href="#requests" class="btn btn-success" (click)="acceptRequest(request.gp_user_id, request.patient_user_id, request.request_gp_id)">Accepteren</a>
+          <a href="#requests" class="btn btn-danger" (click)="deleteRequest(request.request_gp_id)">Afwijzen</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<!-- Image and text -->
+<nav class="navbar navbar-light" style="background-color: #57BA94; line-height: 3.5">
+  <a class="navbar-brand" href="#" style="color: white; letter-spacing: 5px;">
+    <img src="/assets/images/zonneveltLogo.png" width="50" height="50" class="d-inline-block" alt="">
+    ZONNEVELT
+  </a>
+
+  <ul class="nav justify-content-end">
+    <li class="nav-item">
+      <a *ngIf="(loginService.isUserLoggedIn() && userRole == 'general_practitioner')" class="nav-link" href="/#patientView" style="color: white;">MIJN PATIENTEN</a>
+    </li>
+    <li class="nav-item">
+      <a *ngIf="(loginService.isUserLoggedIn()&& userRole == 'patient')" class="nav-link" role="button" href="/#appointment" style="color: white;">AFSPRAAK MAKEN</a>
+    </li>
+    <li class="nav-item">
+      <a *ngIf="(loginService.isUserLoggedIn())" class="nav-link" role="button" href="/#chat" style="color: white;">CHAT</a>
+    </li>
+    <li class="nav-item">
+      <a *ngIf="(loginService.isUserLoggedIn() && userRole == 'general_practitioner')" class="nav-link" role="button" href="/#requests" style="color: white;">VERZOEKEN</a>
+    </li>
+    <li class="nav-item">
+      <a *ngIf="(loginService.isUserLoggedIn()&& userRole == 'patient')" class="nav-link" href="/#appointmentView" style="color: white;">MIJN AFSPRAKEN</a>
+    </li>
+    <li class="nav-item">
+      <a *ngIf="loginService.isUserLoggedIn()" class="nav-link" href="/#personalView" style="color: white;">{{fullName}}</a>
+    </li>
+    <li class="nav-item">
+      <a *ngIf="loginService.isUserLoggedIn()" class="nav-link" role="button" (click)="loginService.logOut()" href="#" style="color: white;">LOG UIT</a>
+    </li>
+
+  </ul>
+</nav>
+
