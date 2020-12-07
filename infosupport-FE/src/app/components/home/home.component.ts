@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
       let fullNameArray = this.fullName[0].split(",");
       let firstName = fullNameArray[0];
       let lastName = fullNameArray[1];
-      this.fullName = firstName.toUpperCase() + " " + lastName.toUpperCase();
+      this.fullName = firstName + " " + lastName;
     });
   }
 
@@ -115,7 +115,3 @@ export class HomeComponent implements OnInit {
     }
   }
 }
-
-
-
-

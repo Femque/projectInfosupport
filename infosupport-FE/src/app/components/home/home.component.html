@@ -46,8 +46,8 @@
                 <div class="icon-box mt-4 mt-xl-0">
                   <i class="bx bx-receipt"></i>
                   <h4>Zie uw gegevens</h4>
-                  <p>naam: {{this.firstname}} </p>
-                  <p>geboorteDatum: {{this.dateOfBirth}} </p>
+                  <p>{{this.fullName}} </p>
+                  <p>{{this.dateOfBirth}} </p>
                   <div class="text-center">
                     <a href="/#personalView" class="more-btn nav-link" *ngIf="loginService.isUserLoggedIn()">klik hier<i
                       class="bx bx-chevron-right"></i></a>

@@ -56,6 +56,8 @@ export class LoginComponent implements OnInit {
 
     let role = this.getUserRole(this.user.email); // Value True = Patient, False = GP
 
+
+
   }
 
   getUser_id(email: string) {
