@@ -59,7 +59,7 @@ public class PatientContoller {
     }
 
     @CrossOrigin
-    @GetMapping("/gp/{gp_user_id}")
+    @GetMapping("/gpChat/{gp_user_id}")
     public ResponseEntity<List<Patient>> getPatientsForGp(@PathVariable int gp_user_id) {
         List<Patient> patients = service.getPatientsForGp(gp_user_id);
         return ResponseEntity.ok(patients);
@@ -67,7 +67,7 @@ public class PatientContoller {
 
   //getting the data of patient by id
   @CrossOrigin
-  @GetMapping("gp/{id}")
+  @GetMapping("/gp/{id}")
   public ResponseEntity<Integer> getGPByUserId(@PathVariable int id) {
     Integer gpId = service.getGPByPatientUserId(id);
     return ResponseEntity.ok(gpId);
