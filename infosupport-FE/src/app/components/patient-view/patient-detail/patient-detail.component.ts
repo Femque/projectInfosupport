@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {Subscription} from "rxjs";
-import {ActivatedRoute, Params, Router} from "@angular/router";
-import {Patient} from "../../../models/patient";
-import {LoginService} from "../../login/login.service";
-import {Appointment} from "../../../models/appointment";
-import {AppointmentService} from "../../appointment/appointment.service";
+import {Component, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Patient} from '../../../models/patient';
+import {LoginService} from '../../login/login.service';
+import {Appointment} from '../../../models/appointment';
 
 @Component({
   selector: 'app-patient-detail',
@@ -13,17 +12,10 @@ import {AppointmentService} from "../../appointment/appointment.service";
 })
 export class PatientDetailComponent implements OnInit {
   selectedPatientId: number;
-  private _selectedPatient: Patient;
+   selectedPatient: Patient;
   patientCopy: Patient;
   loadedAppointments : Appointment[] = [];
 
-  set selectedPatient(patient: Patient) {
-    this._selectedPatient = patient;
-  }
-
-  get selectedPatient() {
-    return this._selectedPatient;
-  }
 
   private childParamsSubscription: Subscription = null;
 
@@ -44,13 +36,13 @@ export class PatientDetailComponent implements OnInit {
   }
 
   private setPatientId(id: number) {
-    // console.log(id)
+   this.selectedPatientId = id
 
      this.service.findById(id).subscribe(
       patient => {
         for (let i = 0; i < patient.length; i++) {
-          let user_id = id;
-          if (patient[i].user_id == user_id) {
+          console.log(patient);
+          if (patient[i].user_id == id) {
             this.patientCopy = new Patient(
               patient[i].user_id,
               patient[i].dateOfBirth,
@@ -59,8 +51,11 @@ export class PatientDetailComponent implements OnInit {
               patient[i].email,
               patient[i].firstname,
               patient[i].lastname,
-              patient[i].phonenumber
+              patient[i].phonenumber,
+              patient[i].password
             );
+
+            this.selectedPatient = patient[i]
 
             return this.patientCopy;
           }
@@ -89,8 +84,12 @@ export class PatientDetailComponent implements OnInit {
   }
 
   saveForm() {
-    let value = this.service.updatePatient(this.selectedPatient);
-    this.patientCopy = Object.assign(this.selectedPatient);
+   this.selectedPatient = this.patientCopy
+   this.service.updatePatient(this.selectedPatient).subscribe(data => {
+     this.patientCopy = Object.assign(this.selectedPatient);
+   })
+
+
   }
 
   cancelForm() {
