@@ -7,14 +7,14 @@ import {Patient} from '../../models/patient';
 import {Message} from '../../models/message';
 import {catchError} from 'rxjs/operators';
 import {GP} from '../../models/gp';
+import {environment} from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
-  getDoctorByUserId = 'http://localhost:8080/patient/gp'
-
-  chatUrl = 'http://localhost:8080/chat' //Url to get all appointments
+  getDoctorByUserId = environment.apiUrl + '/patient/gp';
+  chatUrl = environment.apiUrl + '/chat';
 
 
   constructor(private http: HttpClient){
@@ -22,13 +22,13 @@ export class ChatService {
 
   getPatientsForGp(gp_user_id: number): Observable<Patient[]>{
     console.log("getting patients");
-    return this.http.get<Patient[]>("http://localhost:8080/patient/gpChat/" + gp_user_id)
+    return this.http.get<Patient[]>(environment.apiUrl + "/patient/gpChat/" + gp_user_id)
   }
 
   insertMessage(message: Message): Observable<Message>{
     console.log(message);
     return this.http.post<Message>(this.chatUrl + "/message", message).
-      pipe(catchError(this.handleError))
+      pipe(catchError(ChatService.handleError))
   }
 
   getMessagesForChat(gp_user_id: number, patient_user_id: number): Observable<Message[]>{
@@ -41,16 +41,16 @@ export class ChatService {
   }
 
   getGp(user_id: number) {
-    const url = "http://localhost:8080/doctor/user_id/" + user_id;
+    const url = environment.apiUrl + "/doctor/user_id/" + user_id;
     return this.http.get<GP>(url)
   }
 
   getPatientById(id: number) {
-    const url = `http://localhost:8080/patient/${id}`;
+    const url = environment.apiUrl + `/patient/${id}`;
     return this.http.get<Patient>(url);
   }
 
-  private handleError(error: HttpErrorResponse) {
+  private static handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
