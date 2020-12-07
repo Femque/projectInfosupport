@@ -21,7 +21,8 @@
         <div class="col-lg-4 d-flex align-items-stretch">
           <div class="content">
             <h3>Maak uw eerst volgende afspraak</h3>
-            <div *ngIf="loadedAppointments != null; else elseText">
+            <div *ngIf="loadedAppointments != null && this.userRole !== 'general_practitioner'; else elseText">
+              <p>{{this.loadedAppointments}}</p>
               <p>Uw eerst volgende afspraak heeft op datum {{this.loadedAppointments[0].start_time}} gepland
                 staan
               </p>
