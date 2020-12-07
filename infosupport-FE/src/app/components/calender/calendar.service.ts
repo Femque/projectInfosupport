@@ -17,7 +17,6 @@ const httpOptions = {
 
 @Injectable()
 export class CalendarService {
-  appointmentsUrl = 'http://localhost:8080/appointments' //Url to get all appointments
 
   constructor(
     private http: HttpClient
