@@ -1,7 +1,7 @@
 <div class="container">
   <div class="main-body">
     <div class="col-md-9">
-      <h1>Medisch dossier van {{loadedPatient.firstname}} {{loadedPatient.lastname}}</h1>
+      <h1 *ngIf="loadedPatient">Medisch dossier van {{loadedPatient.firstname}} {{loadedPatient.lastname}}</h1>
 
 
       <div class="card mb-3">
@@ -31,7 +31,7 @@
             <div class="col-sm-3">
             </div>
             <div class="col-sm">
-            <div class="col-sm-9 text-secondary">
+            <div *ngIf="loadedPatient" class="col-sm-9 text-secondary">
                   {{loadedPatient.allergies}}
             </div>
             </div>
