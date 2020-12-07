@@ -89,10 +89,15 @@ export class PatientDetailComponent implements OnInit {
   }
 
   saveForm() {
-    
+    let value = this.service.updatePatient(this.selectedPatient);
+    this.patientCopy = Object.assign(this.selectedPatient);
   }
 
   cancelForm() {
-
+    this.selectedPatientId = -1;
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute
+    })
   }
+
 }

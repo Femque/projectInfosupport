@@ -2,15 +2,15 @@ import {User} from "./user";
 
 export class Patient {
 
-  private user_id: number;
-  private dateOfBirth: Date;
-  private gender: string;
-  private allergies: string;
-  private email: string;
-  private firstname: string;
-  private lastname: string;
-  private phonenumber: string;
-  private password: string;
+   user_id: number;
+   dateOfBirth: Date;
+   gender: string;
+   allergies: string;
+   email: string;
+   firstname: string;
+   lastname: string;
+   phonenumber: string;
+   password: string;
 
 
   constructor(user_id?: number, dateOfBirth?: Date, gender?: string, allergies?: string, email?: string, firstname?: string, lastname?: string, phonenumber?: string, password?: string) {
@@ -25,5 +25,5 @@ export class Patient {
     this.password = password;
   }
 
- 
+
 }
