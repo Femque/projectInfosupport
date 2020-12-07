@@ -1,9 +1,9 @@
 <div class="fluid-container">
-  <!--  TODO maken overzicht voor patients-->
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center">
     <div class="container">
-      <h1>Welkom op Zonnevelt <h2 class="landingText" *ngIf="loginService.isUserLoggedIn() === true">{{fullName}}</h2></h1>
+      <h1>Welkom op Zonnevelt <h2 class="landingText" *ngIf="loginService.isUserLoggedIn() === true">{{fullName}}</h2>
+      </h1>
       <h2>Wij als team van getalenteerde dokters willen u graag helpen en assisteren bij uw probleem</h2>
       <button routerLink="/login" type="button" class="btn-get-started scrollto btn btn-primary btn-lg"
               *ngIf="loginService.isUserLoggedIn() === false">Klik hier om aan
@@ -13,8 +13,6 @@
     </div>
   </section><!-- End Hero -->
 
-
-  <!--TODO check of user is ingelogd zo wel laat dit zien  -->
   <!-- ======= Why Us Section ======= -->
   <section id="why-us" class="why-us" *ngIf="loginService.isUserLoggedIn() === true">
     <div class="container">
@@ -23,7 +21,6 @@
         <div class="col-lg-4 d-flex align-items-stretch">
           <div class="content">
             <h3>Maak uw eerst volgende afspraak</h3>
-            <!--TODO check op afspraken-->
             <div *ngIf="loadedAppointments != null; else elseText">
               <p>Uw eerst volgende afspraak heeft op datum {{this.loadedAppointments[0].start_time}} gepland
                 staan
@@ -34,7 +31,6 @@
                 te plannen
               </p>
             </ng-template>
-            <!--TODO check als geen afspraken if else-->
             <div class="text-center">
               <a href="/#appointment" class="more-btn nav-link" *ngIf="loginService.isUserLoggedIn()">klik hier voor een
                 nieuwe afspraak<i
@@ -49,7 +45,6 @@
                 <div class="icon-box mt-4 mt-xl-0">
                   <i class="bx bx-receipt"></i>
                   <h4>Zie uw gegevens</h4>
-                  <!--TODO fix gegevens -->
                   <p>naam: {{this.firstname}} </p>
                   <p>geboorteDatum: {{this.dateOfBirth}} </p>
                   <div class="text-center">
@@ -62,7 +57,6 @@
                 <div class="icon-box mt-4 mt-xl-0">
                   <i class="bx bx-cube-alt"></i>
                   <h4>Bekijk uw afspraken</h4>
-                  <!-- TODO fix statement -->
                   <div *ngIf="loadedAppointments != null; else elseText">
                     <div *ngIf="loadedAppointments.length == 1; else moreAppointments">
                       U heeft {{loadedAppointments.length}} afspraak gepland staan
@@ -83,7 +77,6 @@
                   </ng-template>
                 </div>
               </div>
-              <!-- TODO wanneer gp is ingelogd alleen dit showen  -->
               <div class="col-xl-4 d-flex align-items-stretch" *ngIf="this.userRole === 'general_practitioner'">
                 <div class="icon-box mt-4 mt-xl-0">
                   <i class="bx bx-images"></i>
@@ -101,7 +94,6 @@
   </section><!-- End Why Us Section -->
 
 
-  <!--TODO maken user overview wanneer er niemand is ingelogd-->
   <!-- ======= About Section ======= -->
   <section id="about" class="about">
     <div class="container-fluid">
@@ -123,23 +115,21 @@
 
           <div class="icon-box">
             <div class="icon"><i class="bx bx-fingerprint"></i></div>
-            <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-            <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint
-              occaecati cupiditate non provident</p>
+            <h4 class="title"><a href="">Dokter Hans</a></h4>
+            <p class="description">Wist u dat Hans....</p>
           </div>
 
           <div class="icon-box">
             <div class="icon"><i class="bx bx-gift"></i></div>
-            <h4 class="title"><a href="">Nemo Enim</a></h4>
-            <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
-              voluptatum deleniti atque</p>
+            <h4 class="title"><a href="">Meer tijd</a></h4>
+            <p class="description">Zonneveld heeft meer tijd voor u nu</p>
           </div>
 
           <div class="icon-box">
             <div class="icon"><i class="bx bx-atom"></i></div>
-            <h4 class="title"><a href="">Dine Pad</a></h4>
-            <p class="description">Explicabo est voluptatum asperiores consequatur magnam. Et veritatis odit. Sunt aut
-              deserunt minus aut eligendi omnis</p>
+            <h4 class="title"><a href="">afspraak plannen</a></h4>
+            <p class="description">Door middel van onze livechat kunt u sneller en makkelijker een afpsraak
+              inplannen</p>
           </div>
 
         </div>
@@ -147,6 +137,4 @@
 
     </div>
   </section><!-- End About Section -->
-
-  <!--  TODO maken overzicht voor docters-->
 </div>
