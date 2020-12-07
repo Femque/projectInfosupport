@@ -81,8 +81,8 @@ export class LoginService {
   }
 
   getPatientsForGp(gp_user_id: number): Observable<Patient[]>{
-    console.log("Getting patients");
-    return this.http.get<Patient[]>(this.patientUrl + "/gp/" + gp_user_id);
+    console.log("Getting patients with " + gp_user_id);
+    return this.http.get<Patient[]>(this.patientUrl + "/gpChat/" + gp_user_id);
   }
 
   findById(id: number): Observable<Patient[]> {

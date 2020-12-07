@@ -31,10 +31,10 @@ export class PatientViewComponent implements OnInit {
               private router: Router,
               private activatedRoute: ActivatedRoute) {
 
-    this.loadedPatients = this.getPatients(sessionStorage.getItem('user_id'));
   }
 
   ngOnInit() {
+    this.loadedPatients = this.getPatients(sessionStorage.getItem('user_id'));
     this.getBigCode(sessionStorage.getItem('user_id'));
     // this.getPatients(sessionStorage.getItem('user_id'));
 
@@ -57,6 +57,7 @@ export class PatientViewComponent implements OnInit {
 
   getPatients(gp_user_id) {
     this.service.getPatientsForGp(gp_user_id).subscribe(data => {
+      console.log(data);
       this.loadedPatients = data;
     }, error => {
       console.log(error);
