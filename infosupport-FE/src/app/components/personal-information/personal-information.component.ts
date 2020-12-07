@@ -26,7 +26,7 @@ export class PersonalInformationComponent implements OnInit {
   dateOfBirth: Date;
   allergies: string;
 
-
+  userRole: string;
   // @ViewChild('content')
   // content;
 
@@ -35,7 +35,7 @@ export class PersonalInformationComponent implements OnInit {
 
   ngOnInit() {
     this.getUserInfo();
-
+    this.userRole = sessionStorage.getItem('user_role');
 
     console.log('wat is firstname' + this.firstname);
   }
