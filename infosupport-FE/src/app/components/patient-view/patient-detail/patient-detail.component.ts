@@ -67,4 +67,32 @@ export class PatientDetailComponent implements OnInit {
         }
       }, error => console.log(error)
     )}
+
+  isFormChanged() : boolean {
+    return this.selectedPatient !== this.patientCopy;
+  }
+
+  action(action) {
+    switch (action.toLowerCase()) {
+      case "save":
+        this.saveForm();
+        break;
+      case "cancel":
+        if (confirm("Wil je stoppen met bewerken van gegevens?")){
+          this.cancelForm();
+        }
+        break;
+      default:
+        break;
+    }
+
+  }
+
+  saveForm() {
+    
+  }
+
+  cancelForm() {
+
+  }
 }

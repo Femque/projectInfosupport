@@ -44,6 +44,13 @@
     </div>
   </div>
 
+  <div class="btn-group">
+    <button class="btn btn-primary" [disabled]="!isFormChanged()"
+            (click)="action('save')">Opslaan</button>
+    <button class="btn btn-secondary" [disabled]="!isFormChanged()"
+            (click)="action('cancel')">Cancel</button>
+  </div>
+
 </ng-container>
 
 <ng-template #elseText>
