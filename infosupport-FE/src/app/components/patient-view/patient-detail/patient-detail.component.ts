@@ -41,7 +41,7 @@ export class PatientDetailComponent implements OnInit {
      this.service.findById(id).subscribe(
       patient => {
         for (let i = 0; i < patient.length; i++) {
-          console.log(patient);
+          // console.log(patient);
           if (patient[i].user_id == id) {
             this.patientCopy = new Patient(
               patient[i].user_id,
