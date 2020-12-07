@@ -64,8 +64,14 @@ export class ChatComponent implements OnInit {
     });
 
     this.ws.addEventListener('message', (e: MessageEvent) => {
-      this.messagesForCurrentPatient.push(new Message(e.data, '', new Date(), '', parseInt(sessionStorage.getItem('user_id')), this.selectedPatientId,
-        parseInt(sessionStorage.getItem('user_id'))));
+      if (this.role == false){
+        this.messagesForCurrentPatient.push(new Message(e.data, '', new Date(), '', parseInt(sessionStorage.getItem('user_id')), this.selectedPatientId,
+          parseInt(sessionStorage.getItem('user_id'))));
+      }else{
+        this.messagesForCurrentPatient.push(new Message(e.data, '', new Date(), '', this.generalPractionerId, this.userId,
+          parseInt(sessionStorage.getItem('user_id'))));
+      }
+
       if (this.role == false) {
         setTimeout(() => {
           this.getMessagesForChat(this.userId, this.selectedPatientId)
