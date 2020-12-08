@@ -20,7 +20,7 @@
     </li>
 
     <li class="nav-item">
-      <a *ngIf="(loginService.isUserLoggedIn() && userRole == 'general_practitioner')" class="nav-link" role="button" href="/#requests" style="color: white;">    <span matBadge="{{requestsLength}}" matBadgeSize="large">VERZOEKEN</span></a>
+      <a *ngIf="(loginService.isUserLoggedIn() && userRole == 'general_practitioner')" class="nav-link" role="button" href="/#requests" style="color: white;">    <span matBadge="{{requestsLength}}" matBadgeSize="large"[matBadgeHidden]="requestsLength<=0">VERZOEKEN</span></a>
     </li>
     <li class="nav-item">
       <a *ngIf="(loginService.isUserLoggedIn()&& userRole == 'patient')" class="nav-link" href="/#appointmentView" style="color: white;">MIJN AFSPRAKEN</a>
