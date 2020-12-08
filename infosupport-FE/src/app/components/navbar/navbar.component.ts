@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {LoginService} from "../login/login.service";
 import {AppointmentService} from "../appointment/appointment.service";
+import {RequestGpService} from "../request-gp/request-gp.service";
 
 @Component({
   selector: 'app-navbar',
@@ -11,13 +12,15 @@ export class NavbarComponent implements OnInit {
 
   fullName: string;
   userRole: string;
+  requestsLength: number;
 
   //Check if user is loggen in or not, decide if all nav-links are available
   isUserLoggedIn : boolean = false;
 
   constructor(
     public loginService : LoginService,
-    public appointmentService : AppointmentService
+    public appointmentService : AppointmentService,
+    public requestGpService: RequestGpService
   ) { }
 
   ngOnInit(): void {
@@ -26,6 +29,13 @@ export class NavbarComponent implements OnInit {
 
     if (this.isUserLoggedIn){
       this.getFullNameById();
+
+    if (this.userRole == 'general_practitioner') {
+      this.requestGpService.getRequestsForGP().subscribe(data =>  {
+        this.requestsLength = data.length;
+      })
+    }
+
     }
 
   }

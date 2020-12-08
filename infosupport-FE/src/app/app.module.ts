@@ -17,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatBadgeModule } from "@angular/material/badge";
 import { HomeComponent } from "./components/home/home.component";
 import { MatGridListModule, MatGridTile } from "@angular/material/grid-list";
 import {MatSelectModule} from "@angular/material/select";
@@ -69,6 +70,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {origin:
     FullCalendarModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MatBadgeModule,
     FormsModule,
     MatTableModule,
     MatProgressSpinnerModule,
