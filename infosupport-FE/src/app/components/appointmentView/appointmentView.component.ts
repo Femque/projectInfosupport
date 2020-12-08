@@ -26,15 +26,14 @@ export class AppointmentViewComponent implements OnInit {
 
   //list of appointments
   loadedAppointments: Appointment[] = [];
+  arrayDatesStartTime: any[] = [];
+  arrayDatesEndTime: any[] = [];
 
   constructor(private http: HttpClient, private appointmentService: AppointmentService) {
   }
 
   ngOnInit() {
     this.getAppointments();
-
-
-    console.log(sessionStorage.getItem('user_id'));
   }
 
 
@@ -48,17 +47,22 @@ export class AppointmentViewComponent implements OnInit {
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
         var yyyy = today.getFullYear();
         var hours = today.toLocaleTimeString();
+        var startTime = new Date(appointment[i].start_time);
+        var endTime = new Date(appointment[i].end_time);
+        var months = ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober",
+          "November", "December"];
+        var days = ["Zondag", "Maandag", "Disndag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag"];
+        this.arrayDatesStartTime[i] = days[startTime.getDay()] + " " + startTime.getDate() + " " +
+          months[startTime.getMonth()] + " " + startTime.getFullYear() + " om " + startTime.getHours()+ ":" + startTime.getMinutes();
+        this.arrayDatesEndTime[i] = days[endTime.getDay()] + " " + endTime.getDate() + " " +
+          months[endTime.getMonth()] + " " + endTime.getFullYear() + " om " + endTime.getHours()+ ":" + endTime.getMinutes();
 
         // @ts-ignore
         today = yyyy + '-' + mm + '-' + dd + 'T' + hours;
-        console.log(today);
-        console.log("startTime" + appointment[i].start_time);
 
         this.getFullNameById(appointment[i].big_code);
 
         if (appointment[i].start_time >= today) {
-          console.log('yes datum is groter');
-
           let newAppointment = new Appointment(appointment[i].start_time,
             appointment[i].end_time, appointment[i].is_digital, appointment[i].description, appointment[i].location,
             appointment[i].is_follow_up, appointment[i].big_code, appointment[i].patient_user_id, appointment[i].title, appointment[i].appointment_code);
@@ -72,13 +76,8 @@ export class AppointmentViewComponent implements OnInit {
 
   getFullNameById(bigCode: number) {
     this.appointmentService.getFullNameBig(bigCode).subscribe(data => {
-      // var res = data.replace(",", " ");
-      // data.replace(/,/g, '');
-
       data = data.replace(/,/g, ""); // remove commas
-
       this.fullName = data;
-
     });
   }
 
@@ -86,18 +85,14 @@ export class AppointmentViewComponent implements OnInit {
   //method called when user clicks cancel
   public clickedAppointment(id) {
     if (id != null && confirm("Are you sure to delete " + id)) {
-      // this.onSelect(id);
-      console.log(id);
       this.deleteAppointment(id);
     } else {
-      // this.onSelect(-1)
     }
   }
 
   //delete current appointment
   // @ts-ignore
   deleteAppointment(id): any {
-    console.log("loggieee ===" + id)
     this.appointmentService.deleteAppointment(id).subscribe(() => {
         this.loadedAppointments = [];
         this.getAppointments();

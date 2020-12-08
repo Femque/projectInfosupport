@@ -1,5 +1,4 @@
 <div class="fluid-container">
-  <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center">
     <div class="container">
       <h1>Welkom op Zonnevelt <h2 class="landingText" *ngIf="loginService.isUserLoggedIn() === true">{{fullName}}</h2>
@@ -9,19 +8,15 @@
               *ngIf="loginService.isUserLoggedIn() === false">Klik hier om aan
         te melden
       </button>
-
     </div>
-  </section><!-- End Hero -->
+  </section>
 
-  <!-- ======= Why Us Section ======= -->
   <section id="why-us" class="why-us" *ngIf="(loginService.isUserLoggedIn() === true) && userRole == 'patient'">
     <div class="container">
-
       <div class="row">
         <div class="col-lg-4 d-flex align-items-stretch">
           <div class="content">
             <h3>Maak uw eerst volgende afspraak</h3>
-            <!--TODO check op afspraken-->
             <div *ngIf="loadedAppointments.length > 0; else elseText">
               <p>Uw eerst volgende afspraak heeft op datum {{this.loadedAppointments[0].start_time}} gepland
                 staan
@@ -87,25 +82,20 @@
                 </div>
               </div>
             </div>
-          </div><!-- End .content-->
+          </div>
         </div>
       </div>
-
     </div>
-  </section><!-- End Why Us Section -->
+  </section>
 
-
-  <!-- ======= About Section ======= -->
   <section id="about" class="about">
     <div class="container-fluid">
-
       <div class="row">
         <div class="col-xl-5 col-lg-6 video-box d-flex justify-content-center align-items-stretch">
           <a href="" class="venobox mb-4" data-vbtype="video"
              data-autoplay="true">
           </a>
         </div>
-
         <div
           class="col-xl-7 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5">
           <h3>Nieuws over Zonnevelt</h3>
@@ -113,29 +103,24 @@
             nog
             beter bereiken.
           </p>
-
           <div class="icon-box">
             <div class="icon"><i class="bx bx-fingerprint"></i></div>
             <h4 class="title"><a href="">Dokter Hans</a></h4>
             <p class="description">Wist u dat Hans....</p>
           </div>
-
           <div class="icon-box">
             <div class="icon"><i class="bx bx-gift"></i></div>
             <h4 class="title"><a href="">Meer tijd</a></h4>
             <p class="description">Zonneveld heeft meer tijd voor u nu</p>
           </div>
-
           <div class="icon-box">
             <div class="icon"><i class="bx bx-atom"></i></div>
             <h4 class="title"><a href="">afspraak plannen</a></h4>
             <p class="description">Door middel van onze livechat kunt u sneller en makkelijker een afpsraak
               inplannen</p>
           </div>
-
         </div>
       </div>
-
     </div>
-  </section><!-- End About Section -->
+  </section>
 </div>
