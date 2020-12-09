@@ -25,6 +25,8 @@ export class LoginComponent implements OnInit {
 
   role : boolean;
 
+  errorMsg : boolean = false;
+
   constructor(
     private loginService: LoginService,
     private route: ActivatedRoute,
@@ -48,16 +50,15 @@ export class LoginComponent implements OnInit {
   handleLogin() {
     this.submitted = true;
     this.loginService.loginUserFromRemote(this.user).subscribe(
-      data => this.user = data,
-      error => error
-    )
-
-    let id = this.getUser_id(this.user.email);
-
-    let role = this.getUserRole(this.user.email); // Value True = Patient, False = GP
-
-
-
+      data => {
+        this.user = data
+        let id = this.getUser_id(this.user.email);
+        let role = this.getUserRole(this.user.email); // Value True = Patient, False = GP
+      },
+      error => {
+        console.log(error)
+        this.errorMsg = true
+      })
   }
 
   getUser_id(email: string) {
