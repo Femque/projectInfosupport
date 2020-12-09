@@ -6,3 +6,11 @@
 .btn-group {
   padding-left: 20px;
 }
+
+.alert-succes {
+  padding-left: 35px;
+}
+
+.btn-primary {
+  background-color: #57BA94 ;
+}

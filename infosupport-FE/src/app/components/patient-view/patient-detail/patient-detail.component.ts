@@ -16,6 +16,7 @@ export class PatientDetailComponent implements OnInit {
   patientCopy: Patient;
   loadedAppointments : Appointment[] = [];
 
+  showMsg: boolean = false;
 
   private childParamsSubscription: Subscription = null;
 
@@ -30,7 +31,9 @@ export class PatientDetailComponent implements OnInit {
         this.setPatientId(params['id'] || -1);
         this.selectedPatient = this.patientCopy;
       })
+    this.showMsg = false;
   }
+
   ngOnDestroy() {
     this.childParamsSubscription && this.childParamsSubscription.unsubscribe();
   }
@@ -56,6 +59,7 @@ export class PatientDetailComponent implements OnInit {
             );
 
             this.selectedPatient = patient[i]
+            this.showMsg = false;
 
             return this.patientCopy;
           }
@@ -71,6 +75,7 @@ export class PatientDetailComponent implements OnInit {
     switch (action.toLowerCase()) {
       case "save":
         this.saveForm();
+
         break;
       case "cancel":
         if (confirm("Wil je stoppen met bewerken van gegevens?")){
@@ -87,6 +92,7 @@ export class PatientDetailComponent implements OnInit {
    this.selectedPatient = this.patientCopy
    this.service.updatePatient(this.selectedPatient).subscribe(data => {
      this.patientCopy = Object.assign(this.selectedPatient);
+     this.showMsg = true;
    })
 
 
@@ -98,5 +104,4 @@ export class PatientDetailComponent implements OnInit {
       relativeTo: this.activatedRoute.parent
     })
   }
-
 }

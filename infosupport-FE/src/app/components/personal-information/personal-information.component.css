@@ -32,3 +32,8 @@ body{
   padding: 1rem;
 }
 
+.btn-primary {
+  background-color: #57ba94;
+  border-color: #57ba94;
+}
+

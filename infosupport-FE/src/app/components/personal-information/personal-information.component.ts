@@ -16,6 +16,8 @@ export class PersonalInformationComponent implements OnInit {
   loadedPatient: Patient;
   userForm;
 
+  showMsg: boolean = false;
+
   user_id: number;
   gender: string;
   email: string;
@@ -120,6 +122,8 @@ export class PersonalInformationComponent implements OnInit {
         this.getUserInfo();
       }
     );
+
+    this.showMsg = true;
 
   }
 

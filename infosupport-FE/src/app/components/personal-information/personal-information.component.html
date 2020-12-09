@@ -69,6 +69,13 @@
           </div>
         </div>
       </div>
+
+    <div class="row" *ngIf="showMsg">
+      <h2 class="alert alert-succes">
+        <strong>Gegevens succesvol opgeslagen</strong>
+      </h2>
+    </div>
+
       <button type="button" (click)="updatePatient()" class="btn btn-primary">Gegevens aanpassen</button>
       <button *ngIf="userRole == 'patient'" mat-raised-button color="primary" routerLink="/medical-file" class="mr-1">Medisch Dossier</button>
       <button *ngIf="userRole == 'patient'" mat-raised-button color="primary" routerLink="/requestGP">Andere huisarts aanvragen</button>
