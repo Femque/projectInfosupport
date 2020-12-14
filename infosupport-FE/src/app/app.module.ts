@@ -38,6 +38,7 @@ import {CalendarService} from "./components/calender/calendar.service";
 import { PatientDetailComponent } from './components/patient-view/patient-detail/patient-detail.component';
 import { RequestGpComponent } from './components/request-gp/request-gp.component';
 import { RequestsComponent } from './components/requests/requests.component';
+import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin
@@ -67,6 +68,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {origin:
 
   imports: [
     BrowserModule,
+    NgbModule,
     FullCalendarModule,
     HttpClientModule,
     BrowserAnimationsModule,

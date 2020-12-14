@@ -1,74 +1,65 @@
 <div class="container">
   <div class="main-body">
-
-      <div class="col-md-8">
-        <h1>Mijn gegevens</h1>
-
-        <div class="card mb-3" >
-          <div class="card-body">
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Naam</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <input [(ngModel)]="firstname" class="e-field e-input" type="text"  name="firstname"
-                       style="width: 100%"/>
-              </div>
+    <div class="col-md-8">
+      <h1>Mijn gegevens</h1>
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Naam</h6>
             </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Geboortedatum</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <input [(ngModel)]="dateOfBirth" class="e-field e-input" type="text"  name="dateOfBirth"
-                       style="width: 100%"/>
-              </div>
+            <div class="col-sm-9 text-secondary">
+              {{this.firstname}}
             </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Geslacht</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <input [(ngModel)]="gender" class="e-field e-input" type="text"  name="gender"
-                       style="width: 100%"/>
-              </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Geboortedatum</h6>
             </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Telefoon nummer</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <input [(ngModel)]="phonenumber" class="e-field e-input" type="text"  name="phoneNumber"
-                       style="width: 100%"/>
-              </div>
+            <div class="col-sm-9 text-secondary">
+              {{this.dateOfBirth}}
             </div>
-
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Email</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <input [(ngModel)]="email" class="e-field e-input" type="text"  name="email"
-                       style="width: 100%"/>
-              </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Geslacht</h6>
             </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Wachtwoord</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <input [(ngModel)]="password" class="e-field e-input" type="text"  name="password"
-                       style="width: 100%"/>
-              </div>
+            <div class="col-sm-9 text-secondary">
+              {{this.gender}}
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Telefoon nummer</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              {{this.phonenumber}}
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Email</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              {{this.email}}
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Wachtwoord</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              {{this.password}}
             </div>
           </div>
         </div>
       </div>
+    </div>
 
     <div class="row" *ngIf="showMsg">
       <h2 class="alert alert-succes">
@@ -76,11 +67,50 @@
       </h2>
     </div>
 
-      <button type="button" (click)="updatePatient()" class="btn btn-primary">Gegevens aanpassen</button>
-      <button *ngIf="userRole == 'patient'" mat-raised-button color="primary" routerLink="/medical-file" class="mr-1">Medisch Dossier</button>
-      <button *ngIf="userRole == 'patient'" mat-raised-button color="primary" routerLink="/requestGP">Andere huisarts aanvragen</button>
+    <button type="button" class="btn btn-primary" (click)="open(content)">Gegevens aanpassen</button>
 
-
+    <button *ngIf="userRole == 'patient'" mat-raised-button color="primary" routerLink="/medical-file" class="mr-1">
+      Medisch Dossier
+    </button>
+    <button *ngIf="userRole == 'patient'" mat-raised-button color="primary" routerLink="/requestGP">Andere huisarts
+      aanvragen
+    </button>
 
   </div>
 </div>
+
+<!--modal for editing / updating gegevens-->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Klik hier om uw gegevens te wijzigen</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label>Telefoonnummer:</label>
+        <div class="input-group">
+          <input [(ngModel)]="phonenumber" name="phonenumber" class="form-control"
+                 placeholder="vul uw telefoonnummer in" name="pn">
+        </div>
+        <label>Email:</label>
+        <div class="input-group">
+          <input [(ngModel)]="email" name="email" class="form-control" placeholder="vul uw email in" name="em">
+        </div>
+        <label>wachtwoord:</label>
+        <div class="input-group">
+          <input [(ngModel)]="password" name="password" class="form-control" placeholder="vul uw wachtwoord in"
+                 name="pw">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="updatePatient()">Save</button>
+  </div>
+</ng-template>
+
+
+
