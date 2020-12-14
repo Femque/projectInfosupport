@@ -1,10 +1,13 @@
-import {Component, Injectable, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CalendarService} from "../calender/calendar.service";
 import {Patient} from "../../models/patient";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {LoginService} from "../login/login.service";
 
+/**
+ *  Patient-view Component - retrieves a table with all the patients for the doctor
+ */
 
 @Component({
   selector: 'app-patient-view',
@@ -36,7 +39,6 @@ export class PatientViewComponent implements OnInit {
   ngOnInit() {
     this.loadedPatients = this.getPatients(sessionStorage.getItem('user_id'));
     this.getBigCode(sessionStorage.getItem('user_id'));
-    // this.getPatients(sessionStorage.getItem('user_id'));
 
     this.childParamsSubscription = this.activatedRoute.params
       .subscribe((params: Params) => {
@@ -48,16 +50,22 @@ export class PatientViewComponent implements OnInit {
     this.childParamsSubscription && this.childParamsSubscription.unsubscribe()
   }
 
-    getBigCode(user_id) {
-    this.calendarService.getBigCode(user_id).subscribe( data => {
+  /**
+   * Gets the big_code through the calender service using the user_id and sets it as big_code in the session storage
+   * @param user_id
+   */
+  getBigCode(user_id) {
+    this.calendarService.getBigCode(user_id).subscribe(data => {
       sessionStorage.setItem("big_code", JSON.stringify(data))
-      console.log("big code = " + sessionStorage.getItem("big_code"));
     });
   }
 
+  /**
+   * Gets the patients through login service which belong with the doctor using the gp_user_id
+   * @param gp_user_id
+   */
   getPatients(gp_user_id) {
     this.service.getPatientsForGp(gp_user_id).subscribe(data => {
-      console.log(data);
       this.loadedPatients = data;
     }, error => {
       console.log(error);
@@ -65,8 +73,11 @@ export class PatientViewComponent implements OnInit {
     return this.loadedPatients;
   }
 
+  /**
+   * Get the id for the clicked patient and select
+   * @param id
+   */
   clickedPatient(id) {
-    // console.log("Patient id = " + id)
     if (id != null) {
       this.selectPatient(id);
     } else {
@@ -74,8 +85,11 @@ export class PatientViewComponent implements OnInit {
     }
   }
 
+  /**
+   * Shows selected patient in the detail by using the id
+   * @param id
+   */
   selectPatient(id: number) {
-    // console.log("selected id = " + id);
     this.router.navigate([id], {
       relativeTo: this.activatedRoute
     })

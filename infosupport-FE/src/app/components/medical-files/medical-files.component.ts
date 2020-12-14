@@ -4,8 +4,10 @@ import {HttpClient} from "@angular/common/http";
 import {LoginService} from "../login/login.service";
 import {AppointmentService} from "../appointment/appointment.service";
 import {Appointment} from "../../models/appointment";
-import {dateComparator} from "@ng-bootstrap/ng-bootstrap/datepicker/datepicker-tools";
-import {getLocaleDateFormat} from "@angular/common";
+
+/**
+ * Medical-files Component - contains methods to retrieve the patients medical files
+ */
 
 @Component({
   selector: 'app-medical-files',
@@ -16,7 +18,6 @@ export class MedicalFilesComponent implements OnInit {
 
   loadedPatient : Patient;
   loadedAppointments : Appointment[] = [];
-
   currentDate = new Date();
 
   constructor(
@@ -30,6 +31,9 @@ export class MedicalFilesComponent implements OnInit {
     this.getPastAppointments()
   }
 
+  /**
+   * Fetches the patients data by using the user_id
+   */
   getUserInfo() : any {
     this.loginService.getPatientInfoById().subscribe(
       patient => {
@@ -52,6 +56,9 @@ export class MedicalFilesComponent implements OnInit {
       }, error => console.log(error));
   }
 
+  /**
+   * Fetches all appointments through the appointment service and filters through them to only get the expired appointments
+   */
   getPastAppointments() : any {
     this.appointmentService.getAppointmentsById().subscribe(
       appointment => {
@@ -71,10 +78,7 @@ export class MedicalFilesComponent implements OnInit {
 
           let startDate = new Date(appointment[i].start_time);
 
-          console.log("Current date = " +  this.currentDate);
-          console.log("Existing appointments dates = " +  startDate);
-
-          // Check if startdate of appointment is before the currentdate
+          // Check if startdate of appointment is before the current date
           if (startDate < this.currentDate) {
             this.loadedAppointments.push(pastAppointment);
           }

@@ -8,7 +8,7 @@
         <label for="email">Gebruikersnaam</label>
         <input type="text" name="email" class="form-control" id="email" formControlName="email"
                placeholder="gebruikersnaam" [ngClass]="{'is-invalid': submitted && form.email.errors}"
-        [(ngModel)]="user.email">
+               [(ngModel)]="user.email">
         <div *ngIf="submitted && form.email.errors" class="invalid-feedback">
           <div *ngIf="form.email.errors.required">Gebruikersnaam is verplicht</div>
         </div>
@@ -24,6 +24,7 @@
       </div>
       <div class="error mb-3 text-danger"></div>
 
+      <!-- Error message shows up when the credentials are wrong -->
       <div class="row" *ngIf="errorMsg">
         <h2 class="alert alert-error">
           <strong>Inloggen mislukt : foute email en/of wachtwoord</strong>

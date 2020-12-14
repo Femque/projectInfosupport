@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {booleanReturn, LoginService} from "./login.service";
+import {LoginService} from "./login.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../models/user";
-import {Patient} from "../../models/patient";
-import {GP} from "../../models/gp";
+
+/**
+ * Login Component - Handles the login and session storage
+ */
 
 @Component({
   selector: 'app-login',
@@ -12,19 +14,14 @@ import {GP} from "../../models/gp";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
   loginForm: FormGroup;
   submitted = false;
-
   user = new User();
-  gp = new GP();
-  patient = new Patient();
-
   email = '';
   password = '';
-  id: number ;
-
+  id: number;
   role : boolean;
-
   errorMsg : boolean = false;
 
   constructor(
@@ -32,8 +29,7 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -42,11 +38,16 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  //Getter for access form fields
+  /**
+   * Getter for access form fields
+   */
   get form() {
     return this.loginForm.controls;
   }
 
+  /**
+   * Handles the login by sending the user data to the login service
+   */
   handleLogin() {
     this.submitted = true;
     this.loginService.loginUserFromRemote(this.user).subscribe(
@@ -61,6 +62,10 @@ export class LoginComponent implements OnInit {
       })
   }
 
+  /**
+   * Fetches the user_id by using the email in the login service and assign the user_id in the session storage
+   * @param email
+   */
   getUser_id(email: string) {
     return this.loginService.fetchUserId(email).subscribe(
       data => sessionStorage.setItem('user_id' , JSON.stringify(data)),
@@ -68,24 +73,23 @@ export class LoginComponent implements OnInit {
       )
   }
 
+  /**
+   * Fetches the user_role by using the email in the login service and assign the user_role in the session storage
+   * If the data has the value true the user logs in as patient
+   * If the data has the value false the user logs in as doctor
+   * @param email
+   */
   getUserRole(email: string) {
     return this.loginService.getUserRole(email).subscribe(
       data => {
         this.role = (data);
         if (data == true) {
-          console.log("Logging in as patient")
           sessionStorage.setItem('user_role', 'patient')
           this.router.navigate(['./home'])
         } else if (data == false) {
-          console.log("Logging in as general practitioner")
           this.router.navigate(['./home'])
           sessionStorage.setItem('user_role', 'general_practitioner')
-
-        } else {
-          console.log("It's not working yet")
         }
-        console.log(data, "Data Value"); //prints true "X Value"
-        console.log(this.role);
       },
       error => error
     )
