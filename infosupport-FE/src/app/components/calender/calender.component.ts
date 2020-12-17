@@ -204,6 +204,18 @@ export class CalenderComponent implements OnInit {
   }
 
   updateAppoitment() {
+    this.errorMessage = '';
+    var startTime = new Date(Date.parse(this.start_time.toLocaleString()));
+
+
+    if (startTime.getTime() < Date.now()) {
+      this.errorMessage = 'Datum is al geweest.';
+      return;
+    }
+    else if (this.description.length === 0) {
+      this.errorMessage = 'Vul de beschrijving in.';
+      return;
+    }
     let updatedAppointment = new Appointment(
       this.start_time,
       this.end_time,
