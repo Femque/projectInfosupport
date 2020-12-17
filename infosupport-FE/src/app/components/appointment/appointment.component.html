@@ -2,7 +2,7 @@
   <div class="jumbotron w-25 text-center ">
     <h1>Afspraak maken</h1>
     <mat-toolbar *ngIf="successMessage" color="accent">{{ successMessage }}</mat-toolbar>
-<!--    <mat-toolbar *ngIf="errorMessage" color="warn">{{ errorMessage }}</mat-toolbar>-->
+    <mat-toolbar *ngIf="errorMessage" color="warn">{{ errorMessage }}</mat-toolbar>
     <div class="form-container">
       <form [formGroup]="appointmentForm" (ngSubmit)="createAppointment(appointmentForm.value)">
           <div class="form-group">

@@ -10,6 +10,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
+  <mat-toolbar *ngIf="errorMessage" color="warn">{{ errorMessage }}</mat-toolbar>
   <form [formGroup]="appointmentForm" (ngSubmit)="createAppointment(appointmentForm.value)">
     <table cellpadding="15px" class="custom-event-editor">
       <tbody>
