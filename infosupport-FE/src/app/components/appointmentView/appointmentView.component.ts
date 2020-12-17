@@ -6,6 +6,8 @@ import {ActivatedRoute, Params} from "@angular/router";
 import {Calendar_appointment} from "../../models/calendar_appointment";
 import {map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
+import {GP} from "../../models/gp";
+import {ChatService} from "../chat/chat.service";
 
 
 @Component({
@@ -16,11 +18,9 @@ import {HttpClient} from "@angular/common/http";
 export class AppointmentViewComponent implements OnInit {
 
   public title: string;
-  public errorMessage: string;
   public successMessage: string;
   public appointmentDate: string;
   public appointmentTime: string;
-  public appointmentMessage: string;
   public message: string;
   public fullName: string;
 
@@ -53,9 +53,9 @@ export class AppointmentViewComponent implements OnInit {
           "November", "December"];
         var days = ["Zondag", "Maandag", "Disndag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag"];
         this.arrayDatesStartTime[i] = days[startTime.getDay()] + " " + startTime.getDate() + " " +
-          months[startTime.getMonth()] + " " + startTime.getFullYear() + " om " + startTime.getHours()+ ":" + startTime.getMinutes();
+          months[startTime.getMonth()] + " " + startTime.getFullYear() + " om " + startTime.getHours() + ":" + startTime.getMinutes();
         this.arrayDatesEndTime[i] = days[endTime.getDay()] + " " + endTime.getDate() + " " +
-          months[endTime.getMonth()] + " " + endTime.getFullYear() + " om " + endTime.getHours()+ ":" + endTime.getMinutes();
+          months[endTime.getMonth()] + " " + endTime.getFullYear() + " om " + endTime.getHours() + ":" + endTime.getMinutes();
 
         // @ts-ignore
         today = yyyy + '-' + mm + '-' + dd + 'T' + hours;
@@ -72,12 +72,14 @@ export class AppointmentViewComponent implements OnInit {
       }
     }, error => console.log(error));
   }
-
-
+  
   getFullNameById(bigCode: number) {
     this.appointmentService.getFullNameBig(bigCode).subscribe(data => {
-      data = data.replace(/,/g, ""); // remove commas
       this.fullName = data;
+      var fullNameArray = this.fullName[0].split(",");
+      var firstName = fullNameArray[0];
+      var lastName = fullNameArray[1];
+      this.fullName = firstName + " " + lastName;
     });
   }
 
@@ -98,8 +100,5 @@ export class AppointmentViewComponent implements OnInit {
         this.getAppointments();
       }
     );
-
   }
-
-
 }

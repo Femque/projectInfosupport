@@ -1,13 +1,13 @@
 <div class="container-fluid">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center">
-            <h1> Aankomende afspraken:</h1>
+            <h1> Aankomende afspraken: </h1>
         </div>
 
         <!-- show card if data exist -->
 
       <ng-container *ngIf="loadedAppointments != null; else elseText">
 
-          <div class="col-8 align-self-center"
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center"
           *ngFor="let appointment of loadedAppointments">
             <div class="card">
               <div class="card-body">
@@ -17,6 +17,7 @@
                     <th scope="col">Datum afspraak</th>
                     <th scope="col">Beschrijving</th>
                     <th scope="col">Locatie</th>
+                    <th scope="col">Huisarts</th>
                     <th scope="col">Afspraak annuleren</th>
                   </tr>
                   </thead>
@@ -25,6 +26,7 @@
                     <th scope="row">{{appointment.start_time | date:'d MMM y, h:mm a'}}</th>
                     <td>{{appointment.description}}</td>
                     <td>{{appointment.location}}</td>
+                    <td>{{fullName}}</td>
                     <td><button class="btn btn-danger"
                     (click)="clickedAppointment(appointment.appointment_code)">ANNULEER</button></td>
                   </tr>
