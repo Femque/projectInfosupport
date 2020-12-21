@@ -4,7 +4,8 @@
     <img src="/assets/images/zonneveltLogo.png" width="50" height="50" class="d-inline-block" alt="">
     ZONNEVELT
   </a>
-
+<!--<div>{{ loginService.isUserLoggedIn() }}</div>-->
+<!--<div>{{ userRole }}</div>-->
   <ul class="nav justify-content-end">
     <li class="nav-item">
       <a *ngIf="(loginService.isUserLoggedIn() && userRole == 'general_practitioner')" class="nav-link" href="/#calender" style="color: white;">KALENDER</a>

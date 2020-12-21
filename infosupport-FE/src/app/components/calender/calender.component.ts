@@ -24,6 +24,8 @@ export class CalenderComponent implements OnInit {
   closeResult = '';
   appointmentForm;
   patients: Patient[] = [];
+  errorMessage: string;
+
 
   selectedAppointment: any;
   selectedPatient: Patient;
@@ -161,6 +163,19 @@ export class CalenderComponent implements OnInit {
 
   createAppointment(appointmentdata) {
     console.log(this.selectedUserId);
+    this.errorMessage = '';
+
+    var startTime = new Date(Date.parse(appointmentdata.start));
+
+
+    if (startTime.getTime() < Date.now()) {
+      this.errorMessage = 'Datum is al geweest.';
+      return;
+    }
+    else if (appointmentdata.description.length === 0) {
+      this.errorMessage = 'Vul de beschrijving in.';
+      return;
+    }
     let appointment = new Appointment(appointmentdata.start, appointmentdata.end, appointmentdata.is_digital,
       appointmentdata.description, appointmentdata.location, appointmentdata.is_followup, parseInt(sessionStorage.getItem('big_code')), this.selectedUserId, this.selectedPatient.firstname + " " + this.selectedPatient.lastname);
     this.calendarService.createAppointment(appointment)
@@ -189,6 +204,18 @@ export class CalenderComponent implements OnInit {
   }
 
   updateAppoitment() {
+    this.errorMessage = '';
+    var startTime = new Date(Date.parse(this.start_time.toLocaleString()));
+
+
+    if (startTime.getTime() < Date.now()) {
+      this.errorMessage = 'Datum is al geweest.';
+      return;
+    }
+    else if (this.description.length === 0) {
+      this.errorMessage = 'Vul de beschrijving in.';
+      return;
+    }
     let updatedAppointment = new Appointment(
       this.start_time,
       this.end_time,
