@@ -12,6 +12,9 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import javax.annotation.PostConstruct;
+import javax.websocket.OnClose;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,8 +36,9 @@ public class InfosupportMessageHandler  extends TextWebSocketHandler {
     }
 
     @Override
+    @OnOpen
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        test = session.getAttributes().get("user_id").toString(); // == 66;
+        test = session.getAttributes().get("user_id").toString();
         userId = Integer.parseInt(test);
         sessions.put(number++, session);
         rooms.get("room").getUserSessions().put(number++, session);
@@ -43,6 +47,7 @@ public class InfosupportMessageHandler  extends TextWebSocketHandler {
 
 
     @Override
+    @OnMessage
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 //        for (WebSocketSession value : this.rooms.get(session.getId()).getUserSessions().values()){
 //            value.sendMessage(message);
@@ -58,6 +63,12 @@ public class InfosupportMessageHandler  extends TextWebSocketHandler {
             }
         });
 
+    }
+
+    @OnClose
+    protected void onClose(WebSocketSession session) throws Exception{
+        sessions.remove(session);
+        this.afterConnectionEstablished(session);
     }
 
 }

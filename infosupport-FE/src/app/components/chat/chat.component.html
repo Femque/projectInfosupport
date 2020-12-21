@@ -34,8 +34,8 @@
             <ng-template #elsePatient>
             <div class="chat_ib">
               <h5>{{chat.firstname + " " + chat.lastname}}
-                <span *ngIf="lastDate" class="chat_date">{{ formatDate(this.lastDate)}}</span></h5>
-              <p *ngIf="lastMessage"> {{this.lastMessage}} </p>
+                <span *ngIf="lastDate != null" class="chat_date">{{ formatDate(this.lastDate)}}</span></h5>
+              <p *ngIf="lastMessage != null"> {{this.lastMessage}} </p>
             </div>
           </ng-template>
 
@@ -44,13 +44,16 @@
         </div>
       </div>
       <div  class="mesgs">
+<!--        <div class="name">-->
+<!--          {{getPatient(selectedPatientId).firstname + " " + getPatient(selectedPatientId).lastname}}-->
+<!--        </div>-->
         <div #scrollMe class="msg_history">
           <div  *ngFor="let message of messagesForCurrentPatient">
             <div class="outgoing_msg" *ngIf="message.send_by == userId else elseblock">
               <div class="sent_msg" *ngIf="message.message != null">
-                <p>{{message.message}}</p>
+                <p *ngIf="message.message != null">{{message.message}}</p>
                 <div class="received_withd_msg">
-                  <span class="time_date">{{formatDate(message.message_time)}}</span></div>
+                  <span *ngIf="message.message_time != null" class="time_date">{{formatDate(message.message_time)}}</span></div>
               </div>
             </div>
             <ng-template #elseblock>

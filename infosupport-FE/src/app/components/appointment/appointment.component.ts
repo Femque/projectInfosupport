@@ -35,12 +35,21 @@ export class AppointmentComponent implements OnInit {
   }
 
   createAppointment(appointmentData) {
-    this.errorMessage = 'Er is iets fout gegaan';
+    this.errorMessage = '';
     this.successMessage = '';
 
     //Endtime calculation by adding 15 minutes to the starttime.
     var startTime = new Date(Date.parse(appointmentData.start));
     var endTime = new Date(startTime.getTime() + 15 * 60000);
+
+    if (startTime.getTime() < Date.now()) {
+      this.errorMessage = 'Datum is al geweest.';
+      return;
+    }
+    else if (appointmentData.description === null) {
+      this.errorMessage = 'Vul alle velden in';
+      return;
+    }
 
     //Gets user id
     let userId = parseInt(sessionStorage.getItem('user_id'));
