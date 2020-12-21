@@ -67,6 +67,7 @@ public class InfosupportMessageHandler  extends TextWebSocketHandler {
 
     @OnClose
     protected void onClose(WebSocketSession session) throws Exception{
+        sessions.remove(session);
         this.afterConnectionEstablished(session);
     }
 
