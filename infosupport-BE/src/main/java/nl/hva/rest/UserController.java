@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 
@@ -78,6 +79,16 @@ public class UserController {
     return null;
 }
 
+  @PutMapping("/update")
+  @CrossOrigin
+  @Transactional
+  public ResponseEntity<User> update(@RequestBody User user) {
+    System.out.println("User update" + user.getFirstname());
+    service.updateUser(user.getUser_id(), user.getFirstname(), user.getLastname(),
+            user.getEmail(), user.getPhonenumber(), user.getPassword(), user.getDateOfBirth());
+    return ResponseEntity.ok(user);
+  }
+
   // "user/login"
   @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
   @CrossOrigin(origins = "http://localhost:4200")
@@ -103,5 +114,14 @@ public class UserController {
   public ResponseEntity<List<String>> getFullNameByUserId(@PathVariable int user_id){
     List<String> fullName = service.getFullNameByUserId(user_id);
     return ResponseEntity.ok(fullName);
+  }
+
+
+  //getting the data of patient by id
+  @CrossOrigin
+  @GetMapping("/{id}")
+  public ResponseEntity<List<User>> getAllUserDataById(@PathVariable int id) {
+    List<User> userData = service.getUser(id);
+    return ResponseEntity.ok(userData);
   }
 }

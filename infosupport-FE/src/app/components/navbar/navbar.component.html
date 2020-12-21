@@ -1,38 +1,69 @@
-<!-- Image and text -->
-<nav class="navbar navbar-light" style="background-color: #57BA94; line-height: 3.5">
+<nav id="header" class="navbar navbar-expand-md fixed-top">
+  <!--  <a href="#" class="navbar-brand">Brand</a>-->
   <a class="navbar-brand" href="#" style="color: white; letter-spacing: 5px;">
     <img src="/assets/images/zonneveltLogo.png" width="50" height="50" class="d-inline-block" alt="">
     ZONNEVELT
   </a>
-<!--<div>{{ loginService.isUserLoggedIn() }}</div>-->
-<!--<div>{{ userRole }}</div>-->
-  <ul class="nav justify-content-end">
-    <li class="nav-item">
-      <a *ngIf="(loginService.isUserLoggedIn() && userRole == 'general_practitioner')" class="nav-link" href="/#calender" style="color: white;">KALENDER</a>
-    </li>
-    <li class="nav-item">
-      <a *ngIf="(loginService.isUserLoggedIn() && userRole == 'general_practitioner')" class="nav-link" href="/#patientView" style="color: white;">MIJN PATIENTEN</a>
-    </li>
-    <li class="nav-item">
-      <a *ngIf="(loginService.isUserLoggedIn()&& userRole == 'patient')" class="nav-link" role="button" href="/#appointment" style="color: white;">AFSPRAAK MAKEN</a>
-    </li>
-    <li class="nav-item">
-      <a *ngIf="(loginService.isUserLoggedIn())" class="nav-link" role="button" href="/#chat" style="color: white;">CHAT</a>
-    </li>
+  <button type="button" class="navbar-toggler navbar-light" data-toggle="collapse" data-target="#navbarCollapse">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <li class="nav-item">
-      <a *ngIf="(loginService.isUserLoggedIn() && userRole == 'general_practitioner')" class="nav-link" role="button" href="/#requests" style="color: white;">    <span matBadge="{{requestsLength}}" matBadgeSize="large"[matBadgeHidden]="requestsLength<=0">VERZOEKEN</span></a>
-    </li>
-    <li class="nav-item">
-      <a *ngIf="(loginService.isUserLoggedIn()&& userRole == 'patient')" class="nav-link" href="/#appointmentView" style="color: white;">MIJN AFSPRAKEN</a>
-    </li>
-    <li class="nav-item">
-      <a *ngIf="loginService.isUserLoggedIn()" class="nav-link" href="/#personalView" style="color: white;">{{fullName}}</a>
-    </li>
-    <li class="nav-item">
-      <a *ngIf="loginService.isUserLoggedIn()" class="nav-link" role="button" (click)="loginService.logOut()" href="#" style="color: white;">LOG UIT</a>
-    </li>
+  <div class="collapse navbar-collapse navbar-light justify-content-end" id="navbarCollapse">
+    <div class="navbar-nav">
+      <ul class="navbar-nav nav-menu nav justify-content-end">
+        <li class="nav-item">
+          <a *ngIf="(loginService.isUserLoggedIn() === false)" class="nav-link"
+             href="/#login" data-toggle="collapse" data-target=".navbar-collapse.show"
+             routerLink="login" routerLinkActive="activeLink">Log in</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="(loginService.isUserLoggedIn() && userRole == 'general_practitioner')" class="nav-link"
+             href="/#calender" routerLink="calender" data-toggle="collapse" data-target=".navbar-collapse.show"
+             routerLinkActive="activeLink">KALENDER</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="(loginService.isUserLoggedIn() && userRole == 'general_practitioner')" class="nav-link"
+             href="/#patientView" data-toggle="collapse" data-target=".navbar-collapse.show"
+             routerLink="patientView" routerLinkActive="activeLink">MIJN PATIENTEN</a>
+        </li>
+        <li class="nav-item" toggle="collapse" data-target=".navbar-collapse.show">
+          <a *ngIf="(loginService.isUserLoggedIn()&& userRole == 'patient')" class="nav-link" role="button"
+             href="/#appointment" routerLink="appointment" data-toggle="collapse" data-target=".navbar-collapse.show"
+             routerLinkActive="activeLink">AFSPRAAK
+            MAKEN</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="(loginService.isUserLoggedIn())" data-toggle="collapse" data-target=".navbar-collapse.show"
+             class="nav-link" role="button" href="/#chat"
+             routerLink="chat" routerLinkActive="activeLink">CHAT</a>
+        </li>
 
-  </ul>
+        <li class="nav-item">
+          <a *ngIf="(loginService.isUserLoggedIn() && userRole == 'general_practitioner')"
+             data-toggle="collapse" data-target=".navbar-collapse.show" class="nav-link"
+             role="button" href="/#requests"> <span matBadge="{{requestsLength}}"
+                                                    matBadgeSize="large"
+                                                    [matBadgeHidden]="requestsLength<=0">VERZOEKEN</span></a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="(loginService.isUserLoggedIn()&& userRole == 'patient')" class="nav-link"
+             href="/#appointmentView" data-toggle="collapse" data-target=".navbar-collapse.show"
+             routerLink="appointmentView" routerLinkActive="activeLink">MIJN
+            AFSPRAKEN</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="loginService.isUserLoggedIn()" class="nav-link" data-toggle="collapse"
+             data-target=".navbar-collapse.show" href="/#personalView" routerLink="personalView"
+             routerLinkActive="activeLink">{{fullName}}</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="loginService.isUserLoggedIn()" data-toggle="collapse"
+             data-target=".navbar-collapse.show" class="nav-link" role="button" (click)="loginService.logOut()"
+             href="/#home" routerLink="home">LOG UIT</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </nav>
+
 

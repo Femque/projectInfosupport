@@ -25,9 +25,9 @@ public class PatientService {
   }
 
   public void updatePatient(int user_id, String email, String firstname, String lastname,
-                            String password, String phoneNumber, LocalDate dateOfBirth, String allergies){
+                            String password, String phoneNumber, LocalDate dateOfBirth){
     repo.savePatientBy(email, firstname, lastname, password,
-      phoneNumber, dateOfBirth, allergies, user_id);
+      phoneNumber, dateOfBirth, user_id);
   }
 
   public List<Patient> getPatientsForGp(int gp_user_id) {

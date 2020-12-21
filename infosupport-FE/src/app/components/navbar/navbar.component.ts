@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LoginService} from "../login/login.service";
 import {AppointmentService} from "../appointment/appointment.service";
 import {RequestGpService} from "../request-gp/request-gp.service";
+import {CommonModule} from '@angular/common';
+import {BrowserModule} from '@angular/platform-browser';
+
+;
 
 @Component({
   selector: 'app-navbar',
@@ -15,30 +19,32 @@ export class NavbarComponent implements OnInit {
   requestsLength: number;
 
   //Check if user is loggen in or not, decide if all nav-links are available
-  isUserLoggedIn : boolean = false;
+  isUserLoggedIn: boolean = false;
 
   constructor(
-    public loginService : LoginService,
-    public appointmentService : AppointmentService,
+    public loginService: LoginService,
+    public appointmentService: AppointmentService,
     public requestGpService: RequestGpService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.userRole = sessionStorage.getItem('user_role');
     this.isUserLoggedIn = this.loginService.isUserLoggedIn();
 
-    if (this.isUserLoggedIn){
+    if (this.isUserLoggedIn) {
       this.getFullNameById();
 
-    if (this.userRole == 'general_practitioner') {
-      this.requestGpService.getRequestsForGP().subscribe(data =>  {
-        this.requestsLength = data.length;
-      })
-    }
+      if (this.userRole == 'general_practitioner') {
+        this.requestGpService.getRequestsForGP().subscribe(data => {
+          this.requestsLength = data.length;
+        })
+      }
 
     }
 
   }
+
 
   getFullNameById() {
     this.appointmentService.getFullName().subscribe(data => {

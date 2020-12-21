@@ -2,6 +2,7 @@ package nl.hva.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -28,16 +29,25 @@ public class User implements Serializable {
   @Column(name = "password")
   private String password;
 
+  @Column(name = "dateOfBirth")
+  private LocalDate dateOfBirth;
+
+  @Column(name = "gender")
+  private String gender;
+
 
   public User(){ }
 
-  public User(Integer user_id, String firstname, String lastname, String email, String phonenumber, String password) {
+  public User(Integer user_id, String firstname, String lastname, String email, String phonenumber, String password,
+              LocalDate dateOfBirth,String gender) {
     this.user_id = user_id;
     this.firstname = firstname;
     this.lastname = lastname;
     this.email = email;
     this.phonenumber = phonenumber;
     this.password = password;
+    this.dateOfBirth = dateOfBirth;
+    this.gender = gender;
   }
 
   public Integer getUser_id() {
@@ -86,5 +96,21 @@ public class User implements Serializable {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public LocalDate getDateOfBirth() {
+    return dateOfBirth;
+  }
+
+  public void setDateOfBirth(LocalDate dateOfBirth) {
+    this.dateOfBirth = dateOfBirth;
+  }
+
+  public String getGender() {
+    return gender;
+  }
+
+  public void setGender(String gender) {
+    this.gender = gender;
   }
 }

@@ -58,6 +58,14 @@ export class LoginService {
   /**
    * Get request to get patient data by using user_id
    */
+  getUserInfoById(): Observable<User[]> {
+    const url = `${this.usersUrl}/${sessionStorage.getItem('user_id')}`;
+    return this.http.get<Patient[]>(url)
+  }
+
+  /**
+   * Get request to get patient data by using user_id
+   */
   getPatientInfoById(): Observable<Patient[]> {
     const url = `${this.patientUrl}/${sessionStorage.getItem('user_id')}`;
     return this.http.get<Patient[]>(url)
@@ -78,6 +86,17 @@ export class LoginService {
    */
   updatePatient(patient: Patient): Observable<Patient> {
     return this.http.put<Patient>(this.patientUrl + '/update', patient)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  /**
+   * Put request to update the user data in the back end
+   * @param user
+   */
+  updateUser(user: User): Observable<User> {
+    return this.http.put<User>(this.usersUrl + '/update', user)
       .pipe(
         catchError(this.handleError)
       );

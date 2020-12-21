@@ -2,10 +2,12 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {LoginService} from '../login/login.service';
 import {Patient} from '../../models/patient';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {NgbDate, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {Appointment} from '../../models/appointment';
+import {ConfirmedValidator} from "./personal-information-confirmed.validator";
+import {User} from "../../models/user";
 
 @Component({
   selector: 'app-personal-information',
@@ -13,9 +15,9 @@ import {Appointment} from '../../models/appointment';
   styleUrls: ['./personal-information.component.css']
 })
 export class PersonalInformationComponent implements OnInit {
-
+  form: FormGroup = new FormGroup({});
   //list of appointments
-  loadedPatient: Patient;
+  loadedUser: User;
   showMsg: boolean = false;
   user_id: number;
   gender: string;
@@ -23,6 +25,7 @@ export class PersonalInformationComponent implements OnInit {
   firstname: string;
   lastname: string;
   password: string;
+  passwordInitialize: string;
   phonenumber: string;
   dateOfBirth: Date;
   allergies: string;
@@ -30,13 +33,59 @@ export class PersonalInformationComponent implements OnInit {
 
   constructor(private http: HttpClient, private loginService: LoginService, private formBuilder: FormBuilder,
               private modalService: NgbModal) {
+    this.form = formBuilder.group({
+      phoneNumber: [],
+      email: ['', [
+        Validators.required,
+        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+      firstPassword: [],
+      password: ['', [Validators.required]],
+      confirm_password: ['', [Validators.required]]
+    }, {
+      validator: ConfirmedValidator('password', 'confirm_password')
+    })
   }
 
   ngOnInit() {
     this.getUserInfo();
     this.userRole = sessionStorage.getItem('user_role');
+  }
 
-    console.log('wat is firstname' + this.firstname);
+  dismiss() {
+    this.modalService.dismissAll();
+    location.href = "#";
+  }
+
+  onInputChange(event: any, firstTime: boolean) {
+    if (firstTime === true) {
+      this.passwordInitialize = event.target.value;
+    } else {
+      this.password = event.target.value;
+    }
+  }
+
+  pwCheck(): boolean {
+    if (this.loadedUser.password != this.passwordInitialize) {
+      return true;
+    } else {
+      const el = document.querySelectorAll('#password,#confirm_password');
+      for (var i = 0; i < el.length; i++) {
+        el[i].classList.remove("defaultPw");
+      }
+    }
+  }
+
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
+  }
+
+  get f() {
+    return this.form.controls;
   }
 
   //method for modal
@@ -48,63 +97,54 @@ export class PersonalInformationComponent implements OnInit {
 
   //show appointments
   getUserInfo(): any {
-    this.loginService.getPatientInfoById().subscribe(patient => {
-      for (let i = 0; i < patient.length; i++) {
+    this.loginService.getUserInfoById().subscribe(user => {
+      for (let i = 0; i < user.length; i++) {
 
         let userId = parseInt(sessionStorage.getItem('user_id'));
-        if (patient[i].user_id == userId) {
-          this.user_id = patient[i].user_id;
-          this.dateOfBirth = patient[i].dateOfBirth;
-          this.gender = patient[i].gender;
-          this.allergies = patient[i].allergies;
-          this.email = patient[i].email;
-          this.firstname = patient[i].firstname;
-          this.lastname = patient[i].lastname;
-          this.phonenumber = patient[i].phonenumber;
-          this.password = patient[i].password;
+        if (user[i].user_id == userId) {
+          this.user_id = user[i].user_id;
+          this.firstname = user[i].firstname;
+          this.lastname = user[i].lastname;
+          this.email = user[i].email;
+          this.phonenumber = user[i].phonenumber;
+          this.passwordInitialize = '';
+          this.dateOfBirth = user[i].dateOfBirth;
+          this.gender = user[i].gender;
 
-
-          this.loadedPatient = new Patient(
-            patient[i].user_id,
-            patient[i].dateOfBirth,
-            patient[i].gender,
-            patient[i].allergies,
-            patient[i].email,
-            patient[i].firstname,
-            patient[i].lastname,
-            patient[i].phonenumber,
-            patient[i].password
+          this.loadedUser = new User(
+            user[i].user_id,
+            user[i].firstname,
+            user[i].lastname,
+            user[i].email,
+            user[i].phonenumber,
+            user[i].password,
+            user[i].dateOfBirth,
+            user[i].gender
           );
-          console.log(this.loadedPatient);
-          console.log(patient[i].user_id);
         }
 
       }
     }, error => console.log(error));
   }
 
-  updatePatient() {
-    let updatedUser = new Patient(
+  updateUser() {
+    let updatedUser = new User(
       this.user_id,
-      this.dateOfBirth,
-      this.gender,
-      this.allergies,
-      this.email,
       this.firstname,
       this.lastname,
+      this.email,
       this.phonenumber,
-      this.password
+      this.password,
+      this.dateOfBirth
     );
 
-    this.loginService.updatePatient(updatedUser).subscribe(
+    this.loginService.updateUser(updatedUser).subscribe(
       (data) => {
-        //TODO fix closing modal
-        this.loadedPatient = null;
+        this.loadedUser = null;
         this.getUserInfo();
+        this.loginService.logOut();
       }
     );
-
     this.showMsg = true;
-
   }
 }

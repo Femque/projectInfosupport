@@ -1,10 +1,12 @@
 package nl.hva.service;
 
+import nl.hva.models.Patient;
 import nl.hva.models.User;
 import nl.hva.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -15,6 +17,17 @@ public class UserService {
 
   public User findUserByEmailAndPassword(String email, String password) {
     return repo.findByEmailAndPassword(email, password);
+  }
+
+  public void updateUser(int user_id,String firstname, String lastname, String email,
+                            String phoneNumber, String password, LocalDate dateOfBirth){
+    repo.saveUserBy(firstname, lastname, email,
+            phoneNumber, password, dateOfBirth,user_id);
+  }
+
+  //find specific user with ID
+  public List<User> getUser(int user_id){
+    return repo.getUserByUser_id(user_id);
   }
 
   public List<User> findAll() {

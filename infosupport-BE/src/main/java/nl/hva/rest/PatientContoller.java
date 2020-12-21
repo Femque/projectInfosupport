@@ -53,8 +53,7 @@ public class PatientContoller {
     public ResponseEntity<Patient> update(@RequestBody Patient patient) {
         System.out.println("patient update" + patient.getFirstname());
         service.updatePatient(patient.getUser_id(), patient.getEmail(), patient.getFirstname(),
-                patient.getLastname(), patient.getPassword(), patient.getPhonenumber(), patient.getDateOfBirth(),
-                patient.getAllergies());
+                patient.getLastname(), patient.getPassword(), patient.getPhonenumber(), patient.getDateOfBirth());
         return ResponseEntity.ok(patient);
     }
 

@@ -21,7 +21,7 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     @Modifying
     @Query("Update Patient p Set p.email = ?1 ,p.firstname = ?2,  " +
             "p.lastname = ?3, p.password = ?4 , " +
-            "p.phonenumber = ?5, p.dateOfBirth = ?6, p.allergies = ?7 where p.user_id = ?8")
+            "p.phonenumber = ?5, p.dateOfBirth = ?6 where p.user_id = ?7")
     void savePatientBy(
             @Param("email") String email,
             @Param("firstname") String firstname,
@@ -29,7 +29,6 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
             @Param("password") String password,
             @Param("phonenumber") String phonenumber,
             @Param("dateOfBirth") LocalDate dateOfBirth,
-            @Param("allergies") String allergies,
             @Param("user_id") int user_id
             );
 
