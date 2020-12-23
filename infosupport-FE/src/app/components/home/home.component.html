@@ -1,9 +1,33 @@
 <div class="fluid-container">
   <section id="hero" class="d-flex align-items-center">
     <div class="container">
-      <h1>Welkom op Zonnevelt <h2 class="landingText" *ngIf="loginService.isUserLoggedIn() === true">{{fullName}}</h2>
+      <h1>Welkom op Zonnevelt
+        <h2 class="landingText" *ngIf="loginService.isUserLoggedIn() === true && userRole == 'general_practitioner'">
+          Dokter {{ fullName}}
+        </h2>
+        <h2 class="landingText" *ngIf="loginService.isUserLoggedIn() === true && userRole == 'patient'">
+          {{fullName}}
+        </h2>
       </h1>
-      <h2>Wij als team van getalenteerde dokters willen u graag helpen en assisteren bij uw probleem</h2>
+      <h2 *ngIf="userRole == 'patient' || userRole == null">
+        Wij als team van getalenteerde dokters willen u graag helpen en assisteren bij uw probleem
+      </h2>
+      <h2 *ngIf="userRole == 'general_practitioner'">
+        Hoe is uw dag? Vandaag word het weer een mooie dag voor u.
+        <div *ngIf="loadedAppointments != null; else elseText">
+          <div *ngIf="loadedAppointments.length == 1; else moreAppointments">
+            U heeft vandaag {{loadedAppointments.length}} afspraak gepland staan
+          </div>
+          <ng-template #moreAppointments>
+            <p>U heeft vandaag {{loadedAppointments.length}} afspraken gepland staan</p>
+          </ng-template>
+        </div>
+        <ng-template #elseText>
+          <p>
+            U heeft momenteel geen afspraak gepland staan.
+          </p>
+        </ng-template>
+      </h2>
       <button routerLink="/login" type="button" class="btn-get-started scrollto btn btn-primary btn-lg"
               *ngIf="loginService.isUserLoggedIn() === false">Klik hier om aan
         te melden
@@ -89,7 +113,7 @@
   </section>
 
   <section id="about" class="about">
-    <div class="container-fluid">
+    <div class="container-fluid" *ngIf="this.userRole !== 'general_practitioner'">
       <div class="row">
         <div class="col-xl-5 col-lg-6 video-box d-flex justify-content-center align-items-stretch">
           <a href="" class="venobox mb-4" data-vbtype="video"
@@ -105,17 +129,17 @@
           </p>
           <div class="icon-box">
             <div class="icon"><i class="bx bx-fingerprint"></i></div>
-            <h4 class="title"><a href="">Dokter Hans</a></h4>
-            <p class="description">Wist u dat Hans....</p>
+            <h4 class="title"><a href="/#appointmentView">Uw afspraken....</a></h4>
+            <p class="description">Wist uw afspraken snel bij ons kan inzien....</p>
           </div>
           <div class="icon-box">
             <div class="icon"><i class="bx bx-gift"></i></div>
-            <h4 class="title"><a href="">Meer tijd</a></h4>
+            <h4 class="title"><a href="/#chat">Meer tijd</a></h4>
             <p class="description">Zonneveld heeft meer tijd voor u nu</p>
           </div>
           <div class="icon-box">
             <div class="icon"><i class="bx bx-atom"></i></div>
-            <h4 class="title"><a href="">afspraak plannen</a></h4>
+            <h4 class="title"><a href="/#appointment">afspraak plannen</a></h4>
             <p class="description">Door middel van onze livechat kunt u sneller en makkelijker een afpsraak
               inplannen</p>
           </div>

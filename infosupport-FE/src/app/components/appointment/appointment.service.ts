@@ -20,31 +20,31 @@ export class AppointmentService {
     return this.http.post<Appointment>(this.url + "/appointments/create", appointment)
       .pipe(
         catchError(this.handleError)
-      );  }
+      );
+  }
 
   //getting appointments
   getAppointments(): Observable<Appointment[]> {
-    return this.http.get<Appointment[]>(this.url+ "/appointments")
+    return this.http.get<Appointment[]>(this.url + "/appointments")
   }
 
   //getting appointment
-  getAppointmentsById(): Observable<Appointment[]> {
-    const url = `${this.url}/appointments/${sessionStorage.getItem('user_id')}`; // DELETE api/heroes/42
-    return this.http.get<Appointment[]>(url)
+  getAppointmentsById(boolAppointmentGP): Observable<Appointment[]> {
+    if (boolAppointmentGP == true) {
+      const url = `${this.url}/appointments/gp/${sessionStorage.getItem('user_id')}`;
+      return this.http.get<Appointment[]>(url)
+    } else {
+      const url = `${this.url}/appointments/${sessionStorage.getItem('user_id')}`;
+      return this.http.get<Appointment[]>(url)
+    }
   }
-
-  // //deleting appointment
-  // deleteAppointment(id: number) {
-  //   console.log("deleting appointment");
-  //   return this.http.delete(this.getAppointmentUrl + "/delete", id)
-  // }
 
   deleteAppointment(id: number): Observable<{}> {
     const url = `${this.url + "/appointments" + "/delete"}/${id}`; // DELETE api/heroes/42
     return this.http.delete(url)
   }
 
-  getGPUSerId(user_id: number){
+  getGPUSerId(user_id: number) {
     const url = `${this.url + "/appointments" + "/patient/gp"}/${user_id}`
     return this.http.get<number>(url)
   }
@@ -59,11 +59,10 @@ export class AppointmentService {
     return this.http.get<string>(url);
   }
 
-  getBigCode(user_id: number){
+  getBigCode(user_id: number) {
     const url = `${this.url + "/appointments" + "/big_code"}/${user_id}`
     return this.http.get<number>(url)
   }
-
 
 
   private handleError(error: HttpErrorResponse) {

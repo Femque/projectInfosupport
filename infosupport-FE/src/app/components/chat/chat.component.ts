@@ -20,6 +20,7 @@ export class ChatComponent implements OnInit {
   userId: number;
   generalPractionerId;
   generalPractitioner;
+  userRole: string;
 
   role: boolean;
 
@@ -40,6 +41,8 @@ export class ChatComponent implements OnInit {
 
   ngOnInit() {
     //getting role of user
+    this.checkLoggedIn();
+    this.userRole = sessionStorage.getItem('user_role');
     this.getrole();
     if (this.role == false) {
       this.getPatients(sessionStorage.getItem('user_id'));
@@ -285,6 +288,17 @@ export class ChatComponent implements OnInit {
     try {
       this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
     } catch (err) {
+    }
+  }
+
+  /**
+   * method checking before acces to page
+   */
+  checkLoggedIn() {
+    var ask = sessionStorage.getItem('user_role');
+    if (ask === null) {
+      window.alert("U bent nog niet ingelogd");
+      window.location.href = "#";
     }
   }
 

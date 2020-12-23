@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
   //list of appointments
   loadedPatient: Patient;
   userRole: string;
+  boolAppointmentGp: boolean;
 
 
   //Check if user is loggen in or not, decide if all nav-links are available
@@ -38,10 +39,11 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.isUserLoggedIn = this.loginService.isUserLoggedIn();
     this.userRole = sessionStorage.getItem('user_role');
-    if (this.isUserLoggedIn){
-    this.getFullNameById();
-    this.getAppointments();
-    this.checkUserRole();}
+    if (this.isUserLoggedIn) {
+      this.getFullNameById();
+      this.getAppointments();
+      this.checkUserRole();
+    }
   }
 
   getFullNameById() {
@@ -56,7 +58,10 @@ export class HomeComponent implements OnInit {
 
   //show appointments
   getAppointments(): any {
-    this.appointmentService.getAppointmentsById().subscribe(appointment => {
+    if (this.userRole === "general_practitioner") {
+      this.boolAppointmentGp = true;
+    }
+    this.appointmentService.getAppointmentsById(this.boolAppointmentGp).subscribe(appointment => {
       for (let i = 0; i < appointment.length; i++) {
 
         var today = new Date();
@@ -64,17 +69,36 @@ export class HomeComponent implements OnInit {
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
         var yyyy = today.getFullYear();
         var hours = today.toLocaleTimeString();
+        var endDay = new Date();
 
         // @ts-ignore
         today = yyyy + '-' + mm + '-' + dd + 'T' + hours;
+        // @ts-ignore
+        endDay = yyyy + '-' + mm + '-' + dd + 'T' + '23:59:59';
 
-        if (appointment[i].start_time >= today) {
+        if (this.userRole === "general_practitioner") {
+          console.log('gp');
+          if (appointment[i].start_time >= today && endDay >= appointment[i].end_time) {
+            console.log("jp time")
+            let newAppointment = new Appointment(appointment[i].start_time,
+              appointment[i].end_time, appointment[i].is_digital, appointment[i].description, appointment[i].location,
+              appointment[i].is_follow_up, appointment[i].big_code, appointment[i].patient_user_id, appointment[i].title, appointment[i].appointment_code);
 
-          let newAppointment = new Appointment(appointment[i].start_time,
-            appointment[i].end_time, appointment[i].is_digital, appointment[i].description, appointment[i].location,
-            appointment[i].is_follow_up, appointment[i].big_code, appointment[i].patient_user_id, appointment[i].title, appointment[i].appointment_code);
+            this.loadedAppointments.push(newAppointment);
+          }
+        }
+        if (this.userRole === "patient") {
+          console.log('gp');
 
-          this.loadedAppointments.push(newAppointment);
+          if (appointment[i].start_time >= today) {
+            console.log("patient time")
+
+            let newAppointment = new Appointment(appointment[i].start_time,
+              appointment[i].end_time, appointment[i].is_digital, appointment[i].description, appointment[i].location,
+              appointment[i].is_follow_up, appointment[i].big_code, appointment[i].patient_user_id, appointment[i].title, appointment[i].appointment_code);
+
+            this.loadedAppointments.push(newAppointment);
+          }
         }
       }
     }, error => console.log(error));
@@ -107,8 +131,8 @@ export class HomeComponent implements OnInit {
           let userId = parseInt(sessionStorage.getItem('user_id'));
           if (patient[i].user_id == userId) {
             this.user_id = patient[i].user_id;
-              this.firstname = patient[i].firstname;
-              this.dateOfBirth = patient[i].dateOfBirth
+            this.firstname = patient[i].firstname;
+            this.dateOfBirth = patient[i].dateOfBirth
           }
         }
       }, error => console.log(error));

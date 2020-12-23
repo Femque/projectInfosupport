@@ -30,8 +30,20 @@ export class AppointmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.checkLoggedIn();
     this.getGpUser_id(sessionStorage.getItem('user_id'));
     this.getFullNameById();
+  }
+
+  /**
+   * method checking before acces to page
+   */
+  checkLoggedIn() {
+    var ask = sessionStorage.getItem('user_role');
+    if (ask === null) {
+      window.alert("U bent nog niet ingelogd");
+      window.location.href = "#";
+    }
   }
 
   createAppointment(appointmentData) {
@@ -45,8 +57,7 @@ export class AppointmentComponent implements OnInit {
     if (startTime.getTime() < Date.now()) {
       this.errorMessage = 'Datum is al geweest.';
       return;
-    }
-    else if (appointmentData.description === null) {
+    } else if (appointmentData.description === null) {
       this.errorMessage = 'Vul alle velden in';
       return;
     }
@@ -66,9 +77,9 @@ export class AppointmentComponent implements OnInit {
     console.log(appointment);
     this.appointmentService.createAppointment(appointment)
       .subscribe((createdAppointment: Appointment) => {
-          const appointmentDate = new Date(appointment.start_time).toLocaleString();
-          this.successMessage = `Succesvol geboekt`;
-        })
+        const appointmentDate = new Date(appointment.start_time).toLocaleString();
+        this.successMessage = `Succesvol geboekt`;
+      })
   }
 
   getGpUser_id(user_id) {

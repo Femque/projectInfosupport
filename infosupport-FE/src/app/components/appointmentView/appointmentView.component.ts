@@ -23,6 +23,8 @@ export class AppointmentViewComponent implements OnInit {
   public appointmentTime: string;
   public message: string;
   public fullName: string;
+  public boolAppointmentGp: boolean;
+  public userRole: string;
 
   //list of appointments
   loadedAppointments: Appointment[] = [];
@@ -33,13 +35,27 @@ export class AppointmentViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.checkLoggedIn();
     this.getAppointments();
   }
 
+  /**
+   * method checking before acces to page
+   */
+  checkLoggedIn() {
+    var ask = sessionStorage.getItem('user_role');
+    if (ask === null) {
+      window.alert("U bent nog niet ingelogd");
+      window.location.href = "#";
+    }
+  }
 
   //show appointments
   getAppointments(): any {
-    this.appointmentService.getAppointmentsById().subscribe(appointment => {
+    if (this.userRole === "general_practitioner") {
+      this.boolAppointmentGp = true;
+    }
+    this.appointmentService.getAppointmentsById(this.boolAppointmentGp).subscribe(appointment => {
       for (let i = 0; i < appointment.length; i++) {
 
         var today = new Date();
@@ -72,7 +88,7 @@ export class AppointmentViewComponent implements OnInit {
       }
     }, error => console.log(error));
   }
-  
+
   getFullNameById(bigCode: number) {
     this.appointmentService.getFullNameBig(bigCode).subscribe(data => {
       this.fullName = data;

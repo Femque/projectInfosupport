@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Patient} from "../../models/patient";
 import {HttpClient} from "@angular/common/http";
 import {LoginService} from "../login/login.service";
@@ -16,15 +16,18 @@ import {Appointment} from "../../models/appointment";
 })
 export class MedicalFilesComponent implements OnInit {
 
-  loadedPatient : Patient;
-  loadedAppointments : Appointment[] = [];
+  loadedPatient: Patient;
+  loadedAppointments: Appointment[] = [];
   currentDate = new Date();
+  boolAppointmentGp: boolean;
+  userRole: string;
 
   constructor(
-    private http : HttpClient,
-    private loginService : LoginService,
-    private appointmentService : AppointmentService
-  ) { }
+    private http: HttpClient,
+    private loginService: LoginService,
+    private appointmentService: AppointmentService
+  ) {
+  }
 
   ngOnInit() {
     this.getUserInfo();
@@ -34,7 +37,7 @@ export class MedicalFilesComponent implements OnInit {
   /**
    * Fetches the patients data by using the user_id
    */
-  getUserInfo() : any {
+  getUserInfo(): any {
     this.loginService.getPatientInfoById().subscribe(
       patient => {
         for (let i = 0; i < patient.length; i++) {
@@ -59,8 +62,11 @@ export class MedicalFilesComponent implements OnInit {
   /**
    * Fetches all appointments through the appointment service and filters through them to only get the expired appointments
    */
-  getPastAppointments() : any {
-    this.appointmentService.getAppointmentsById().subscribe(
+  getPastAppointments(): any {
+    if (this.userRole === "general_practitioner") {
+      this.boolAppointmentGp = true;
+    }
+    this.appointmentService.getAppointmentsById(this.boolAppointmentGp).subscribe(
       appointment => {
         for (let i = 0; i < appointment.length; i++) {
           let pastAppointment = new Appointment(
