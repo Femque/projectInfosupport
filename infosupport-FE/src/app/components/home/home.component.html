@@ -16,10 +16,10 @@
         Hoe is uw dag? Vandaag word het weer een mooie dag voor u.
         <div *ngIf="loadedAppointments != null; else elseText">
           <div *ngIf="loadedAppointments.length == 1; else moreAppointments">
-            U heeft vandaag {{loadedAppointments.length}} afspraak gepland staan
+            U heeft vandaag nog {{loadedAppointments.length}} afspraak gepland staan
           </div>
           <ng-template #moreAppointments>
-            <p>U heeft vandaag {{loadedAppointments.length}} afspraken gepland staan</p>
+            <p>U heeft vandaag nog {{loadedAppointments.length}} afspraken gepland staan</p>
           </ng-template>
         </div>
         <ng-template #elseText>
