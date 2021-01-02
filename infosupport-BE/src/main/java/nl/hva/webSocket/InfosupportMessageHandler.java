@@ -52,16 +52,19 @@ public class InfosupportMessageHandler  extends TextWebSocketHandler {
 //        for (WebSocketSession value : this.rooms.get(session.getId()).getUserSessions().values()){
 //            value.sendMessage(message);
 //        }
+        System.out.println(userId);
         rooms.get("room").getUserSessions().forEach((s, websocketSession) -> {
             System.out.println(rooms.get("room"));
             try {
-                if (rooms.get("room").getUserId() == Integer.parseInt(test)) {
+                if (rooms.get("room").getUserId() == userId) {
                     websocketSession.sendMessage(message);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
+
+//        session.sendMessage(message);
 
     }
 

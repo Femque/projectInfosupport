@@ -5,6 +5,8 @@ import {Message} from '../../models/message';
 import {GP} from '../../models/gp';
 import {map} from 'rxjs/operators';
 import set = Reflect.set;
+import {findLast} from '@angular/compiler/src/directive_resolver';
+import * as http from 'http';
 
 @Component({
   selector: 'app-chat',
@@ -16,7 +18,8 @@ export class ChatComponent implements OnInit {
   @ViewChild('message') inputMessage;
   @ViewChild('scrollMe') private messageContainer: ElementRef;
 
-  selectedPatientId: any = -1;
+  selectedPatientId: any = 0;
+  selectedpatient: Patient;
   userId: number;
   generalPractionerId;
   generalPractitioner;
@@ -47,6 +50,7 @@ export class ChatComponent implements OnInit {
     if (this.role == false) {
       this.getPatients(sessionStorage.getItem('user_id'));
     } else {
+      // this.selectedPatientId = sessionStorage.getItem('user_id')
       this.getGp();
     }
     //get chats that contain messages
@@ -62,29 +66,34 @@ export class ChatComponent implements OnInit {
 
     //when message is being send
     this.ws.addEventListener('message', (e: MessageEvent) => {
-      if (this.role == false) {
-        this.messagesForCurrentPatient.push(new Message(e.data, '', new Date(), '', parseInt(sessionStorage.getItem('user_id')), this.selectedPatientId,
-          parseInt(sessionStorage.getItem('user_id'))));
-      } else {
-        this.messagesForCurrentPatient.push(new Message(e.data, '', new Date(), '', this.generalPractionerId, this.userId,
-          parseInt(sessionStorage.getItem('user_id'))));
-      }
-
+      console.log('message');
       //get messages for chat when a new message is detected
-      if (this.role == false) {
-        setTimeout(() => {
-          this.getMessagesForChat(this.userId, this.selectedPatientId);
-        }, 100);
-      } else if (this.role == true) {
-        setTimeout(() => {
-          this.getMessagesForChat(this.generalPractionerId, this.userId);
-        }, 100);
-      }
-      return false;
+      setTimeout(() => {
+        if (this.role == false) {
+          setTimeout(() => {
+            this.patients.forEach( p => {
+              this.getMessagesForChat(this.userId, p.user_id);
+            })
+            this.getMessagesForChat(this.userId, this.selectedPatientId)
+            this.messagesForCurrentPatient.push(new Message(e.data, '', new Date(), '', parseInt(sessionStorage.getItem('user_id')), this.selectedPatientId,
+              parseInt(sessionStorage.getItem('user_id'))));
+          }, 100);
+        } else {
+          setTimeout(() => {
+            console.log("patient");
+            this.getMessagesForChat(this.generalPractionerId, this.userId);
+            this.messagesForCurrentPatient.push(new Message(e.data, '', new Date(), '', this.generalPractionerId, this.userId,
+              parseInt(sessionStorage.getItem('user_id'))));
+          }, 100);
+        }
+
+      },10)
+      return true
     });
 
-    this.ws.addEventListener('close', () => {
+    this.ws.addEventListener('close', (e) => {
       console.log('closing?');
+      this.ws.onopen
     });
   }
 
@@ -232,9 +241,10 @@ export class ChatComponent implements OnInit {
   }
 
   //get the id from the selected patient
-  selected(e) {
+  selected(e, p) {
     this.messagesForCurrentPatient = [];
     this.selectedPatientId = e;
+    this.selectedpatient = p
 
     if (this.role == false) {
       this.getMessagesForChat(parseInt(sessionStorage.getItem('user_id')), e);
@@ -297,8 +307,8 @@ export class ChatComponent implements OnInit {
   checkLoggedIn() {
     var ask = sessionStorage.getItem('user_role');
     if (ask === null) {
-      window.alert("U bent nog niet ingelogd");
-      window.location.href = "#";
+      window.alert('U bent nog niet ingelogd');
+      window.location.href = '#';
     }
   }
 
