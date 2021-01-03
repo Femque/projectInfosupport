@@ -4,6 +4,8 @@ import {AppointmentService} from "../appointment/appointment.service";
 import {RequestGpService} from "../request-gp/request-gp.service";
 import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
+import {CometChat} from '@cometchat-pro/chat/CometChat';
+import login = CometChat.login;
 
 ;
 
@@ -17,6 +19,8 @@ export class NavbarComponent implements OnInit {
   fullName: string;
   userRole: string;
   requestsLength: number;
+  session  = sessionStorage
+
 
   constructor(
     public loginService: LoginService,
@@ -26,10 +30,13 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userRole = sessionStorage.getItem('user_role');
+    // this.userRole = sessionStorage.getItem('user_role');
+
+    if (this.loginService.isUserLoggedIn()) {
+    }
+
 
     if (this.loginService.isUserLoggedIn) {
-      this.getFullNameById();
 
       if (this.userRole == 'general_practitioner') {
         this.requestGpService.getRequestsForGP().subscribe(data => {
@@ -41,9 +48,9 @@ export class NavbarComponent implements OnInit {
 
   }
 
-
-  getFullNameById() {
-    this.appointmentService.getFullName().subscribe(data => {
+  getFullNameById(id) {
+    let id2 = parseInt(id)
+    this.loginService.getFullName(id2).subscribe(data => {
       this.fullName = data
       let fullNameArray = this.fullName[0].split(",");
       let firstName = fullNameArray[0];

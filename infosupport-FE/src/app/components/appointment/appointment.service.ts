@@ -51,6 +51,7 @@ export class AppointmentService {
 
   getFullName() {
     const url = `${this.url}/user/fullname/${sessionStorage.getItem('user_id')}`;
+
     return this.http.get<string>(url);
   }
 

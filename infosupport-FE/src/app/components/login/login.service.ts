@@ -16,6 +16,8 @@ export class LoginService {
   public user: Observable<User>;
   private userSubject: BehaviorSubject<User>;
 
+
+
   usersUrl = "http://localhost:8080/user";
   patientUrl = "http://localhost:8080/patient";
   gpUrl = "http://localhost:8080/doctor/user_id";
@@ -26,6 +28,12 @@ export class LoginService {
     this.userSubject = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('user_id')));
     this.user = this.userSubject.asObservable();
   }
+
+  getFullName(id: number) {
+    const url = "http://localhost:8080/user/fullname/" + id
+    return this.http.get<string>(url);
+  }
+
 
   /**
    * Sends post request to back end to login and return the user
@@ -48,6 +56,7 @@ export class LoginService {
    * @param email
    */
   public fetchUserId(email: string): Observable<number> {
+    let id = this.http.get<number>(`${this.usersUrl + "/id"}?email=${email}`)
     return this.http.get<number>(`${this.usersUrl + "/id"}?email=${email}`)
       .pipe(catchError(this.handleError));
   }
@@ -57,8 +66,15 @@ export class LoginService {
    * @param email
    */
   public getUserRole(email: string): Observable<boolean> {
+
     let role = this.http.get<boolean>(`${this.usersUrl + "/role"}?email=${email}`)
       .pipe(catchError(this.handleError));
+
+    if (role) {
+      sessionStorage.setItem('user_role', 'patient')
+    } else if (!role) {
+      sessionStorage.setItem('user_role', 'general_practitioner')
+    }
 
     return role;
   }
