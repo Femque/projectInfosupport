@@ -54,7 +54,7 @@
         <li class="nav-item">
           <a *ngIf="loginService.isUserLoggedIn()" class="nav-link" data-toggle="collapse"
              data-target=".navbar-collapse.show" href="/#personalView" routerLink="personalView"
-             routerLinkActive="activeLink">{{fullName}}</a>
+             routerLinkActive="activeLink">{{loginService.loggedInUser.firstname + " " + loginService.loggedInUser.lastname}}</a>
         </li>
         <li class="nav-item">
           <a *ngIf="loginService.isUserLoggedIn()" data-toggle="collapse"

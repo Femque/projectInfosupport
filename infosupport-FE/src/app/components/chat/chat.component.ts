@@ -6,7 +6,6 @@ import {GP} from '../../models/gp';
 import {map} from 'rxjs/operators';
 import set = Reflect.set;
 import {findLast} from '@angular/compiler/src/directive_resolver';
-import * as http from 'http';
 
 @Component({
   selector: 'app-chat',

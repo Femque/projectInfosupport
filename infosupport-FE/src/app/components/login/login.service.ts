@@ -12,6 +12,7 @@ import {GP} from "../../models/gp";
 
 @Injectable({providedIn: "root"})
 export class LoginService {
+  public loggedInUser: User;
   public user: Observable<User>;
   private userSubject: BehaviorSubject<User>;
 
@@ -31,6 +32,13 @@ export class LoginService {
    * @param user
    */
   public loginUserFromRemote(user: User): Observable<any> {
+    this.http.post<any>(this.usersUrl + "/login", user).subscribe(data => {
+      if (data != null) {
+        console.log(data);
+        this.loggedInUser = data;
+      }
+    });
+
     return this.http.post<any>(this.usersUrl + "/login", user)
       .pipe(catchError(this.handleError));
   }
