@@ -6,6 +6,7 @@ import {catchError} from "rxjs/operators";
 import {GP} from "../../models/gp";
 import {RequestGP} from "../../models/requestgp";
 import {httpFactory} from "@angular/http/src/http_module";
+import {environment} from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +14,17 @@ import {httpFactory} from "@angular/http/src/http_module";
 export class RequestGpService {
 
   //URL to get all doctors
-  getDoctorsUrl = 'http://localhost:8080/doctor';
+  getDoctorsUrl = environment.apiUrl + '/doctor';
   //URL to get all requests
-  getRequestsURL = 'http://localhost:8080/requests';
+  getRequestsURL = environment.apiUrl + '/requests';
   //URL to get a patient by gp_user_id
-  getDoctorByUserId = 'http://localhost:8080/patient/gp';
+  getDoctorByUserId = environment.apiUrl + '/patient/gp';
   //URL to create a request (POST)
-  createRequestUrl = 'http://localhost:8080/requests/create';
+  createRequestUrl = environment.apiUrl + '/requests/create';
   //URL to get full name of user
-  getUserFullNameUrl = 'http://localhost:8080/user/fullname';
+  getUserFullNameUrl = environment.apiUrl + '/user/fullname';
   //URL to update gp_user_id for patient
-  updatePatientGPUrl = 'http://localhost:8080/patient/update';
+  updatePatientGPUrl = environment.apiUrl + '/patient/update';
 
 
   constructor(private http: HttpClient) { }

@@ -13,7 +13,7 @@ export class AppointmentService {
   constructor(private http: HttpClient) {
   }
 
-  url = "http://localhost:8080"
+  url = environment.apiUrl;
 
   createAppointment(appointment: Appointment): Observable<Appointment> {
     console.log("Creating appointment...");
