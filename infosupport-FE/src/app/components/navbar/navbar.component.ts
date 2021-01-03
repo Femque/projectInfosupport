@@ -18,9 +18,6 @@ export class NavbarComponent implements OnInit {
   userRole: string;
   requestsLength: number;
 
-  //Check if user is loggen in or not, decide if all nav-links are available
-  isUserLoggedIn: boolean = false;
-
   constructor(
     public loginService: LoginService,
     public appointmentService: AppointmentService,
@@ -30,9 +27,8 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.userRole = sessionStorage.getItem('user_role');
-    this.isUserLoggedIn = this.loginService.isUserLoggedIn();
 
-    if (this.isUserLoggedIn) {
+    if (this.loginService.isUserLoggedIn) {
       this.getFullNameById();
 
       if (this.userRole == 'general_practitioner') {
@@ -54,5 +50,9 @@ export class NavbarComponent implements OnInit {
       let lastName = fullNameArray[1];
       this.fullName = firstName.toUpperCase() + " " + lastName.toUpperCase();
     });
+  }
+
+  refreshNavBar() {
+    this.ngOnInit();
   }
 }
