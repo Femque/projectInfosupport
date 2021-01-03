@@ -12,7 +12,7 @@
       <h2 *ngIf="userRole == 'patient' || userRole == null">
         Wij als team van getalenteerde dokters willen u graag helpen en assisteren bij uw probleem
       </h2>
-      <h2 *ngIf="userRole == 'general_practitioner'">
+      <h2 *ngIf="userRole == 'general_practitioner' && loginService.isUserLoggedIn() === true">
         Hoe is uw dag? Vandaag word het weer een mooie dag voor u.
         <div *ngIf="loadedAppointments != null; else elseText">
           <div *ngIf="loadedAppointments.length == 1; else moreAppointments">
