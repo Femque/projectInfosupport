@@ -108,7 +108,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label>wachtwoord:</label>
+        <label>Wachtwoord:</label>
         <div class="input-group">
           <input type="password" formControlName="firstPassword" (change)="onInputChange($event,true)"
                  [(ngModel)]="passwordInitialize"
@@ -120,7 +120,7 @@
         </div>
         <div *ngIf="f.firstPassword.touched">
           <div *ngIf="this.loadedUser.password != this.passwordInitialize" class="alert alert-danger">
-            <div>Vul uw huidige wachtwoord in.</div>
+            <div>Vul uw huidige wachtwoord in</div>
           </div>
         </div>
       </div>
@@ -139,7 +139,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="confirm_password">bevestig uw nieuwe wachtwoord</label>
+        <label for="confirm_password">Bevestig uw nieuwe wachtwoord</label>
         <input
           formControlName="confirm_password"
           id="confirm_password"
@@ -150,7 +150,7 @@
         <div *ngIf="this.loadedUser.password == this.passwordInitialize">
           <div *ngIf="f.confirm_password.touched && f.confirm_password.invalid" class="alert alert-danger">
             <div *ngIf="f.confirm_password.errors.required">U moet uw wachtwoord invoeren</div>
-            <div *ngIf="f.confirm_password.errors.confirmedValidator">wachtwoord en bevestiging wachtwoord komen niet
+            <div *ngIf="f.confirm_password.errors.confirmedValidator">Wachtwoord en bevestiging wachtwoord komen niet
               overeen met elkaar
             </div>
           </div>
@@ -161,7 +161,7 @@
   <div class="modal-footer">
     <button id="myPersonal" type="button" class="btn btn-outline-dark myPersonal" [disabled]="!form.valid"
             (click)="updateUser()"
-            (click)="dismiss()">Save
+            (click)="dismiss()">Opslaan
     </button>
   </div>
 </ng-template>
