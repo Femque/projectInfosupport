@@ -5,6 +5,7 @@ import {User} from "../../models/user";
 import {catchError} from "rxjs/operators";
 import {Patient} from '../../models/patient';
 import {GP} from "../../models/gp";
+import {RequestGP} from '../../models/requestgp';
 
 /**
  * Login Service - helps with the login, session storage and retrieving user data
@@ -15,12 +16,14 @@ export class LoginService {
   public loggedInUser: User;
   public user: Observable<User>;
   private userSubject: BehaviorSubject<User>;
+  fullName;
 
-
+  length;
 
   usersUrl = "http://localhost:8080/user";
   patientUrl = "http://localhost:8080/patient";
   gpUrl = "http://localhost:8080/doctor/user_id";
+  getRequestsURL = 'http://localhost:8080/requests';
 
   constructor(
     private http: HttpClient
@@ -31,7 +34,27 @@ export class LoginService {
 
   getFullName(id: number) {
     const url = "http://localhost:8080/user/fullname/" + id
+
+    this.http.get<string>(url).subscribe(data => {
+      this.fullName = data
+      let fullNameArray = this.fullName[0].split(",");
+      let firstName = fullNameArray[0];
+      let lastName = fullNameArray[1];
+      this.fullName = firstName.toUpperCase() + " " + lastName.toUpperCase()
+    })
+
     return this.http.get<string>(url);
+  }
+
+  getLength(id: number){
+    const url = `${this.getRequestsURL}/gp/${id}`;
+
+    this.http.get<RequestGP[]>(url).subscribe(data => {
+      this.length = data.length
+      console.log(this.length);
+    })
+
+   return this.http.get<RequestGP[]>(url);
   }
 
 
@@ -44,6 +67,8 @@ export class LoginService {
       if (data != null) {
         console.log(data);
         this.loggedInUser = data;
+        this.getFullName(data.user_id)
+        this.getLength(data.user_id)
       }
     });
 
