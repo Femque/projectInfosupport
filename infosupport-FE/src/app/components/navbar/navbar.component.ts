@@ -41,11 +41,9 @@ export class NavbarComponent implements OnInit {
 
     if (this.userRole == 'general_practitioner') {
       this.loginService.getLength(this.id).subscribe(data => {
-        this.length = data.length;
         console.log(data.length);
       });
     }
-
 
   }
 
