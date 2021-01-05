@@ -6,6 +6,9 @@ import {Appointment} from "../../models/appointment";
 import {Patient} from "../../models/patient";
 import {GP} from "../../models/gp";
 
+/**
+ * Home component - landingspage for user , patient and general practitioner
+ */
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -21,7 +24,7 @@ export class HomeComponent implements OnInit {
   dateOfBirth: Date;
   //list of appointments
   loadedAppointments: Appointment[] = [];
-  //list of appointments
+  //list of patient
   loadedPatient: Patient;
   userRole: string;
   boolAppointmentGp: boolean;
@@ -37,7 +40,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //checks wether the user is logged in
     this.isUserLoggedIn = this.loginService.isUserLoggedIn();
+    //getting the userRole
     this.userRole = sessionStorage.getItem('user_role');
     if (this.isUserLoggedIn) {
       this.getFullNameById();
@@ -46,6 +51,9 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  /**
+   * get fullName by the id of the user
+   */
   getFullNameById() {
     this.appointmentService.getFullName().subscribe(data => {
       this.fullName = data
@@ -56,11 +64,15 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  //show appointments
+  /**
+   * getting the appointments,checks when it concerns a general practitioner or a patient
+   */
   getAppointments(): any {
     if (this.userRole === "general_practitioner") {
       this.boolAppointmentGp = true;
     }
+    // make a call to the appointmentService for getting the appointments by ID,
+    // Based on a given boolean, the request is adjusted if it concerns a GP or patient
     this.appointmentService.getAppointmentsById(this.boolAppointmentGp).subscribe(appointment => {
       for (let i = 0; i < appointment.length; i++) {
 
@@ -76,6 +88,7 @@ export class HomeComponent implements OnInit {
         // @ts-ignore
         endDay = yyyy + '-' + mm + '-' + dd + 'T' + '23:59:59';
 
+        //check for GP
         if (this.userRole === "general_practitioner") {
           console.log('gp');
           if (appointment[i].start_time >= today && endDay >= appointment[i].end_time) {
@@ -87,6 +100,7 @@ export class HomeComponent implements OnInit {
             this.loadedAppointments.push(newAppointment);
           }
         }
+        //check for the patient
         if (this.userRole === "patient") {
           console.log('gp');
 
@@ -105,6 +119,9 @@ export class HomeComponent implements OnInit {
   }
 
 
+  /**
+   *method for checking whether it concerns a general practitioner or patient
+   */
   checkUserRole(): any {
     if (this.userRole === "general_practitioner") {
       this.getUserInfo(true);
@@ -113,9 +130,13 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  //show appointments
+  /**
+   * method for getting specific userInfo. Depends on whether it is a general practitioner or a patient
+   * @param checkGp is a given boolean. If the user Role is a GP, the boolean is true
+   */
   getUserInfo(checkGp: boolean): any {
     if (checkGp) {
+      //make a call to the loginService for getting the GPs info by ID
       this.loginService.getGPInfoById().subscribe(gp => {
         let userId = parseInt(sessionStorage.getItem('user_id'));
 
@@ -126,6 +147,7 @@ export class HomeComponent implements OnInit {
         }
       }, error => console.log(error));
     } else {
+      //make a call to the loginService for getting the patients info by ID
       this.loginService.getPatientInfoById().subscribe(patient => {
         for (let i = 0; i < patient.length; i++) {
           let userId = parseInt(sessionStorage.getItem('user_id'));

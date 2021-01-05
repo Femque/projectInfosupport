@@ -51,11 +51,19 @@ export class PersonalInformationComponent implements OnInit {
     this.userRole = sessionStorage.getItem('user_role');
   }
 
+  /**
+   * method for closing the modal after saving the new form data
+   */
   dismiss() {
     this.modalService.dismissAll();
     location.href = "#";
   }
 
+  /**
+   * method for the password
+   * @param event
+   * @param firstTime
+   */
   onInputChange(event: any, firstTime: boolean) {
     if (firstTime === true) {
       this.passwordInitialize = event.target.value;
