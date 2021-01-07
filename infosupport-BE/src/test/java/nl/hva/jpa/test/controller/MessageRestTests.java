@@ -27,9 +27,11 @@ public class MessageRestTests {
 
     @Test
     void testHttpStatus() {
+        List<Message> list = controller.getMessagesForChat(6, 1).getBody();
         //get responseEntity from controller method
         ResponseEntity<List<Message>> messageResponseEntity = controller.getMessagesForChat(6, 1);
         assertEquals(messageResponseEntity.getStatusCode(), HttpStatus.OK);
+        assertEquals(messageResponseEntity.getBody(), list);
     }
 
     @Test
@@ -41,7 +43,7 @@ public class MessageRestTests {
         //insert message
         controller.insert(message);
 
-        assertNotEquals(controller.getMessagesForChat(6, 1).getBody().size(), length);
+        assertEquals(controller.getMessagesForChat(6, 1).getBody().size(), length +1);
     }
 
 }
