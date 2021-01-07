@@ -16,6 +16,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -36,9 +37,10 @@ public class AppointmentControllerTests {
     private AppointmentController controller;
 
     @Test
+    @DirtiesContext
     void checkAllAppointments() {
         ResponseEntity<List<Appointment>> appointmentList = controller.getAllAppointments();
-        assertEquals(6, appointmentList.getBody().size());
+        assertEquals(6, Objects.requireNonNull(appointmentList.getBody()).size());
     }
 
 }

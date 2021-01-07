@@ -23,7 +23,7 @@ export class CalendarService {
   ) {
   }
 
-  url  = "http://localhost:8080"
+  url  = environment.apiUrl;
 
   getAppointments(): Observable<Appointment[]> {
     console.log("getting appointments ")
