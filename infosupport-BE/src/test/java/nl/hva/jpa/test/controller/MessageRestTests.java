@@ -1,4 +1,4 @@
-package nl.hva.rest.test.rest;
+package nl.hva.jpa.test.controller;
 
 import nl.hva.models.Message;
 import nl.hva.rest.MessageController;
@@ -38,7 +38,7 @@ public class MessageRestTests {
         Message message = new Message(1000, "test", "", LocalDateTime.now(), "", 6, 1, 6);
         //get lenght from list of messages
         int length = controller.getMessagesForChat(6, 1).getBody().size();
-        //insert message 
+        //insert message
         controller.insert(message);
 
         assertNotEquals(controller.getMessagesForChat(6, 1).getBody().size(), length);
