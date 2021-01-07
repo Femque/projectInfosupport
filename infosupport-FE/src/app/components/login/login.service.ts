@@ -5,6 +5,7 @@ import {User} from "../../models/user";
 import {catchError} from "rxjs/operators";
 import {Patient} from '../../models/patient';
 import {GP} from "../../models/gp";
+import {environment} from 'src/environments/environment';
 import {RequestGP} from '../../models/requestgp';
 
 /**
@@ -20,10 +21,10 @@ export class LoginService {
 
   length;
 
-  usersUrl = "http://localhost:8080/user";
-  patientUrl = "http://localhost:8080/patient";
-  gpUrl = "http://localhost:8080/doctor/user_id";
-  getRequestsURL = 'http://localhost:8080/requests';
+  usersUrl = environment.apiUrl + "/user";
+  patientUrl = environment.apiUrl + "/patient";
+  gpUrl = environment.apiUrl + "/doctor/user_id";
+  getRequestsURL = environment.apiUrl + '/requests';
 
   constructor(
     private http: HttpClient
