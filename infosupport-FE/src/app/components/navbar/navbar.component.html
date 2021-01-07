@@ -4,7 +4,7 @@
     <img src="/assets/images/zonneveltLogo.png" width="50" height="50" class="d-inline-block" alt="">
     ZONNEVELT
   </a>
-<!--  <div *ngIf="loginService.isUserLoggedIn()">{{refreshNavBar()}}</div>-->
+  <!--  <div *ngIf="loginService.isUserLoggedIn()">{{refreshNavBar()}}</div>-->
   <button type="button" class="navbar-toggler navbar-light" data-toggle="collapse" data-target="#navbarCollapse">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -18,17 +18,20 @@
              routerLink="login" routerLinkActive="activeLink">Log in</a>
         </li>
         <li class="nav-item">
-          <a *ngIf="(loginService.isUserLoggedIn() && userRole == 'general_practitioner')" class="nav-link"
+          <a *ngIf="(loginService.isUserLoggedIn() && session.getItem('user_role') == 'general_practitioner')"
+             class="nav-link"
              href="/#calender" routerLink="calender" data-toggle="collapse" data-target=".navbar-collapse.show"
              routerLinkActive="activeLink">KALENDER</a>
         </li>
         <li class="nav-item">
-          <a *ngIf="(loginService.isUserLoggedIn() && userRole == 'general_practitioner')" class="nav-link"
+          <a *ngIf="(loginService.isUserLoggedIn() && session.getItem('user_role') == 'general_practitioner')"
+             class="nav-link"
              href="/#patientView" data-toggle="collapse" data-target=".navbar-collapse.show"
              routerLink="patientView" routerLinkActive="activeLink">MIJN PATIENTEN</a>
         </li>
         <li class="nav-item" toggle="collapse" data-target=".navbar-collapse.show">
-          <a *ngIf="(loginService.isUserLoggedIn()&& userRole == 'patient')" class="nav-link" role="button"
+          <a *ngIf="(loginService.isUserLoggedIn()&& session.getItem('user_role') == 'patient')" class="nav-link"
+             role="button"
              href="/#appointment" routerLink="appointment" data-toggle="collapse" data-target=".navbar-collapse.show"
              routerLinkActive="activeLink">AFSPRAAK
             MAKEN</a>
@@ -40,14 +43,14 @@
         </li>
 
         <li class="nav-item">
-          <a *ngIf="(loginService.isUserLoggedIn() && userRole == 'general_practitioner')"
+          <a *ngIf="(loginService.isUserLoggedIn() && session.getItem('user_role') == 'general_practitioner')"
              data-toggle="collapse" data-target=".navbar-collapse.show" class="nav-link"
-             role="button" href="/#requests"> <span matBadge="{{requestsLength}}"
+             role="button" href="/#requests" routerLink="requests"> <span matBadge="{{loginService.length}}"
                                                     matBadgeSize="large"
-                                                    [matBadgeHidden]="requestsLength<=0">VERZOEKEN</span></a>
+                                                    [matBadgeHidden]="loginService.length <= 0">VERZOEKEN</span></a>
         </li>
         <li class="nav-item">
-          <a *ngIf="(loginService.isUserLoggedIn()&& userRole == 'patient')" class="nav-link"
+          <a *ngIf="(loginService.isUserLoggedIn()&& session.getItem('user_role') == 'patient')" class="nav-link"
              href="/#appointmentView" data-toggle="collapse" data-target=".navbar-collapse.show"
              routerLink="appointmentView" routerLinkActive="activeLink">MIJN
             AFSPRAKEN</a>
@@ -55,7 +58,7 @@
         <li class="nav-item">
           <a *ngIf="loginService.isUserLoggedIn()" class="nav-link" data-toggle="collapse"
              data-target=".navbar-collapse.show" href="/#personalView" routerLink="personalView"
-             routerLinkActive="activeLink">{{loginService.loggedInUser.firstname + " " + loginService.loggedInUser.lastname}}</a>
+             routerLinkActive="activeLink">{{loginService.fullName}}</a>
         </li>
         <li class="nav-item">
           <a *ngIf="loginService.isUserLoggedIn()" data-toggle="collapse"

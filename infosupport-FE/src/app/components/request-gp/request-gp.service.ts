@@ -12,6 +12,8 @@ import {httpFactory} from "@angular/http/src/http_module";
 })
 export class RequestGpService {
 
+  requestLength;
+
   //URL to get all doctors
   getDoctorsUrl = 'http://localhost:8080/doctor';
   //URL to get all requests
@@ -34,6 +36,11 @@ export class RequestGpService {
 
   getRequestsForGP(): Observable<RequestGP[]> {
     const url = `${this.getRequestsURL}/gp/${sessionStorage.getItem('user_id')}`;
+    this.http.get<RequestGP[]>(url).subscribe(data => {
+      this.requestLength = data.length
+      console.log(this.requestLength);
+    })
+
     return this.http.get<RequestGP[]>(url);
   }
 

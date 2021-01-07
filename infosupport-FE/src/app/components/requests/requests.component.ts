@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {RequestGpService} from "../request-gp/request-gp.service";
 import {RequestGP} from "../../models/requestgp";
 import {log} from "util";
+import {LoginComponent} from '../login/login.component';
+import {LoginService} from '../login/login.service';
 
 
 @Component({
@@ -12,12 +14,14 @@ import {log} from "util";
 export class RequestsComponent implements OnInit {
 
   requestList: Array<RequestGP> = [];
+  id;
 
 
-  constructor(private requestGpService: RequestGpService) { }
+  constructor(private requestGpService: RequestGpService, private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.getRequests();
+    this.id = sessionStorage.getItem('user_id')
   }
 
   getRequests() {
@@ -37,6 +41,12 @@ export class RequestsComponent implements OnInit {
         this.requestList = [];
         this.getRequests()
       });
+
+      setTimeout(() =>{
+        this.loginService.getLength(this.id).subscribe(data => {
+          console.log(data.length);
+        });
+      }, 400)
     }
   }
 

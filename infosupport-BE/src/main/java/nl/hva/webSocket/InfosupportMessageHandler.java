@@ -16,14 +16,16 @@ import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
 @Slf4j
 public class InfosupportMessageHandler  extends TextWebSocketHandler {
     private Map<String, Room> rooms = new HashMap<>();
-    private Map<Integer, WebSocketSession> sessions = new HashMap<>();
+    private List<WebSocketSession> sessions = new ArrayList<>();
 
     private static int number= 1;
     private int userId;
@@ -40,7 +42,7 @@ public class InfosupportMessageHandler  extends TextWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         test = session.getAttributes().get("user_id").toString();
         userId = Integer.parseInt(test);
-        sessions.put(number++, session);
+        sessions.add(session);
         rooms.get("room").getUserSessions().put(number++, session);
         rooms.get("room").setUserId(userId);
     }

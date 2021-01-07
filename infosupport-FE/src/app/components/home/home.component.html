@@ -1,7 +1,8 @@
 <div class="fluid-container">
+  <!--hero section-->
   <section id="hero" class="d-flex align-items-center">
     <div class="container">
-      <h1>Welkom op Zonnevelt
+      <h1>Welkom bij Zonnevelt
         <h2 class="landingText" *ngIf="loginService.isUserLoggedIn() === true && userRole == 'general_practitioner'">
           Dokter {{ fullName}}
         </h2>
@@ -12,8 +13,8 @@
       <h2 *ngIf="userRole == 'patient' || userRole == null">
         Wij als team van getalenteerde dokters willen u graag helpen en assisteren bij uw probleem
       </h2>
-      <h2 *ngIf="userRole == 'general_practitioner'">
-        Hoe is uw dag? Vandaag word het weer een mooie dag voor u.
+      <h2 *ngIf="userRole == 'general_practitioner' && loginService.isUserLoggedIn() === true">
+        Hoe is uw dag? Vandaag wordt het weer een mooie dag voor u
         <div *ngIf="loadedAppointments != null; else elseText">
           <div *ngIf="loadedAppointments.length == 1; else moreAppointments">
             U heeft vandaag nog {{loadedAppointments.length}} afspraak gepland staan
@@ -34,7 +35,7 @@
       </button>
     </div>
   </section>
-
+  <!--Why us section-->
   <section id="why-us" class="why-us" *ngIf="(loginService.isUserLoggedIn() === true) && userRole == 'patient'">
     <div class="container">
       <div class="row">
@@ -42,17 +43,17 @@
           <div class="content">
             <h3>Maak uw eerst volgende afspraak</h3>
             <div *ngIf="loadedAppointments.length > 0; else elseText">
-              <p>Uw eerst volgende afspraak heeft op datum {{this.loadedAppointments[0].start_time}} gepland
+              <p>Uw eerst volgende afspraak heeft u op datum {{this.loadedAppointments[0].start_time}} gepland
                 staan
               </p>
             </div>
             <ng-template #elseText>
-              <p>U heeft momenteel geen afspraak gepland staan klik op de knop om een nieuwe afspraak
+              <p>U heeft momenteel geen afspraak gepland staan. Klik op de knop om een nieuwe afspraak
                 te plannen
               </p>
             </ng-template>
             <div class="text-center">
-              <a href="/#appointment" class="more-btn nav-link" *ngIf="loginService.isUserLoggedIn()">klik hier voor een
+              <a href="/#appointment" class="more-btn nav-link" *ngIf="loginService.isUserLoggedIn()">Klik hier voor een
                 nieuwe afspraak<i
                   class="bx bx-chevron-right"></i></a>
             </div>
@@ -84,15 +85,15 @@
                     <ng-template #moreAppointments>
                       <p>U heeft {{loadedAppointments.length}} afspraken gepland staan</p>
                     </ng-template>
-                    <a href="/#appointmentView" class="more-btn nav-link" *ngIf="loginService.isUserLoggedIn()">klik
+                    <a href="/#appointmentView" class="more-btn nav-link" *ngIf="loginService.isUserLoggedIn()">Klik
                       hier om te bekijken<i class="bx bx-chevron-right"></i>
                     </a>
                   </div>
                   <ng-template #elseText>
-                    <p>U heeft momenteel geen afspraak gepland staan klik op de knop om een nieuwe afspraak
+                    <p>U heeft momenteel geen afspraak gepland staan. Klik op de knop om een nieuwe afspraak
                       te plannen
                     </p>
-                    <a href="/#appointment" class="more-btn nav-link" *ngIf="loginService.isUserLoggedIn()">klik hier<i
+                    <a href="/#appointment" class="more-btn nav-link" *ngIf="loginService.isUserLoggedIn()">Klik hier<i
                       class="bx bx-chevron-right"></i></a>
                   </ng-template>
                 </div>
@@ -101,7 +102,7 @@
                 <div class="icon-box mt-4 mt-xl-0">
                   <i class="bx bx-images"></i>
                   <h4>Toon overzicht van uw patienten die gepland staan</h4>
-                  <a href="/#calender" class="more-btn nav-link">klik hier<i
+                  <a href="/#calender" class="more-btn nav-link">Klik hier<i
                     class="bx bx-chevron-right"></i></a>
                 </div>
               </div>
@@ -111,7 +112,7 @@
       </div>
     </div>
   </section>
-
+  <!--about section-->
   <section id="about" class="about">
     <div class="container-fluid" *ngIf="this.userRole !== 'general_practitioner'">
       <div class="row">
@@ -130,7 +131,7 @@
           <div class="icon-box">
             <div class="icon"><i class="bx bx-fingerprint"></i></div>
             <h4 class="title"><a href="/#appointmentView">Uw afspraken....</a></h4>
-            <p class="description">Wist uw afspraken snel bij ons kan inzien....</p>
+            <p class="description">U kunt uw afspraken snel bij ons inzien....</p>
           </div>
           <div class="icon-box">
             <div class="icon"><i class="bx bx-gift"></i></div>
@@ -139,7 +140,7 @@
           </div>
           <div class="icon-box">
             <div class="icon"><i class="bx bx-atom"></i></div>
-            <h4 class="title"><a href="/#appointment">afspraak plannen</a></h4>
+            <h4 class="title"><a href="/#appointment">Afspraak plannen</a></h4>
             <p class="description">Door middel van onze livechat kunt u sneller en makkelijker een afpsraak
               inplannen</p>
           </div>
