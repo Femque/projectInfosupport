@@ -1,4 +1,4 @@
-package nl.hva;
+package nl.hva.jpa.test.repository;
 
 import nl.hva.models.Appointment;
 import nl.hva.repositories.AppointmentRepository;

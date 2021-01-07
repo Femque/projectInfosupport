@@ -1,4 +1,4 @@
-package nl.hva;
+package nl.hva.jpa.test.controller;
 
 
 import nl.hva.models.Appointment;
