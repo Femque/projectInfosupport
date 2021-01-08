@@ -58,18 +58,24 @@ class TestUserRepository {
 //        assertEquals("Klaasie", users.get(0).getFirstname());
 //    }
 
-    @Test
     @DirtiesContext
+    @Test
     void testUpdatingAUser() {
-
+        //getting the user
         List<User> u = repository.getUserByUser_id(4);
 
+        //set name to new name
         u.get(0).setFirstname("updated naam Thijs");
 
+        //calling the save method of the repo
         repository.save(u.get(0));
 
+        assertNotNull(u.get(0).getFirstname());
+
+        //getting the updated user again for comparing purpopes
         u = repository.getUserByUser_id(4);
 
+        //checks if it is equal to the updated name
         assertEquals("updated naam Thijs", u.get(0).getFirstname());
 
     }
