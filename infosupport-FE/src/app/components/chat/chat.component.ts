@@ -22,8 +22,8 @@ export class ChatComponent implements OnInit {
   userId: number;
   generalPractionerId;
   generalPractitioner;
-  userRole: string;
 
+  userRole: string;
   role: boolean;
 
   public RecentPatients: Array<Message[]> = [];
@@ -70,37 +70,30 @@ export class ChatComponent implements OnInit {
       setTimeout(() => {
         if (this.role == false) {
           setTimeout(() => {
-            this.patients.forEach( p => {
+            this.patients.forEach(p => {
               this.getMessagesForChat(this.userId, p.user_id);
-            })
-            this.getMessagesForChat(this.userId, this.selectedPatientId)
+            });
+            this.getMessagesForChat(this.userId, this.selectedPatientId);
             this.messagesForCurrentPatient.push(new Message(e.data, '', new Date(), '', parseInt(sessionStorage.getItem('user_id')), this.selectedPatientId,
               parseInt(sessionStorage.getItem('user_id'))));
           }, 100);
         } else {
           setTimeout(() => {
-            console.log("patient");
+            console.log('patient');
             this.getMessagesForChat(this.generalPractionerId, this.userId);
             this.messagesForCurrentPatient.push(new Message(e.data, '', new Date(), '', this.generalPractionerId, this.userId,
               parseInt(sessionStorage.getItem('user_id'))));
           }, 100);
         }
 
-      },10)
-      return true
+      }, 10);
     });
 
     this.ws.addEventListener('close', (e) => {
       console.log('closing?');
-      this.ws.onopen
+      this.ws.onopen;
     });
   }
-
-
-  // sortCurrentChats(){
-  //   return this.CurrentChats.sort((a, b) => (this.getLastMessage(a.user_id) < this.getLastMessage(b.user_id) ? -1 : 1))
-  // }
-
   //when the the send button is clicked, this method is called
   public sendMessage(value: string) {
     //send message to websocket
@@ -229,6 +222,7 @@ export class ChatComponent implements OnInit {
   }
 
 
+  //finds the last message between two users
   getlastMessage(gp_user_id: number, patient_user_id: number) {
     this.service.getMessagesForChat(gp_user_id, patient_user_id).subscribe(data => {
       if (!this.role) {
@@ -243,7 +237,7 @@ export class ChatComponent implements OnInit {
   selected(e, p) {
     this.messagesForCurrentPatient = [];
     this.selectedPatientId = e;
-    this.selectedpatient = p
+    this.selectedpatient = p;
 
     if (this.role == false) {
       this.getMessagesForChat(parseInt(sessionStorage.getItem('user_id')), e);
@@ -260,12 +254,13 @@ export class ChatComponent implements OnInit {
 
 
   }
-
-
+  
+  //get recent message with the given id
   getMostRecentChat(id: number): Message {
     return this.recentChats.get(id);
   }
 
+  //format date to remove the T
   formatDate(date: Date) {
     return date.toString().replace('T', ' ');
   }
@@ -310,17 +305,6 @@ export class ChatComponent implements OnInit {
       window.location.href = '#';
     }
   }
-
-  //
-  // getLastMessage(userId){
-  //
-  //   let message = this.service.getMessagesForChat(this.userId, userId).pipe(map((data) => data))
-  //   console.log(message);
-  //   return message.subscribe(data => {
-  //     console.log(data[data.length - 1].message_time);
-  //   })
-  // }
-
 
 }
 
