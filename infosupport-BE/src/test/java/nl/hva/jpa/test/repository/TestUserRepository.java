@@ -31,6 +31,7 @@ class TestUserRepository {
 
 
     @Test
+    @DirtiesContext
     void testFindingAUser() {
         List<User> u = repository.getUserByUser_id(4);
         assertEquals("Thijs", u.get(0).getFirstname());
@@ -58,8 +59,8 @@ class TestUserRepository {
 //        assertEquals("Klaasie", users.get(0).getFirstname());
 //    }
 
-    @DirtiesContext
     @Test
+    @DirtiesContext
     void testUpdatingAUser() {
         //getting the user
         List<User> u = repository.getUserByUser_id(4);
