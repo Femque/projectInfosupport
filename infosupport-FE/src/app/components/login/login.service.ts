@@ -34,7 +34,7 @@ export class LoginService {
   }
 
   getFullName(id: number) {
-    const url = "http://localhost:8080/user/fullname/" + id
+    const url = environment.apiUrl + "/user/fullname/" + id
 
     this.http.get<string>(url).subscribe(data => {
       this.fullName = data
