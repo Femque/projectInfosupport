@@ -3,6 +3,7 @@ package nl.hva.jpa.test.repository;
 import nl.hva.models.Appointment;
 import nl.hva.repositories.AppointmentRepository;
 import nl.hva.service.AppointmentService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.logging.Logger;
 import org.junit.platform.commons.logging.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -24,6 +26,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  */
 
 @SpringBootTest
+@DirtiesContext
+@Transactional
 public class AppointmentRepoTests {
 
     private Logger logger = LoggerFactory.getLogger((this.getClass()));
@@ -34,14 +38,6 @@ public class AppointmentRepoTests {
 
     //Jesse Bijma
     @Test
-    void testGettingAnAppointment() {
-        Appointment a = repository.getByAppointmentCode(344455634);
-        assertEquals(344455634, a.getAppointment_code());
-    }
-
-    //Jesse Bijma
-    @Test
-    @DirtiesContext
     void testCreatingAppointment() {
         Appointment a = new Appointment();
         a.setBig_code(6);
@@ -65,7 +61,6 @@ public class AppointmentRepoTests {
 
     //Jesse Bijma
     @Test
-    @DirtiesContext
     void testDeletingAppointment() {
         Appointment a = repository.getByAppointmentCode(344455634);
         repository.deleteById(344455634);
@@ -76,7 +71,6 @@ public class AppointmentRepoTests {
 
     //Jesse Bijma
     @Test
-    @DirtiesContext
     void testUpdateAppointment() {
         Appointment a = new Appointment();
         a.setBig_code(6);
