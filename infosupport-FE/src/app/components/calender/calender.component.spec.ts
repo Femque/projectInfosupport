@@ -41,23 +41,28 @@ fdescribe('CalenderComponent', () => {
   //   expect(component).toBeTruthy();
   // });
 
+
+  //Jesse Bijma
   it('Test 1: Calendar should be instantiated', () => {
     const calendar: HTMLElement = componentHtml.querySelector('#calendar');
     expect(calendar).toBeTruthy();
   });
 
+  //Jesse Bijma
   it('Test 2: Can add appointment to local list', () => {
     const appointment = new Appointment();
     component.appointments.push(appointment);
     expect(component.appointments.length > 0).toBeTruthy();
   });
 
+  //Jesse Bijma
   it('Test 4: Test if update opens and closes', () => {
     component.openUpdate('click');
     component.cancelUpdate();
     expect().nothing();
   });
 
+  //Jesse Bijma
   it('Test 5: can create appointment, and update it', () => {
     let service_a = fixture.debugElement.injector.get(AppointmentService);
     let service_b = fixture.debugElement.injector.get(CalendarService);

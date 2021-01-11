@@ -44,6 +44,7 @@ fdescribe('AppointmentComponent', () => {
   //   expect(component).toBeTruthy();
   // });
 
+  //Jesse Bijma
   it('Test 3: can create appointment, and get it by user_id', () => {
     let service_a = fixture.debugElement.injector.get(AppointmentService);
     fixture.detectChanges();
