@@ -44,9 +44,6 @@
         </div>
       </div>
       <div  class="mesgs" *ngIf="selectedPatientId != 0 else nopatient">
-<!--        <div class="name">-->
-<!--          {{getPatient(selectedPatientId).firstname + " " + getPatient(selectedPatientId).lastname}}-->
-<!--        </div>-->
         <div class="namePatient" *ngIf="selectedpatient != null">{{selectedpatient.firstname + " " + selectedpatient.lastname}}</div>
         <div  #scrollMe class="msg_history" >
 

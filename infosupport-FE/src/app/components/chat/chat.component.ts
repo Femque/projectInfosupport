@@ -88,17 +88,11 @@ export class ChatComponent implements OnInit {
 
       }, 10);
     });
-
-    this.ws.addEventListener('close', (e) => {
-      console.log('closing?');
-      this.ws.onopen;
-    });
   }
   //when the the send button is clicked, this method is called
   public sendMessage(value: string) {
     //send message to websocket
     this.ws.send(value);
-    this.inputMessage.nativeElement.value = '';
     //insert message in database
     this.insertMessage(value);
 
@@ -116,6 +110,7 @@ export class ChatComponent implements OnInit {
 
   //inserts message in database
   insertMessage(value: string) {
+    this.message = value;
     if (this.role == false) {
       let message = new Message(value, '', new Date(), '', parseInt(sessionStorage.getItem('user_id')), this.selectedPatientId,
         parseInt(sessionStorage.getItem('user_id')));
@@ -254,7 +249,7 @@ export class ChatComponent implements OnInit {
 
 
   }
-  
+
   //get recent message with the given id
   getMostRecentChat(id: number): Message {
     return this.recentChats.get(id);
