@@ -64,12 +64,16 @@ export class LoginService {
    * @param user
    */
   public loginUserFromRemote(user: User): Observable<any> {
+    console.log("loggin in user   " + user.email + "   " + user.password);
     this.http.post<any>(this.usersUrl + "/login", user).subscribe(data => {
       if (data != null) {
         console.log(data);
         this.loggedInUser = data;
         this.getFullName(data.user_id)
         this.getLength(data.user_id)
+        console.log("D");
+        console.log(data.user_id);
+        sessionStorage.setItem('user_id', data.user_id);
       }
     });
 

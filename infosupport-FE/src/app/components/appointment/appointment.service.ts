@@ -30,6 +30,7 @@ export class AppointmentService {
 
   //getting appointment
   getAppointmentsById(boolAppointmentGP): Observable<Appointment[]> {
+    console.log("getting appointments by id");
     if (boolAppointmentGP == true) {
       const url = `${this.url}/appointments/gp/${sessionStorage.getItem('user_id')}`;
       return this.http.get<Appointment[]>(url)
