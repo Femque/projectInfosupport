@@ -24,7 +24,10 @@ public class UserController {
   private final PatientService p_service;
   private final GeneralPractitionerService gp_service;
 
-  // "/user"
+  /**
+   * All users
+   * @return
+   */
   @GetMapping
   @CrossOrigin(origins = "http://localhost:4200")
   public ResponseEntity<List<User>> index() {
@@ -48,6 +51,11 @@ public class UserController {
     return null;
   }
 
+  /**
+   * Get request to get user_role by using the email
+   * @param email
+   * @return true if patient, false if doctor, null if email does not exist
+   */
   @GetMapping(value = "/role")
   @CrossOrigin(origins = "http://localhost:4200")
   public ResponseEntity<Boolean> getRole(@RequestParam String email) {
@@ -89,7 +97,12 @@ public class UserController {
     return ResponseEntity.ok(user);
   }
 
-  // "user/login"
+  /**
+   * Post method to login user using the email and password
+   * @param user
+   * @return user userObj when credentials match an user
+   * @throws Exception when credetials are wrong and can't find user
+   */
   @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
   @CrossOrigin(origins = "http://localhost:4200")
   public ResponseEntity<User> loginUser(@RequestBody User user) throws Exception {
@@ -117,7 +130,11 @@ public class UserController {
   }
 
 
-  //getting the data of patient by id
+  /**
+   * Get user data by using Id
+   * @param id
+   * @return userData
+   */
   @CrossOrigin
   @GetMapping("/{id}")
   public ResponseEntity<List<User>> getAllUserDataById(@PathVariable int id) {
