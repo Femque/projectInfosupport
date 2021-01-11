@@ -8,7 +8,7 @@ import {FormBuilder} from '@angular/forms';
 import {LoginService} from '../login/login.service';
 import {User} from '../../models/user';
 
-fdescribe('AppointmentComponent', () => {
+describe('AppointmentComponent', () => {
   let component: AppointmentComponent;
   let componentHtml: HTMLElement;
   let fixture: ComponentFixture<AppointmentComponent>;

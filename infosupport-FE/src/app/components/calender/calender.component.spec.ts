@@ -10,7 +10,7 @@ import {AppointmentService} from '../appointment/appointment.service';
 import {User} from '../../models/user';
 import {Observable} from 'rxjs';
 
-fdescribe('CalenderComponent', () => {
+describe('CalenderComponent', () => {
   let component: CalenderComponent;
   let fixture: ComponentFixture<CalenderComponent>;
   let componentHtml: HTMLElement;
