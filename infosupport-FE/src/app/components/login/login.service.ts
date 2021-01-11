@@ -32,32 +32,6 @@ export class LoginService {
     this.user = this.userSubject.asObservable();
   }
 
-  getFullName(id: number) {
-    const url = "http://localhost:8080/user/fullname/" + id
-
-    this.http.get<string>(url).subscribe(data => {
-      this.fullName = data
-      let fullNameArray = this.fullName[0].split(",");
-      let firstName = fullNameArray[0];
-      let lastName = fullNameArray[1];
-      this.fullName = firstName.toUpperCase() + " " + lastName.toUpperCase()
-    })
-
-    return this.http.get<string>(url);
-  }
-
-  getLength(id: number){
-    const url = `${this.getRequestsURL}/gp/${id}`;
-
-    this.http.get<RequestGP[]>(url).subscribe(data => {
-      this.length = data.length
-      console.log(this.length);
-    })
-
-   return this.http.get<RequestGP[]>(url);
-  }
-
-
   /**
    * Sends post request to back end to login and return the user
    * @param user
@@ -204,5 +178,38 @@ export class LoginService {
     // Return an observable with a user-facing error message.
     return throwError(
       'Something bad happened; please try again later.');
+  }
+
+  /**
+   * Get request to get and return the fullname of an user by using id
+   * @param id
+   */
+  getFullName(id: number) {
+    const url = "http://localhost:8080/user/fullname/" + id
+
+    this.http.get<string>(url).subscribe(data => {
+      this.fullName = data
+      let fullNameArray = this.fullName[0].split(",");
+      let firstName = fullNameArray[0];
+      let lastName = fullNameArray[1];
+      this.fullName = firstName.toUpperCase() + " " + lastName.toUpperCase()
+    })
+
+    return this.http.get<string>(url);
+  }
+
+  /**
+   * Get request length
+   * @param id
+   */
+  getLength(id: number){
+    const url = `${this.getRequestsURL}/gp/${id}`;
+
+    this.http.get<RequestGP[]>(url).subscribe(data => {
+      this.length = data.length
+      console.log(this.length);
+    })
+
+    return this.http.get<RequestGP[]>(url);
   }
 }
