@@ -16,6 +16,7 @@ describe('AppointmentComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AppointmentComponent],
+
       imports: [HttpClientModule],
       providers: [FormBuilder, AppointmentService]
     })
