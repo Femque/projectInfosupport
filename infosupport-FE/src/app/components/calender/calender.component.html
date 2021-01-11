@@ -3,7 +3,7 @@
 </div>
 
 
-<ng-template #create let-data>
+<ng-template #create let-data id="create_appointment">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
     <button type="button" class="close" aria-label="Close" (click)="data.dismiss('Cross click')">
@@ -80,7 +80,7 @@
 </ng-template>
 
 
-<ng-template style="height: 70%" #content let-data>
+<ng-template id="update_appointment" style="height: 70%" #content let-data>
   <mat-toolbar *ngIf="errorMessage" color="warn">{{ errorMessage }}</mat-toolbar>
   <table cellpadding="15px" class="custom-event-editor">
     <tbody>

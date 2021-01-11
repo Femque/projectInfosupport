@@ -39,6 +39,28 @@ class TestUserRepository {
         assertEquals("Thijs", u.get(0).getFirstname());
     }
 
+//    @Test
+//    @DirtiesContext
+//    void testAddingAUser() {
+//
+//        User u = new User(10,
+//                "Klaasie",
+//                "Molleke",
+//                "KlaasJeWeetWel@gmail.com",
+//                "0611554324",
+//                "testwachtwoord",
+//                "1999-09-08",
+//                "man");
+//
+//        repository.save(u);
+//
+//        assertNotNull(u.getUser_id());
+//
+//        List<User> users = repository.getUserByUser_id(u.getUser_id());
+//
+//        assertEquals("Klaasie", users.get(0).getFirstname());
+//    }
+
     @Test
     void testUpdatingAUser() {
         //getting the user
@@ -57,6 +79,7 @@ class TestUserRepository {
 
         //checks if it is equal to the updated name
         assertEquals("updated naam Thijs", u.get(0).getFirstname());
+
     }
 
 
