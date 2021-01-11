@@ -50,9 +50,7 @@ export class AppointmentViewComponent implements OnInit {
     }
   }
 
-  /**
-   * method for obtaining the appointments from the corresponding user
-   */
+  //show appointments
   getAppointments(): any {
     if (this.userRole === "general_practitioner") {
       this.boolAppointmentGp = true;

@@ -8,7 +8,7 @@
             <div class="col-sm-3">
               <h6 class="mb-0">Naam</h6>
             </div>
-            <div id="firstnamePersonalInformation" class="col-sm-9 text-secondary">
+            <div class="col-sm-9 text-secondary">
               {{this.firstname}}
             </div>
           </div>
@@ -93,14 +93,14 @@
         <label>Telefoonnummer:</label>
         <div class="input-group">
           <input formControlName="phoneNumber" [(ngModel)]="phonenumber" name="phonenumber" class="form-control"
-                 placeholder="vul uw telefoonnummer in" name="pn" id="phoneNumber" (keypress)="numberOnly($event)">
+                 placeholder="vul uw telefoonnummer in" name="pn" (keypress)="numberOnly($event)">
         </div>
       </div>
       <div class="form-group">
         <label>Email:</label>
         <div class="input-group">
           <input formControlName="email" [(ngModel)]="email" name="email" class="form-control"
-                 placeholder="vul uw email in" id="email" name="em">
+                 placeholder="vul uw email in" name="em">
         </div>
         <div *ngIf="f.email.touched && f.email.invalid" class="alert alert-danger">
           <small *ngIf="f.email.errors?.required">Een email is verplicht</small>

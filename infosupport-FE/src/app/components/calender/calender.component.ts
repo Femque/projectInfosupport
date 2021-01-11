@@ -10,6 +10,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder} from '@angular/forms';
 import {Patient} from '../../models/patient';
 import {ChatService} from '../chat/chat.service';
+import {log} from 'util';
 
 @Component({
   selector: 'app-calender',
@@ -64,6 +65,7 @@ export class CalenderComponent implements OnInit {
     setTimeout(() => {
       this.getAppointments();
     }, 1);
+    console.log(sessionStorage);
 
   }
 
@@ -160,6 +162,7 @@ export class CalenderComponent implements OnInit {
   }
 
   createAppointment(appointmentdata) {
+    console.log(this.selectedUserId);
     this.errorMessage = '';
 
     var startTime = new Date(Date.parse(appointmentdata.start));
@@ -255,8 +258,22 @@ export class CalenderComponent implements OnInit {
   getBigCode(user_id) {
     this.calendarService.getBigCode(user_id).subscribe(data => {
       sessionStorage.setItem('big_code', JSON.stringify(data));
+      console.log('big code = ' + sessionStorage.getItem('big_code'));
     });
   }
+
+  // getPatients(gp_user_id) {
+  //   this.calendarService.getPatientsForGp(gp_user_id).subscribe(data => {
+  //     console.log(data);
+  //     for (let i = 0; i < data.length; i++) {
+  //       let test = data[i].split(',');
+  //       let test2 = test[0] + ' ' + test[1];
+  //       this.patients.push(test2);
+  //     }
+  //   });
+  //
+  //   return this.patients;
+  // }
 
   setTitle(title: string) {
     this.title = title;
@@ -266,6 +283,7 @@ export class CalenderComponent implements OnInit {
     this.selectedUserId = e;
 
     this.service.getPatientById(e).subscribe(data => {
+      console.log(data);
 
       if (this.selectedUserId != -1) {
         this.selectedPatient = new Patient(
@@ -285,6 +303,11 @@ export class CalenderComponent implements OnInit {
       console.log(this.selectedPatient);
 
     });
+
+
+
+    // this.selectedPatient = p;
+    console.log(this.selectedUserId);
   }
 
   getPatients(gp_user_id) {

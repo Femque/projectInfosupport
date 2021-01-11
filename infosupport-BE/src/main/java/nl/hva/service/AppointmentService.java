@@ -36,10 +36,6 @@ public class AppointmentService {
     repository.save(appointment);
   }
 
-  public Appointment getByAppointmentCode(int appointmentCode) {
-    return repository.getByAppointmentCode(appointmentCode);
-  }
-
   public void deleteAppointment(int id) {
     repository.deleteById(id);
   }

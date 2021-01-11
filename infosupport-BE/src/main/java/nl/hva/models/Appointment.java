@@ -65,43 +65,5 @@ public class Appointment {
     return appointment_code;
   }
 
-  public void setAppointment_code(Integer appointment_code) {
-    this.appointment_code = appointment_code;
-  }
 
-  public void setStart_time(LocalDateTime start_time) {
-    this.start_time = start_time;
-  }
-
-  public void setEnd_time(LocalDateTime end_time) {
-    this.end_time = end_time;
-  }
-
-  public void setIs_digital(Boolean is_digital) {
-    this.is_digital = is_digital;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public void setLocation(String location) {
-    this.location = location;
-  }
-
-  public void setIs_follow_up(Boolean is_follow_up) {
-    this.is_follow_up = is_follow_up;
-  }
-
-  public void setBig_code(Integer big_code) {
-    this.big_code = big_code;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public void setPatient_user_id(Integer patient_user_id) {
-    this.patient_user_id = patient_user_id;
-  }
 }

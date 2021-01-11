@@ -1,5 +1,4 @@
 <div class="fluid-container">
-  <!--hero section-->
   <section id="hero" class="d-flex align-items-center">
     <div class="container">
       <h1>Welkom bij Zonnevelt
@@ -35,7 +34,7 @@
       </button>
     </div>
   </section>
-  <!--Why us section-->
+
   <section id="why-us" class="why-us" *ngIf="(loginService.isUserLoggedIn() === true) && userRole == 'patient'">
     <div class="container">
       <div class="row">
@@ -112,7 +111,7 @@
       </div>
     </div>
   </section>
-  <!--about section-->
+
   <section id="about" class="about">
     <div class="container-fluid" *ngIf="this.userRole !== 'general_practitioner'">
       <div class="row">

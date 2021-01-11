@@ -40,9 +40,7 @@ public class Patient implements Serializable {
 
   public Patient(){ }
 
-
-
-    public int getUser_id() {
+  public int getUser_id() {
     return user_id;
   }
 

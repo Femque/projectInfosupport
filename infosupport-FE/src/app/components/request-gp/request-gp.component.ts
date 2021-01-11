@@ -27,7 +27,6 @@ export class RequestGpComponent implements OnInit {
     this.getFullNameById(parseInt(sessionStorage.getItem('user_id')))
   }
 
-  //Creates a request
   requestGP(gpUserId) {
     if (confirm("Weet je zeker dat je een nieuwe huisarts wilt aanvragen?")) {
     //Get user id
@@ -37,7 +36,6 @@ export class RequestGpComponent implements OnInit {
     }
   }
 
-  //Gets the current GP of the user
   getCurrentGP() {
     for (let i = 0; i < this.gpList.length; i++) {
       if (this.gpList[i].user_id === this.doctorId) {
@@ -47,14 +45,12 @@ export class RequestGpComponent implements OnInit {
     }
   }
 
-  //Gets the GP's user_id by patient
   getGpUser_id(user_id) {
     this.requestGpService.getGPByPatientUserId(user_id).subscribe(data => {
       this.doctorId = data
     });
   }
 
-  //Gets a list of all GPs
   getGPs() {
     this.requestGpService.getGPs().subscribe(data => {
       for (let i = 0; i < data.length; i++) {
@@ -68,7 +64,6 @@ export class RequestGpComponent implements OnInit {
     })
   }
 
-  //Gets the full name by id
   getFullNameById(id: number) {
     this.requestGpService.getFullName(id).subscribe(data => {
       this.fullName = data;

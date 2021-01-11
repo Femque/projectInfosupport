@@ -23,9 +23,10 @@ export class CalendarService {
   ) {
   }
 
-  url  = environment.apiUrl;
+  url  = "http://localhost:8080"
 
   getAppointments(): Observable<Appointment[]> {
+    console.log("getting appointments ")
     return this.http.get<Appointment[]>(this.url + "/appointments")
       .pipe(
         catchError(this.handleError)
@@ -41,7 +42,7 @@ export class CalendarService {
   }
 
   getBigCode(user_id: number) {
-    console.log("getting big code    " + user_id);
+    console.log(user_id);
     const url = `${this.url}/doctor/big_code/${user_id}`;
     return this.http.get<number>(url)
       .pipe(

@@ -13,7 +13,7 @@ export class AppointmentService {
   constructor(private http: HttpClient) {
   }
 
-  url = environment.apiUrl;
+  url = "http://localhost:8080"
 
   createAppointment(appointment: Appointment): Observable<Appointment> {
     console.log("Creating appointment...");
@@ -30,7 +30,6 @@ export class AppointmentService {
 
   //getting appointment
   getAppointmentsById(boolAppointmentGP): Observable<Appointment[]> {
-    console.log("getting appointments by id");
     if (boolAppointmentGP == true) {
       const url = `${this.url}/appointments/gp/${sessionStorage.getItem('user_id')}`;
       return this.http.get<Appointment[]>(url)

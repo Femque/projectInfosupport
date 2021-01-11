@@ -14,26 +14,26 @@ import java.util.List;
 @RequestMapping("doctor")
 public class General_practitionerController {
 
-    private final GeneralPractitionerService service;
+  private final GeneralPractitionerService service;
 
-    @GetMapping
-    @CrossOrigin
-    public ResponseEntity<List<General_practitioner>> index() {
-        List<General_practitioner> doctors = service.findAll();
+  @GetMapping
+  @CrossOrigin(origins = "http://localhost:4200")
+  public ResponseEntity<List<General_practitioner>> index() {
+    List<General_practitioner> doctors = service.findAll();
 
-        return ResponseEntity.ok(doctors);
-    }
+    return ResponseEntity.ok(doctors);
+  }
 
-    @GetMapping("/big_code/{user_id}")
-    @CrossOrigin
-    public ResponseEntity<Integer> findBigCodeByUserId(@PathVariable int user_id) {
-        service.findBigCodeByUserId(user_id);
-        return ResponseEntity.ok(service.findBigCodeByUserId(user_id));
-    }
+  @GetMapping("/big_code/{user_id}")
+  @CrossOrigin
+  public ResponseEntity<Integer> findBigCodeByUserId(@PathVariable int user_id) {
+    service.findBigCodeByUserId(user_id);
+    return ResponseEntity.ok(service.findBigCodeByUserId(user_id));
+  }
 
-    @GetMapping("/user_id/{user_id}")
-    @CrossOrigin
-    public ResponseEntity<General_practitioner> findByUserid(@PathVariable int user_id) {
-        return ResponseEntity.ok(service.findGp(user_id));
-    }
+  @GetMapping("/user_id/{user_id}")
+  @CrossOrigin
+  public ResponseEntity<General_practitioner> findByUserid(@PathVariable int user_id){
+    return ResponseEntity.ok(service.findGp(user_id));
+  }
 }

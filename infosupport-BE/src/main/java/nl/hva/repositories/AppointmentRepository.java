@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,14 +14,7 @@ import java.util.List;
 public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
 
 
-  @Query(value = "SELECT * FROM Appointment a WHERE a.appointment_code = ?1", nativeQuery = true)
-  Appointment getByAppointmentCode(@Param("appointment_code") int appointmentCode);
-
-  @Query(value = "SELECT * FROM Appointment a WHERE a.title = ?!", nativeQuery = true)
-  Appointment getByTitle(@Param("title") String title);
-
   @Modifying
-  @Transactional
   @Query("Update Appointment a Set a.start_time = ?1, a.end_time = ?2,  a.is_digital = ?3, a.description = ?4 , a.location = ?5, a.is_follow_up = ?6, a.title = ?7 where a.appointment_code = ?8")
   void saveAppointmentBy(@Param("start_time") LocalDateTime start_time,
                          @Param("end_time") LocalDateTime end_time,

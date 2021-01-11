@@ -17,9 +17,9 @@ public class MessageService {
 
     private final MessageRepository repo;
 
-    public  void insert(String message, String image, LocalDateTime message_time, String video,
+    public  String insert(String message, String image, LocalDateTime message_time, String video,
                           int gp_user_id, int patient_user_id, int send_by){
-        repo.insert(gp_user_id, image, message, message_time, patient_user_id, video, send_by);
+        return repo.insert(gp_user_id, image, message, message_time, patient_user_id, video, send_by);
     }
 
     public void insertMessage(Message message){

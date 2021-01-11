@@ -13,10 +13,10 @@ import {environment} from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ChatService {
-  url = environment.apiUrl
+  url = "http://localhost:8080"
 
   getDoctorByUserId = this.url + '/patient/gp';
-  chatUrl = this.url + '/chat';
+  chatUrl = environment.apiUrl + '/chat';
 
 
   constructor(private http: HttpClient){
