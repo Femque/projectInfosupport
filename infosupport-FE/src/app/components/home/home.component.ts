@@ -16,7 +16,6 @@ import {GP} from "../../models/gp";
 })
 export class HomeComponent implements OnInit {
 
-
   //use for printing name
   user_id: number;
   fullName: string;
@@ -28,7 +27,6 @@ export class HomeComponent implements OnInit {
   loadedPatient: Patient;
   userRole: string;
   boolAppointmentGp: boolean;
-
 
   //Check if user is loggen in or not, decide if all nav-links are available
   isUserLoggedIn: boolean = false;
