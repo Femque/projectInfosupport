@@ -37,11 +37,11 @@ export class PersonalInformationComponent implements OnInit {
               private modalService: NgbModal) {
     //formgroup with validators
     this.form = formBuilder.group({
-      phoneNumber: [],
+      phoneNumber: [''],
       email: ['', [
         Validators.required,
         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-      firstPassword: [],
+      firstPassword: [''],
       password: ['', [Validators.required]],
       confirm_password: ['', [Validators.required]]
     }, {

@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -33,6 +34,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DirtiesContext
+@Transactional
 public class UserControllerTests {
 
     private Logger logger = LoggerFactory.getLogger((this.getClass()));
@@ -44,7 +47,6 @@ public class UserControllerTests {
      * test for checking amount of users
      */
     @Test
-    @DirtiesContext
     void checkAllUsers() {
         ResponseEntity<List<User>> userList = controller.index();
         assertEquals(8, Objects.requireNonNull(userList.getBody()).size());
@@ -54,7 +56,6 @@ public class UserControllerTests {
      * test for checking firstname of specific user with id
      */
     @Test
-    @DirtiesContext
     void checkUserById() {
         ResponseEntity<List<User>> userList = controller.getAllUserDataById(4);
         assertEquals("Thijs", userList.getBody().get(0).getFirstname());
@@ -64,7 +65,6 @@ public class UserControllerTests {
      * test for checking if the user updates right
      */
     @Test
-    @DirtiesContext
     void checkUpdateUser() {
 
         //Arrange: getting the user with id 4
