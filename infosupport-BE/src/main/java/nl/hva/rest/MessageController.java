@@ -21,10 +21,8 @@ public class MessageController {
     @CrossOrigin
     @PostMapping("/message")
     public void insert(@RequestBody Message message){
-
         System.out.println(message);
         service.insertMessage(message);
-
     }
 
     @CrossOrigin

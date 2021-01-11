@@ -27,22 +27,25 @@ public class MessageRestTests {
 
     @Test
     void testHttpStatus() {
+        //arrange
         List<Message> list = controller.getMessagesForChat(6, 1).getBody();
-        //get responseEntity from controller method
+        //act
         ResponseEntity<List<Message>> messageResponseEntity = controller.getMessagesForChat(6, 1);
+
+        //assert
         assertEquals(messageResponseEntity.getStatusCode(), HttpStatus.OK);
         assertEquals(messageResponseEntity.getBody(), list);
     }
 
     @Test
     void testAddingMessage() {
-        //make new message
+        //arrange
         Message message = new Message(1000, "test", "", LocalDateTime.now(), "", 6, 1, 6);
-        //get lenght from list of messages
         int length = controller.getMessagesForChat(6, 1).getBody().size();
-        //insert message
+        //act
         controller.insert(message);
 
+        //assert
         assertEquals(controller.getMessagesForChat(6, 1).getBody().size(), length +1);
     }
 
