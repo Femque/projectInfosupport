@@ -18,7 +18,6 @@ export class LoginService {
   public user: Observable<User>;
   private userSubject: BehaviorSubject<User>;
   fullName;
-
   length;
 
   usersUrl = environment.apiUrl + "/user";
@@ -34,7 +33,7 @@ export class LoginService {
   }
 
   getFullName(id: number) {
-    const url = "http://localhost:8080/user/fullname/" + id
+    const url = environment.apiUrl + "/user/fullname/" + id
 
     this.http.get<string>(url).subscribe(data => {
       this.fullName = data
@@ -47,7 +46,7 @@ export class LoginService {
     return this.http.get<string>(url);
   }
 
-  getLength(id: number){
+  getLength(id: number) {
     const url = `${this.getRequestsURL}/gp/${id}`;
 
     this.http.get<RequestGP[]>(url).subscribe(data => {
@@ -55,7 +54,7 @@ export class LoginService {
       console.log(this.length);
     })
 
-   return this.http.get<RequestGP[]>(url);
+    return this.http.get<RequestGP[]>(url);
   }
 
 
@@ -64,12 +63,16 @@ export class LoginService {
    * @param user
    */
   public loginUserFromRemote(user: User): Observable<any> {
+    console.log("loggin in user   " + user.email + "   " + user.password);
     this.http.post<any>(this.usersUrl + "/login", user).subscribe(data => {
       if (data != null) {
         console.log(data);
         this.loggedInUser = data;
         this.getFullName(data.user_id)
         this.getLength(data.user_id)
+        console.log("D");
+        console.log(data.user_id);
+        sessionStorage.setItem('user_id', data.user_id);
       }
     });
 
@@ -108,9 +111,15 @@ export class LoginService {
   /**
    * Get request to get patient data by using user_id
    */
-  getUserInfoById(): Observable<User[]> {
-    const url = `${this.usersUrl}/${sessionStorage.getItem('user_id')}`;
-    return this.http.get<Patient[]>(url)
+  getUserInfoById(user_id?: number): Observable<User[]> {
+    if (user_id) {
+      const url = `${this.usersUrl}/${user_id}`;
+      return this.http.get<Patient[]>(url)
+    }
+    if (user_id == null) {
+      const url = `${this.usersUrl}/${sessionStorage.getItem('user_id')}`;
+      return this.http.get<Patient[]>(url)
+    }
   }
 
   /**

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * testing user repository
  */
 @SpringBootTest
+@DirtiesContext
+@Transactional
 class TestUserRepository {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -59,17 +62,22 @@ class TestUserRepository {
 //    }
 
     @Test
-    @DirtiesContext
     void testUpdatingAUser() {
-
+        //getting the user
         List<User> u = repository.getUserByUser_id(4);
 
+        //set name to new name
         u.get(0).setFirstname("updated naam Thijs");
 
+        //calling the save method of the repo
         repository.save(u.get(0));
 
+        assertNotNull(u.get(0).getFirstname());
+
+        //getting the updated user again for comparing purpopes
         u = repository.getUserByUser_id(4);
 
+        //checks if it is equal to the updated name
         assertEquals("updated naam Thijs", u.get(0).getFirstname());
 
     }

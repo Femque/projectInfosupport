@@ -18,6 +18,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
   @Query(value = "SELECT * FROM Appointment a WHERE a.appointment_code = ?1", nativeQuery = true)
   Appointment getByAppointmentCode(@Param("appointment_code") int appointmentCode);
 
+  @Query(value = "SELECT * FROM Appointment a WHERE a.title = ?!", nativeQuery = true)
+  Appointment getByTitle(@Param("title") String title);
+
   @Modifying
   @Transactional
   @Query("Update Appointment a Set a.start_time = ?1, a.end_time = ?2,  a.is_digital = ?3, a.description = ?4 , a.location = ?5, a.is_follow_up = ?6, a.title = ?7 where a.appointment_code = ?8")

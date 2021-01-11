@@ -13,6 +13,7 @@ import {environment} from 'src/environments/environment';
 })
 export class RequestGpService {
 
+  //Variable for amount of requests in navigation bar
   requestLength;
 
   //URL to get all doctors
@@ -31,10 +32,12 @@ export class RequestGpService {
 
   constructor(private http: HttpClient) { }
 
+  //Gets a list of all GPs
   getGPs(): Observable<GP[]> {
     return this.http.get<GP[]>(this.getDoctorsUrl)
   }
 
+  //Gets all requests for a specific GP
   getRequestsForGP(): Observable<RequestGP[]> {
     const url = `${this.getRequestsURL}/gp/${sessionStorage.getItem('user_id')}`;
     this.http.get<RequestGP[]>(url).subscribe(data => {
@@ -45,12 +48,13 @@ export class RequestGpService {
     return this.http.get<RequestGP[]>(url);
   }
 
-  //getting gp by user id
+  //Gets GP by patient's user id
   getGPByPatientUserId(user_id: number) {
     const url = `${this.getDoctorByUserId}/${user_id}`;
     return this.http.get<number>(url)
   }
 
+  //Method for creating a request
   createRequest(requestGP: RequestGP): Observable<RequestGP> {
     console.log("Creating request...");
     return this.http.post<RequestGP>(this.createRequestUrl, requestGP)
@@ -59,16 +63,19 @@ export class RequestGpService {
       );
   }
 
+  //Method for deleting a request
   deleteRequest(id: number): Observable<{}> {
     const url = `${this.getRequestsURL + "/delete"}/${id}`;
     return this.http.delete(url)
   }
 
+  //Method for getting the full name by user id
   getFullName(id: number) {
     const url = `${this.getUserFullNameUrl}/${id}`;
     return this.http.get<string>(url);
   }
 
+  //Method for updating the GP of a patient
   updateGP(gpUserId: number, userId: number) {
     const url = `${this.updatePatientGPUrl}/${userId}/${gpUserId}`
     return this.http.put(url, [userId, gpUserId,]);
