@@ -81,6 +81,7 @@ export class RequestGpService {
     return this.http.put(url, [userId, gpUserId,]);
   }
 
+  //Method for handling errors
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

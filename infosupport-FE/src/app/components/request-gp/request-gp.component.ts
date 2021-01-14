@@ -23,7 +23,6 @@ export class RequestGpComponent implements OnInit {
   ngOnInit(): void {
     this.getGpUser_id(sessionStorage.getItem('user_id'));
     this.getGPs();
-    this.getCurrentGP();
     this.getFullNameById(parseInt(sessionStorage.getItem('user_id')))
   }
 
@@ -34,16 +33,6 @@ export class RequestGpComponent implements OnInit {
     let userId = parseInt(sessionStorage.getItem('user_id'));
     let newRequest = new RequestGP(userId, gpUserId, this.fullName)
     this.requestGpService.createRequest(newRequest).subscribe();
-    }
-  }
-
-  //Gets the current GP of the user
-  getCurrentGP() {
-    for (let i = 0; i < this.gpList.length; i++) {
-      if (this.gpList[i].user_id === this.doctorId) {
-        console.log(this.gpList[i].user_id);
-        console.log(this.doctorId);
-      }
     }
   }
 
@@ -72,9 +61,9 @@ export class RequestGpComponent implements OnInit {
   getFullNameById(id: number) {
     this.requestGpService.getFullName(id).subscribe(data => {
       this.fullName = data;
-      var fullNameArray = this.fullName[0].split(",");
-      var firstName = fullNameArray[0];
-      var lastName = fullNameArray[1];
+      let fullNameArray = this.fullName[0].split(",");
+      let firstName = fullNameArray[0];
+      let lastName = fullNameArray[1];
       this.fullName = firstName + " " + lastName;
     });
   }
